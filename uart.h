@@ -16,5 +16,6 @@ void tx_chr (unsigned char data_com);
 void Debug_chr_uart(unsigned char Dat);
 void Debug_txt_uart(unsigned char * str);
 void EscribirCadenaSoft(unsigned char tamano_cadena);
-
+unsigned char calculo_bcc();
+void backup_clk();
 #endif	/* _UART_H_ */

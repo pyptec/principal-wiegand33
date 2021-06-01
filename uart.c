@@ -57,7 +57,7 @@ extern unsigned char g_scArrDisplay[];
 extern unsigned char g_scArrTxComSoft[];
 extern unsigned char xdata buffer_bus[];
 extern unsigned char completo;
-
+unsigned char buffer_clk[30];
 extern  bit sendactive;
 extern  bit FueraLinea;
 extern  bit txACK;
@@ -595,4 +595,25 @@ unsigned char i;
         tx_chr(g_scArrTxComSoft[i]);
     }
 	
+}
+unsigned char calculo_bcc()
+{
+	unsigned char bcc=0;
+	unsigned char j;
+	
+	for (j=0; j<g_cContByteRx; j++)
+	{
+				bcc=g_scArrDisplay[j]^bcc;
+	}
+	return bcc;
+}
+void backup_clk()
+{
+	unsigned char i;
+	for (i=0; i<g_cContByteRx+1; i++)
+					{
+			 			buffer_clk[i]= buffer_bus[i];
+						
+					}
+					
 }

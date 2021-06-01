@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   WIEGAND                                                           07/06/2020 15:21:15 PAGE 1   
+C51 COMPILER V9.59.0.0   WIEGAND                                                           06/01/2021 11:39:07 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE WIEGAND
@@ -62,7 +62,7 @@ line level    source
   52          ------------------------------------------------------------------------------*/
   53          
   54          void  ex0_isr (void) interrupt 0 
-C51 COMPILER V9.59.0.0   WIEGAND                                                           07/06/2020 15:21:15 PAGE 2   
+C51 COMPILER V9.59.0.0   WIEGAND                                                           06/01/2021 11:39:07 PAGE 2   
 
   55          {
   56   1        
@@ -126,7 +126,7 @@ line level    source
  114          ------------------------------------------------------------------------------*/
  115          void on_ini_ex0_ex1(void)
  116          {
-C51 COMPILER V9.59.0.0   WIEGAND                                                           07/06/2020 15:21:15 PAGE 3   
+C51 COMPILER V9.59.0.0   WIEGAND                                                           06/01/2021 11:39:07 PAGE 3   
 
  117   1        EA = 1    ;             /*enable las dos interrupciones*/
  118   1        
@@ -190,7 +190,7 @@ line level    source
  176   1          lcd_wiegand();
  177   1      
  178   1      }
-C51 COMPILER V9.59.0.0   WIEGAND                                                           07/06/2020 15:21:15 PAGE 4   
+C51 COMPILER V9.59.0.0   WIEGAND                                                           06/01/2021 11:39:07 PAGE 4   
 
  179          
  180          /*------------------------------------------------------------------------------
@@ -254,7 +254,7 @@ line level    source
  238   1       }
  239           /*
  240           void tr_wiegand_soft()
-C51 COMPILER V9.59.0.0   WIEGAND                                                           07/06/2020 15:21:15 PAGE 5   
+C51 COMPILER V9.59.0.0   WIEGAND                                                           06/01/2021 11:39:07 PAGE 5   
 
  241           {
  242            g_scArrTxComSoft[0]=STX;
@@ -318,7 +318,7 @@ line level    source
  300          ------------------------------------------------------------------------------*/
  301          /*
  302          void ajusta_code_26_normal(void)
-C51 COMPILER V9.59.0.0   WIEGAND                                                           07/06/2020 15:21:15 PAGE 6   
+C51 COMPILER V9.59.0.0   WIEGAND                                                           06/01/2021 11:39:07 PAGE 6   
 
  303          {
  304            facility_code=bits_wiegand_hex(1) ;
@@ -382,7 +382,7 @@ line level    source
  362            Debug_chr_lcd(facility_code);
  363            Debug_chr_lcd(card_number);
  364            Debug_chr_lcd(card_number1);
-C51 COMPILER V9.59.0.0   WIEGAND                                                           07/06/2020 15:21:15 PAGE 7   
+C51 COMPILER V9.59.0.0   WIEGAND                                                           06/01/2021 11:39:07 PAGE 7   
 
  365            Debug_chr_lcd(card_number2);
  366            

@@ -1198,6 +1198,8 @@ void AtencComSoft(void)
 						{
 				 			buffer_bus[i]=g_scArrDisplay[i];
 						}
+						buffer_bus[i++]=calculo_bcc();
+						backup_clk();
 						tx_bus(g_cContByteRx);					   	//TRANFIERE HORA AL SECUNDARIO
 					
 						cont(0x80);
