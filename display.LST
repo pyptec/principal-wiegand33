@@ -1,0 +1,265 @@
+C51 COMPILER V9.59.0.0   DISPLAY                                                           07/06/2020 15:21:16 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE DISPLAY
+OBJECT MODULE PLACED IN .\hex\display.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE display.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(.\libreria) DEBUG OBJECT
+                    -EXTEND TABS(2) OBJECT(.\hex\display.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #include "display.h"
+   3                                //********************************************************************************
+   4          //  RUTINAS DE DISPLAY DMC 2 LINEAS 20 CHR
+   5          //  MEDIO BYTE DE DATOS
+   6          //********************************************************************************
+   7          sbit RS = P1^0 ;                  /* define I/O functions     */
+   8          sbit E =  P1^1 ;                  /* P3.5             */
+   9          sbit sw_1 = P1^2;         //Direccion                       *
+  10          sbit sw_2 = P1^3;         //Direccion   
+  11          
+  12          extern bit audio1;
+  13          extern bit audio2;
+  14          extern bit audio3;
+  15          extern bit audio4;
+  16          
+  17          extern unsigned char g_cRelevos;
+  18          extern  unsigned char g_cDirBoard;
+  19          
+  20          #define RELEVO1   0x01
+  21          #define RELEVO2   0x02
+  22          #define RELEVO3   0x04
+  23          #define RELEVO4   0x08
+  24          //*********************************************************************************
+  25          void wait (void)  {                         /* wait function        */
+  26   1        ;                                         
+  27   1      }
+  28          //*********************************************************************************
+  29          //*********************************************************************************
+  30          void relayIO(void)
+  31          {
+  32   1        g_cRelevos=0x00;
+  33   1      
+  34   1        if (audio1==1)
+  35   1        {
+  36   2          g_cRelevos |= RELEVO1;
+  37   2        }
+  38   1        else if (audio2==1)
+  39   1        {
+  40   2          g_cRelevos |= RELEVO2;
+  41   2        }
+  42   1      
+  43   1        else if (audio3==1)
+  44   1        {
+  45   2          g_cRelevos |= RELEVO3;
+  46   2        }
+  47   1        else if (audio4==1)
+  48   1        {
+  49   2          g_cRelevos |= RELEVO4;
+  50   2        }
+  51   1      }
+  52           void wait_long1 (unsigned int t)  {                      /* wait function        */
+  53   1          unsigned int j;
+  54   1        for (j=0; j<t; j++)               // 2
+C51 COMPILER V9.59.0.0   DISPLAY                                                           07/06/2020 15:21:16 PAGE 2   
+
+  55   1        {
+  56   2          wait();
+  57   2        }   
+  58   1      } 
+  59          //*********************************************************************************
+  60          void wait_long (void)  {                      /* wait function        */
+  61   1          unsigned int j;
+  62   1        for (j=0; j<2; j++)               // 2
+  63   1        {
+  64   2          wait();
+  65   2        }   
+  66   1      } 
+  67          //*********************************************************************************
+  68          void wait_ancho (void)  {                       /* wait function      */
+  69   1          unsigned int j;
+  70   1        for (j=0; j<2; j++)               //
+  71   1        {
+  72   2          wait();
+  73   2        }   
+  74   1      } 
+  75          //********************************************************************************
+  76          void pulso ()  
+  77          {                   
+  78   1      //    E=0;
+  79   1      //    wait_long();
+  80   1          E=1;
+  81   1          wait_long();
+  82   1          E=0;
+  83   1      
+  84   1      }
+  85          //********************************************************************************
+  86          void cont(unsigned char caracter)           /* DIRECCION          */ 
+  87          {                        
+  88   1          RS=0;
+  89   1        relayIO();
+  90   1          P0= (caracter&0xf0)|g_cRelevos;                 //| 0x0f;
+  91   1          pulso();
+  92   1          caracter <<=4;
+  93   1          P0= (caracter&0xf0)|g_cRelevos;                 //| 0x0f;
+  94   1          pulso();
+  95   1       }
+  96           //********************************************************************************
+  97          void borra()
+  98          {
+  99   1          unsigned int i;
+ 100   1          cont(0x01);
+ 101   1          for (i=0; i<250; i++)            // 250
+ 102   1          {
+ 103   2          wait();
+ 104   2          }
+ 105   1      }
+ 106          //*********************************************************************************
+ 107          /*              PROGRAMA EL DISPLAY                  */
+ 108          //*********************************************************************************
+ 109          void prg_disp (void)                
+ 110           {
+ 111   1        RS=0;
+ 112   1        wait_long();        ////////////
+ 113   1        E=0;
+ 114   1        wait_long();
+ 115   1      //  wait_long();        /////////////
+ 116   1        P0=0x39;          // 0x38 FUNCTION SET 8 BIT INTERFACE  +1 Bit MSB es TXD
+C51 COMPILER V9.59.0.0   DISPLAY                                                           07/06/2020 15:21:16 PAGE 3   
+
+ 117   1        pulso();
+ 118   1        wait_long();        // WAIT 4.1 MS
+ 119   1        pulso();          // FUNCTION SET 8 BIT INTERFACE
+ 120   1        wait_long();        // WAIT 100 uS
+ 121   1        pulso();          // Function Set Command: (8-Bit interface)
+ 122   1        wait_long();        // After this command is written, BF can be checked.
+ 123   1       
+ 124   1          P0=0x29;          // 0x28 Function Set: Sets interface to 4 -bit  +1 Bit MSB es TXD
+ 125   1        pulso();
+ 126   1        wait_long();
+ 127   1        cont(0x0c);         // Display ON/OFF Control 0 0 0 0 1 D C B  
+ 128   1                      // The display is ON when D=1 and OFF when D=0 -- C=0: Cursor OFF -- B=0: Blink OFF
+ 129   1        borra();          // Clear Display  0x01
+ 130   1        wait();
+ 131   1        cont(0x06);         // Display ON  0 1 I/D S  I/D=1: +1(Increment Mode)  S=0: No Display Shift operation
+ 132   1        wait();
+ 133   1        cont(0x80);         // 
+ 134   1        wait_long();
+ 135   1      //  wait_long();        /////////////
+ 136   1          
+ 137   1        relayIO();
+ 138   1        P0=g_cRelevos;
+ 139   1       }
+ 140          //********************************************************************************
+ 141          void vdato (unsigned char caracter)  
+ 142          {                             
+ 143   1          RS=1;
+ 144   1        wait();
+ 145   1        relayIO();
+ 146   1      
+ 147   1          P0= (caracter&0xf0)|g_cRelevos;     //| 0x0f;
+ 148   1          pulso();
+ 149   1          caracter <<=4;
+ 150   1          P0= (caracter&0xf0)|g_cRelevos;;    // | 0x0f;
+ 151   1        pulso();
+ 152   1      
+ 153   1       }
+ 154          
+ 155          void lcd_gotoxy( unsigned char x,   unsigned char y )
+ 156          {
+ 157   1        switch(y)
+ 158   1          {
+ 159   2          case 0 : cont(0x80 + x); break;
+ 160   2          case 1 : cont(0xC0 + x); break;
+ 161   2          case 2 : cont(0x94 + x); break;
+ 162   2          case 3 : cont(0xD4 + x); break;
+ 163   2          }
+ 164   1      }
+ 165          
+ 166          
+ 167          
+ 168          void lcd_puts(unsigned char * str)
+ 169          {
+ 170   1        unsigned char xdata i;
+ 171   1        for (i=0; str[i] != '\0'; i++)
+ 172   1        {
+ 173   2      
+ 174   2          vdato(str[i]);
+ 175   2      
+ 176   2        }
+ 177   1      
+ 178   1      }
+C51 COMPILER V9.59.0.0   DISPLAY                                                           07/06/2020 15:21:16 PAGE 4   
+
+ 179           void lcd_text(unsigned char row, unsigned char offset, unsigned char * lcd)
+ 180          {
+ 181   1        lcd_gotoxy(0+offset,row);
+ 182   1        lcd_puts((char*)lcd);
+ 183   1      }
+ 184          
+ 185          void ve_dir(void)
+ 186          {
+ 187   1        sw_1=0;
+ 188   1        sw_2=0;
+ 189   1      
+ 190   1        wait_long();
+ 191   1          g_cDirBoard=0x31;
+ 192   1      
+ 193   1        if (sw_1==1)
+ 194   1        {
+ 195   2          g_cDirBoard++;
+ 196   2        }
+ 197   1        if (sw_2==1)
+ 198   1        {
+ 199   2          g_cDirBoard=g_cDirBoard+2;
+ 200   2        }
+ 201   1        cont(0xc9);
+ 202   1        vdato(g_cDirBoard);
+ 203   1      }
+ 204          //*******************************************************************************************
+ 205          //********************************************************************************************************
+             -******
+ 206          void BorraLCD_L1(void)
+ 207          {
+ 208   1        unsigned char k;
+ 209   1      
+ 210   1        cont(0x80);
+ 211   1        for (k=0; k<16; k++)                //  Limpia Primera Linea de Display
+ 212   1        {
+ 213   2            vdato(' ');
+ 214   2        }
+ 215   1      }
+ 216          //********************************************************************************************************
+             -******
+ 217          void BorraLCD_L2(void)
+ 218          {
+ 219   1        unsigned char k;
+ 220   1      
+ 221   1        cont(0xc0);
+ 222   1        for (k=0; k<16; k++)                //  Limpia Primera Linea de Display
+ 223   1        {
+ 224   2            vdato(' ');
+ 225   2        }
+ 226   1      }
+ 227          void Borra_all(void)
+ 228          {
+ 229   1        BorraLCD_L1  ();
+ 230   1        BorraLCD_L2   ();
+ 231   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    463    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----       3
+   PDATA SIZE       =   ----    ----
+C51 COMPILER V9.59.0.0   DISPLAY                                                           07/06/2020 15:21:16 PAGE 5   
+
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

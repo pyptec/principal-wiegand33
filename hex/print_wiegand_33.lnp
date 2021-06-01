@@ -1,0 +1,6 @@
+".\hex\Principal_MF.obj",
+".\hex\wiegand.obj",
+".\hex\uart.obj",
+".\hex\display.obj" 
+TO ".\hex\print_wiegand_33" 
+PRINT(".\print_wiegand_33.m51") RAMSIZE(256) 

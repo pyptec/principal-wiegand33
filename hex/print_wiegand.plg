@@ -1,0 +1,133 @@
+<html>
+<body>
+<pre>
+<h1>µVision3 Build Log</h1>
+<h2>Project:</h2>
+C:\desarrollo\int_vector com\MODIFICACIONES JP\principla_4.2wiegand_20_09_2019\INT_COM.uv2
+Project File Date:  09/20/2019
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling Principal_MF.C...
+compiling wiegand.c...
+compiling uart.c...
+compiling display.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?OFF_INI_EX0_EX1?WIEGAND
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ID_MAIN?WIEGAND
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?TR_WIEGAND_SOFT?WIEGAND
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DEBUG_TXT_UART?UART
+Program Size: data=27.7 xdata=718 code=18637
+creating hex file from ".\hex\print_wiegand"...
+".\hex\print_wiegand" - 0 Error(s), 4 Warning(s).
+Build target 'Target 1'
+compiling Principal_MF.C...
+compiling wiegand.c...
+compiling uart.c...
+compiling display.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?OFF_INI_EX0_EX1?WIEGAND
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ID_MAIN?WIEGAND
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?TR_WIEGAND_SOFT?WIEGAND
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DEBUG_CHR_UART?UART
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DEBUG_TXT_UART?UART
+Program Size: data=27.7 xdata=718 code=18621
+creating hex file from ".\hex\print_wiegand"...
+".\hex\print_wiegand" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+compiling Principal_MF.C...
+compiling wiegand.c...
+compiling uart.c...
+compiling display.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?OFF_INI_EX0_EX1?WIEGAND
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ID_MAIN?WIEGAND
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?TR_WIEGAND_SOFT?WIEGAND
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DEBUG_TXT_UART?UART
+Program Size: data=27.7 xdata=718 code=18637
+creating hex file from ".\hex\print_wiegand"...
+".\hex\print_wiegand" - 0 Error(s), 4 Warning(s).
+Build target 'Target 1'
+compiling Principal_MF.C...
+compiling wiegand.c...
+compiling uart.c...
+compiling display.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?OFF_INI_EX0_EX1?WIEGAND
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ID_MAIN?WIEGAND
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?TR_WIEGAND_SOFT?WIEGAND
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DEBUG_TXT_UART?UART
+Program Size: data=27.7 xdata=718 code=18637
+creating hex file from ".\hex\print_wiegand"...
+".\hex\print_wiegand" - 0 Error(s), 4 Warning(s).
+Build target 'Target 1'
+compiling Principal_MF.C...
+compiling wiegand.c...
+compiling uart.c...
+compiling display.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?OFF_INI_EX0_EX1?WIEGAND
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ID_MAIN?WIEGAND
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?TR_WIEGAND_SOFT?WIEGAND
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DEBUG_CHR_UART?UART
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DEBUG_TXT_UART?UART
+Program Size: data=27.7 xdata=718 code=18621
+creating hex file from ".\hex\print_wiegand"...
+".\hex\print_wiegand" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+compiling Principal_MF.C...
+compiling wiegand.c...
+compiling uart.c...
+compiling display.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?OFF_INI_EX0_EX1?WIEGAND
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ID_MAIN?WIEGAND
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?TR_WIEGAND_SOFT?WIEGAND
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DEBUG_CHR_UART?UART
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DEBUG_TXT_UART?UART
+Program Size: data=27.7 xdata=718 code=18621
+creating hex file from ".\hex\print_wiegand"...
+".\hex\print_wiegand" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+compiling Principal_MF.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?OFF_INI_EX0_EX1?WIEGAND
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ID_MAIN?WIEGAND
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?TR_WIEGAND_SOFT?WIEGAND
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DEBUG_CHR_UART?UART
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DEBUG_TXT_UART?UART
+Program Size: data=27.7 xdata=718 code=18621
+creating hex file from ".\hex\print_wiegand"...
+".\hex\print_wiegand" - 0 Error(s), 5 Warning(s).

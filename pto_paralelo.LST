@@ -1,0 +1,53 @@
+C51 COMPILER V9.59.0.0   PTO_PARALELO                                                      01/08/2020 09:58:05 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE PTO_PARALELO
+OBJECT MODULE PLACED IN .\hex\pto_paralelo.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE pto_paralelo.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(.\libreria) DEBUG O
+                    -BJECTEXTEND TABS(2) OBJECT(.\hex\pto_paralelo.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #include "pto_paralelo.h"
+   3          
+   4          sbit bus_clk=P3^6;
+   5          sbit busy=P3^5;             //                            *
+   6          sbit ready=P3^4;  
+   7          #define T_MS    20          // Base para 1ms en Espera a tx Bus
+   8          #define MAX_CHR   30          // Maximo Numero CHR a recibir del secundario
+   9          extern unsigned char xdata buffer_bus[];
+  10          extern unsigned char num_data;
+  11          
+  12          
+  13          extern void wait_ancho (void);
+  14          extern void wait_long (void);
+  15          /*--------------------------------------------------------------------------------------------------------
+             ------
+  16          
+  17          ----------------------------------------------------------------------------------------------------------
+             ------*/
+  18          void Pulso_Bus(void)
+  19          {
+  20   1        bus_clk=0;
+  21   1        wait_ancho();
+  22   1        wait_ancho();
+  23   1        wait_ancho();
+  24   1        bus_clk=1;
+  25   1        wait_ancho();
+  26   1        wait_ancho();
+  27   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     19    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
