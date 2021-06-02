@@ -55,9 +55,10 @@ extern unsigned int OpenMensual_Apx;
 extern unsigned char g_scArrRxComSoft[];
 extern unsigned char g_scArrDisplay[];
 extern unsigned char g_scArrTxComSoft[];
-extern unsigned char xdata buffer_bus[];
+extern unsigned char buffer_bus[];
 extern unsigned char completo;
 unsigned char buffer_clk[30];
+
 extern  bit sendactive;
 extern  bit FueraLinea;
 extern  bit txACK;
@@ -72,6 +73,9 @@ extern bit Send_Wiegand;
 extern bit notifyEVP;
 extern  bit InhabilitaPulsoEvPOut;
 extern bit SalidaW;
+
+extern char  *strcpy  (char *s1, const char *s2);
+extern bit tx_bus (unsigned char num_chr);
 /***********************************************************************************************************
 
 
@@ -567,7 +571,7 @@ void Debug_chr_uart(unsigned char Dat)
 /*------------------------------------------------------------------------------
 imprime la trama hasta el caracter null
 ------------------------------------------------------------------------------*/
-/*
+
 void Debug_txt_uart(unsigned char * str)
 {
 	unsigned char i;
@@ -582,7 +586,7 @@ void Debug_txt_uart(unsigned char * str)
 		
 	
 }
-*/
+
 
 //**************************************************************************************************************
 //**************************************************************************************************************
@@ -596,6 +600,7 @@ unsigned char i;
     }
 	
 }
+/*
 unsigned char calculo_bcc()
 {
 	unsigned char bcc=0;
@@ -607,13 +612,16 @@ unsigned char calculo_bcc()
 	}
 	return bcc;
 }
+*/
 void backup_clk()
 {
-	unsigned char i;
-	for (i=0; i<g_cContByteRx+1; i++)
-					{
-			 			buffer_clk[i]= buffer_bus[i];
-						
-					}
+	
+	buffer_clk[0]=0;
+	strcpy(buffer_clk,buffer_bus);
+	tx_bus(g_cContByteRx+1);					   	//TRANFIERE HORA AL SECUNDARIO
+	
+	Debug_txt_uart("backup");
+	Debug_txt_uart("\n");
+	Debug_txt_uart(buffer_clk);
 					
 }

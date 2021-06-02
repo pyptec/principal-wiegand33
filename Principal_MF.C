@@ -124,7 +124,7 @@ unsigned char g_scArrTxComSoft[TAMANO_TX_COM_SOFT];
 
 unsigned char g_scArrDisplay[32];
 
-unsigned char xdata buffer_bus[30];
+unsigned char buffer_bus[30];
 
  unsigned char xdata BufferRetry[20];
 
@@ -153,6 +153,7 @@ unsigned char xdata buffer_bus[30];
  
  
  unsigned int OpenMensual_Apx=0;
+ 
 
 #define ENQ	5
 #define EOT	4
@@ -313,6 +314,9 @@ bit tx_bus (unsigned char num_chr)
 		wait_long();
 //		wait_long();
 	}
+	//Debug_txt_uart("transmite pto paralelo");
+	//Debug_txt_uart("\n\d");
+//	Debug_txt_uart(buffer_bus);
 	return timeOut;
 }
 
@@ -514,6 +518,7 @@ void AtencComSoft(void)
 {
 
 	char i, longTx;
+	unsigned char bcc=0;
 	switch (g_cEstadoComSoft)
 	{
 //**************************************************************************************************************
@@ -1177,7 +1182,9 @@ void AtencComSoft(void)
 //*****************************************************************************************************************
 //*****************************************************************************************************************
 		case ANALICE_STR_SOF:															   //ANALIZA DATOS RECIBIDOS
-
+				
+				g_scArrDisplay[g_cContByteRx]=0;
+				
   				if (SerieOK==1)
 				{
 					SerieOK=0;
@@ -1197,10 +1204,17 @@ void AtencComSoft(void)
 						for (i=0; i<g_cContByteRx; i++)
 						{
 				 			buffer_bus[i]=g_scArrDisplay[i];
+							bcc=g_scArrDisplay[i]^bcc;
 						}
-						buffer_bus[i++]=calculo_bcc();
+						buffer_bus[g_cContByteRx]=bcc;			
+						buffer_bus[g_cContByteRx+1]=0;
+						Debug_txt_uart("llego uart y se transformo");
+						Debug_txt_uart("\n");
+						Debug_txt_uart(buffer_bus);
 						backup_clk();
-						tx_bus(g_cContByteRx);					   	//TRANFIERE HORA AL SECUNDARIO
+					
+						
+						tx_bus(g_cContByteRx+1);					   	//TRANFIERE HORA AL SECUNDARIO
 					
 						cont(0x80);
 						vdato('S');
@@ -1208,6 +1222,8 @@ void AtencComSoft(void)
 						vdato('N');
 						vdato('C');
 						txACK=1;
+						
+						
 						g_cEstadoComSoft=ESPERA_RX;
 
 				}
