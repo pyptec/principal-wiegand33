@@ -32,6 +32,7 @@ extern void Borra_all(void);
 extern void EscribirCadenaSoft(unsigned char tamano_cadena);
 extern int sprintf  (char *, const char *, ...);
 extern void wait_long1 (unsigned int t) ;
+extern bit tx_bus (unsigned char num_chr);
 
 /*configuracion de bit*/
 extern bit Dif_Mot_Car;

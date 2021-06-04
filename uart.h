@@ -18,4 +18,5 @@ void Debug_txt_uart(unsigned char * str);
 void EscribirCadenaSoft(unsigned char tamano_cadena);
 unsigned char calculo_bcc();
 void backup_clk();
+void Retransmitir_trama_hora();
 #endif	/* _UART_H_ */

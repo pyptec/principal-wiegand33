@@ -57,7 +57,8 @@ extern unsigned char g_scArrDisplay[];
 extern unsigned char g_scArrTxComSoft[];
 extern unsigned char xdata buffer_bus[];
 extern unsigned char completo;
-unsigned char buffer_clk[30];
+static unsigned char buffer_clk[30];
+static unsigned char copia_g_cContByteRx=0;
 extern  bit sendactive;
 extern  bit FueraLinea;
 extern  bit txACK;
@@ -72,6 +73,9 @@ extern bit Send_Wiegand;
 extern bit notifyEVP;
 extern  bit InhabilitaPulsoEvPOut;
 extern bit SalidaW;
+
+/*definicion de funciones */
+extern bit tx_bus (unsigned char num_chr);
 /***********************************************************************************************************
 
 
@@ -567,7 +571,7 @@ void Debug_chr_uart(unsigned char Dat)
 /*------------------------------------------------------------------------------
 imprime la trama hasta el caracter null
 ------------------------------------------------------------------------------*/
-/*
+
 void Debug_txt_uart(unsigned char * str)
 {
 	unsigned char i;
@@ -582,7 +586,7 @@ void Debug_txt_uart(unsigned char * str)
 		
 	
 }
-*/
+
 
 //**************************************************************************************************************
 //**************************************************************************************************************
@@ -605,7 +609,8 @@ unsigned char calculo_bcc()
 	{
 				bcc=g_scArrDisplay[j]^bcc;
 	}
-	return bcc;
+	return 2;
+	//return bcc;
 }
 void backup_clk()
 {
@@ -615,5 +620,23 @@ void backup_clk()
 			 			buffer_clk[i]= buffer_bus[i];
 						
 					}
+			buffer_bus[g_cContByteRx+1]=0;
+			Debug_txt_uart("llego uart y se transformo");
+			Debug_txt_uart("\n");
+			Debug_txt_uart(buffer_bus);		
+			copia_g_cContByteRx	=g_cContByteRx+1;
+			tx_bus(g_cContByteRx+1);
 					
+}
+void Retransmitir_trama_hora()
+{
+	unsigned char i;
+	for (i=0; i<copia_g_cContByteRx; i++)
+					{
+			 			buffer_bus[i]=buffer_clk[i];
+						
+					}
+	
+		tx_bus(copia_g_cContByteRx);
+	
 }
