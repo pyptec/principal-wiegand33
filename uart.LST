@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   UART                                                              06/04/2021 16:31:51 PAGE 1   
+C51 COMPILER V9.59.0.0   UART                                                              06/08/2021 11:29:48 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE UART
@@ -62,7 +62,7 @@ line level    source
   52          extern  unsigned int TimeOut_Send_Acceso;
   53          extern unsigned int OpenMensual_Apx;
   54          
-C51 COMPILER V9.59.0.0   UART                                                              06/04/2021 16:31:51 PAGE 2   
+C51 COMPILER V9.59.0.0   UART                                                              06/08/2021 11:29:48 PAGE 2   
 
   55          extern unsigned char g_scArrRxComSoft[];
   56          extern unsigned char g_scArrDisplay[];
@@ -126,7 +126,7 @@ line level    source
  113   1        while (sendactive==1) 
  114   1        {
  115   2        }
-C51 COMPILER V9.59.0.0   UART                                                              06/04/2021 16:31:51 PAGE 3   
+C51 COMPILER V9.59.0.0   UART                                                              06/08/2021 11:29:48 PAGE 3   
 
  116   1          SBUF=data_com;
  117   1        sendactive=1;
@@ -190,7 +190,7 @@ line level    source
  175   4                        
  176   4                case 'w':
  177   4                  g_cEstadoComSoft=RECEPCION_STR_SOF_STX;       //Se atiende en el ciclo principal
-C51 COMPILER V9.59.0.0   UART                                                              06/04/2021 16:31:51 PAGE 4   
+C51 COMPILER V9.59.0.0   UART                                                              06/08/2021 11:29:48 PAGE 4   
 
  178   4      //            txACK=1;
  179   4                  tx_chr(ACK);
@@ -254,7 +254,7 @@ line level    source
  237   4                g_cEstadoComSoft=VER_DIR;
  238   4                g_cContByteRx=0;
  239   4              }
-C51 COMPILER V9.59.0.0   UART                                                              06/04/2021 16:31:51 PAGE 5   
+C51 COMPILER V9.59.0.0   UART                                                              06/08/2021 11:29:48 PAGE 5   
 
  240   3              break;            
  241   3      //-----------------------------------------------------------------------------------------
@@ -318,7 +318,7 @@ line level    source
  298   5                  if(g_scArrRxComSoft[2]=='D')
  299   5                  {
  300   6      //              lock2=0;
-C51 COMPILER V9.59.0.0   UART                                                              06/04/2021 16:31:51 PAGE 6   
+C51 COMPILER V9.59.0.0   UART                                                              06/08/2021 11:29:48 PAGE 6   
 
  301   6                  }
  302   5                  else if(g_scArrRxComSoft[2]=='A')
@@ -382,7 +382,7 @@ line level    source
  359   6                    else
  360   6                    {
  361   7                        if ((Send_Wiegand==1))
-C51 COMPILER V9.59.0.0   UART                                                              06/04/2021 16:31:51 PAGE 7   
+C51 COMPILER V9.59.0.0   UART                                                              06/08/2021 11:29:48 PAGE 7   
 
  362   7                        {
  363   8                          Send_Wiegand=0;
@@ -446,7 +446,7 @@ line level    source
  420   6                    if (TimeOut_Send_Acceso!=0)
  421   6                    {
  422   7                      g_cEstadoTxSoft &=~LECTURA_WIEG_TX;
-C51 COMPILER V9.59.0.0   UART                                                              06/04/2021 16:31:51 PAGE 8   
+C51 COMPILER V9.59.0.0   UART                                                              06/08/2021 11:29:48 PAGE 8   
 
  423   7                      TimeOut_Send_Acceso=0;
  424   7                      Tx_Acceso=1;
@@ -510,7 +510,7 @@ line level    source
  481   9      //                    TF0=0;
  482   9                        }
  483   8                      }
-C51 COMPILER V9.59.0.0   UART                                                              06/04/2021 16:31:51 PAGE 9   
+C51 COMPILER V9.59.0.0   UART                                                              06/08/2021 11:29:48 PAGE 9   
 
  484   7                      else
  485   7                      {
@@ -574,7 +574,7 @@ line level    source
  543   2            TI = 0;                 // clear interrupt request flag
  544   2          sendactive=0;
  545   2          }
-C51 COMPILER V9.59.0.0   UART                                                              06/04/2021 16:31:51 PAGE 10  
+C51 COMPILER V9.59.0.0   UART                                                              06/08/2021 11:29:48 PAGE 10  
 
  546   1      }
  547          
@@ -601,88 +601,113 @@ line level    source
  568            
  569          }
  570          */
- 571          /*------------------------------------------------------------------------------
- 572          imprime la trama hasta el caracter null
- 573          ------------------------------------------------------------------------------*/
- 574          
- 575          void Debug_txt_uart(unsigned char * str)
- 576          {
- 577   1        unsigned char i;
- 578   1      
- 579   1        i=0;
- 580   1        
- 581   1        
- 582   1          for (i=0; str[i] != '\0'; i++)
- 583   1          {
- 584   2              tx_chr(str[i]);
- 585   2          }
- 586   1          
- 587   1        
- 588   1      }
- 589          
- 590          
- 591          //********************************************************************************************************
-             -******
- 592          //********************************************************************************************************
-             -******
- 593          void EscribirCadenaSoft(unsigned char tamano_cadena)
- 594          {
- 595   1      unsigned char i;
- 596   1       
- 597   1        for(i=0;i<tamano_cadena;i++)
- 598   1          {
- 599   2              tx_chr(g_scArrTxComSoft[i]);
- 600   2          }
- 601   1        
- 602   1      }
- 603          unsigned char calculo_bcc()
- 604          {
- 605   1        unsigned char bcc=0;
-C51 COMPILER V9.59.0.0   UART                                                              06/04/2021 16:31:51 PAGE 11  
+ 571          /*
+ 572          void DebugBufferMF(unsigned char *str,unsigned char num_char)
+ 573          {
+ 574            unsigned char j;
+ 575           
+ 576                
+ 577              for (j=0; j<num_char; j++)
+ 578              {
+ 579              Debug_chr_uart(*str);
+ 580              str++;
+ 581              }
+ 582              tx_chr('\r');
+ 583              tx_chr('\n');
+ 584           
+ 585          }
+ 586          */
+ 587          /*------------------------------------------------------------------------------
+ 588          imprime la trama hasta el caracter null
+ 589          ------------------------------------------------------------------------------*/
+ 590          /*
+ 591          void Debug_txt_uart(unsigned char * str)
+ 592          {
+ 593            unsigned char i;
+ 594          
+ 595            i=0;
+ 596            
+ 597            
+ 598              for (i=0; str[i] != '\0'; i++)
+ 599              {
+ 600                  tx_chr(str[i]);
+ 601              }
+ 602              
+ 603            
+ 604          }
+ 605          
+ 606          */
+ 607          //********************************************************************************************************
+C51 COMPILER V9.59.0.0   UART                                                              06/08/2021 11:29:48 PAGE 11  
 
- 606   1        unsigned char j;
- 607   1        
- 608   1        for (j=0; j<g_cContByteRx; j++)
- 609   1        {
- 610   2              bcc=g_scArrDisplay[j]^bcc;
- 611   2        }
- 612   1        return 2;
- 613   1        //return bcc;
- 614   1      }
- 615          void backup_clk()
- 616          {
- 617   1        unsigned char i;
- 618   1        for (i=0; i<g_cContByteRx+1; i++)
- 619   1                {
- 620   2                  buffer_clk[i]= buffer_bus[i];
- 621   2                  
- 622   2                }
- 623   1            buffer_bus[g_cContByteRx+1]=0;
- 624   1            Debug_txt_uart("llego uart y se transformo");
- 625   1            Debug_txt_uart("\n");
- 626   1            Debug_txt_uart(buffer_bus);   
- 627   1            copia_g_cContByteRx =g_cContByteRx+1;
- 628   1            tx_bus(g_cContByteRx+1);
- 629   1                
+             -******
+ 608          //********************************************************************************************************
+             -******
+ 609          void EscribirCadenaSoft(unsigned char tamano_cadena)
+ 610          {
+ 611   1      unsigned char i;
+ 612   1       
+ 613   1        for(i=0;i<tamano_cadena;i++)
+ 614   1          {
+ 615   2              tx_chr(g_scArrTxComSoft[i]);
+ 616   2          }
+ 617   1        
+ 618   1      }
+ 619          unsigned char calculo_bcc()
+ 620          {
+ 621   1        unsigned char bcc=0;
+ 622   1        unsigned char j;
+ 623   1        
+ 624   1        for (j=0; j<g_cContByteRx; j++)
+ 625   1        {
+ 626   2              bcc=g_scArrDisplay[j]^bcc;
+ 627   2        }
+ 628   1        
+ 629   1        return bcc;
  630   1      }
- 631          void Retransmitir_trama_hora()
+ 631          void backup_clk()
  632          {
  633   1        unsigned char i;
- 634   1        for (i=0; i<copia_g_cContByteRx; i++)
- 635   1                {
- 636   2                  buffer_bus[i]=buffer_clk[i];
- 637   2                  
- 638   2                }
- 639   1        
- 640   1          tx_bus(copia_g_cContByteRx);
- 641   1        
- 642   1      }
+ 634   1        buffer_bus[g_cContByteRx++]=calculo_bcc();
+ 635   1        for (i=0; i<g_cContByteRx; i++)
+ 636   1                {
+ 637   2                  buffer_clk[i]= buffer_bus[i];
+ 638   2                  
+ 639   2                }
+ 640   1            buffer_clk[g_cContByteRx+1]=0;    
+ 641   1            buffer_bus[g_cContByteRx+1]=0;
+ 642   1            //Debug_txt_uart("Hora con bcc");
+ 643   1            //Debug_txt_uart("\n");
+ 644   1            //Debug_txt_uart(buffer_bus); 
+ 645   1            //Debug_txt_uart("\n"); 
+ 646   1                
+ 647   1            //Debug_txt_uart("hora backup");
+ 648   1            //Debug_txt_uart(buffer_clk); 
+ 649   1            //Debug_txt_uart("\n");           
+ 650   1            copia_g_cContByteRx =g_cContByteRx;
+ 651   1            tx_bus(g_cContByteRx);
+ 652   1                
+ 653   1      }
+ 654          void Retransmitir_trama_hora()
+ 655          {
+ 656   1        unsigned char i;
+ 657   1        for (i=0; i<copia_g_cContByteRx; i++)
+ 658   1                {
+ 659   2                  buffer_bus[i]=buffer_clk[i];
+ 660   2                  
+ 661   2                }
+ 662   1        
+ 663   1          tx_bus(copia_g_cContByteRx);
+ 664   1        
+ 665   1      }
 
+
+C51 COMPILER V9.59.0.0   UART                                                              06/08/2021 11:29:48 PAGE 12  
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1461    ----
-   CONSTANT SIZE    =     29    ----
-   XDATA SIZE       =     31       3
+   CODE SIZE        =   1410    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     31    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----

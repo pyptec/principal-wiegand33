@@ -568,10 +568,26 @@ void Debug_chr_uart(unsigned char Dat)
 	
 }
 */
+/*
+void DebugBufferMF(unsigned char *str,unsigned char num_char)
+{
+  unsigned char j;
+ 
+  		
+		for (j=0; j<num_char; j++)
+		{
+		Debug_chr_uart(*str);
+		str++;
+		}
+		tx_chr('\r');
+		tx_chr('\n');
+ 
+}
+*/
 /*------------------------------------------------------------------------------
 imprime la trama hasta el caracter null
 ------------------------------------------------------------------------------*/
-
+/*
 void Debug_txt_uart(unsigned char * str)
 {
 	unsigned char i;
@@ -587,7 +603,7 @@ void Debug_txt_uart(unsigned char * str)
 	
 }
 
-
+*/
 //**************************************************************************************************************
 //**************************************************************************************************************
 void EscribirCadenaSoft(unsigned char tamano_cadena)
@@ -609,23 +625,30 @@ unsigned char calculo_bcc()
 	{
 				bcc=g_scArrDisplay[j]^bcc;
 	}
-	return 2;
-	//return bcc;
+	
+	return bcc;
 }
 void backup_clk()
 {
 	unsigned char i;
-	for (i=0; i<g_cContByteRx+1; i++)
+	buffer_bus[g_cContByteRx++]=calculo_bcc();
+	for (i=0; i<g_cContByteRx; i++)
 					{
 			 			buffer_clk[i]= buffer_bus[i];
 						
 					}
+			buffer_clk[g_cContByteRx+1]=0;		
 			buffer_bus[g_cContByteRx+1]=0;
-			Debug_txt_uart("llego uart y se transformo");
-			Debug_txt_uart("\n");
-			Debug_txt_uart(buffer_bus);		
-			copia_g_cContByteRx	=g_cContByteRx+1;
-			tx_bus(g_cContByteRx+1);
+			//Debug_txt_uart("Hora con bcc");
+			//Debug_txt_uart("\n");
+			//Debug_txt_uart(buffer_bus);	
+			//Debug_txt_uart("\n");	
+					
+			//Debug_txt_uart("hora backup");
+			//Debug_txt_uart(buffer_clk);	
+			//Debug_txt_uart("\n");						
+			copia_g_cContByteRx	=g_cContByteRx;
+			tx_bus(g_cContByteRx);
 					
 }
 void Retransmitir_trama_hora()

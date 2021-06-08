@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 1   
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE PRINCIPAL_MF
@@ -62,7 +62,7 @@ line level    source
   52          #define    cte_seg  0x1c
   53          #define    cte_retry  0x2a
   54          
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 2   
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 2   
 
   55          
   56           unsigned char seg,k;
@@ -126,7 +126,7 @@ line level    source
  114          #define LPR_TX      0x08   //reconocimiento placa
  115          
  116          unsigned char g_cEstadoComSoft=ESPERA_RX;
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 3   
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 3   
 
  117          unsigned char g_cEstadoTxSoft=SIN_LECTURA_TX;
  118          
@@ -190,7 +190,7 @@ line level    source
  176          #define NO_MENSUAL  0XB1
  177          #define NO_IN_PARK  0XB2
  178          #define IN_PARK   0Xb3
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 4   
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 4   
 
  179          #define EXPIRO    0Xb4
  180          #define HORARIO   0Xb5
@@ -254,7 +254,7 @@ line level    source
  238           bit Dato_Placa=0;
  239           bit Tiquete_Placa=0;
  240           bit Tiquete_Salida=0;
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 5   
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 5   
 
  241          
  242           bit Tx_Acceso=0;
@@ -318,7 +318,7 @@ line level    source
  299   3            Pulso_Bus();
  300   3          }
  301   2      
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 6   
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 6   
 
  302   2        }
  303   1      //---------------------------------------
@@ -382,7 +382,7 @@ line level    source
  358          //********************************************************************************************************
              -******
  359          //********************************************************************************************
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 7   
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 7   
 
  360          void rx_bus (void)
  361          {
@@ -446,7 +446,7 @@ line level    source
  418   1       unsigned int temp;
  419   1      
  420   1       temp=data_clk;
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 8   
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 8   
 
  421   1       temp=temp & 0xf0;
  422   1       temp>>=4;
@@ -510,7 +510,7 @@ line level    source
  480   3            }
  481   2            NumDatRetry=19;
  482   2            TimeRetryCmd=cte_seg;
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 9   
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 9   
 
  483   2            
  484   2          }
@@ -574,7 +574,7 @@ line level    source
  536   2      //--------------------------------------------------------------------------------------------------------
              -------
  537   2            else if ((g_cEstadoTxSoft&LECTURA_COD_TX)==LECTURA_COD_TX)          //Lectura Cod Barras
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 10  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 10  
 
  538   2            {
  539   3                
@@ -638,7 +638,7 @@ line level    source
  597   6                    {
  598   7                      g_scArrTxComSoft[longTx++]='0';   // Carro=0     modificado 24/01/2019
  599   7                    }
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 11  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 11  
 
  600   6                    
  601   6                  }
@@ -702,7 +702,7 @@ line level    source
  659   6                    g_scArrTxComSoft[longTx++]=' ';
  660   6        
  661   6                    g_scArrTxComSoft[longTx++]=',';
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 12  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 12  
 
  662   6                    g_scArrTxComSoft[longTx++]=ETX;         
  663   6                    EscribirCadenaSoft(longTx);     
@@ -766,7 +766,7 @@ line level    source
  721   5                  g_scArrTxComSoft[longTx+3]=Cod_Dcto;
  722   5                }
  723   4                else
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 13  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 13  
 
  724   4                {         
  725   5                  g_scArrTxComSoft[longTx+3]='0';
@@ -830,7 +830,7 @@ line level    source
  783   7                    }
  784   6                  }
  785   5                  else
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 14  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 14  
 
  786   5                  {
  787   6                    g_scArrTxComSoft[longTx+4]='0';   //Carro =0;
@@ -894,7 +894,7 @@ line level    source
  844   5                    //SalidaW=0;
  845   5      //---------------------;
  846   5      
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 15  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 15  
 
  847   5                  g_scArrTxComSoft[0]=STX;
  848   5                  g_scArrTxComSoft[1]='w';
@@ -958,7 +958,7 @@ line level    source
  906   6                    if (Dif_Mot_Car==1)
  907   6                    {
  908   7                      if (automovil==0)
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 16  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 16  
 
  909   7                      {
  910   8                        g_scArrTxComSoft[10]='0';   //Carro =0;   no funcionamodificado 23/01/2019
@@ -1022,7 +1022,7 @@ line level    source
  968   5                    g_scArrTxComSoft[2]=((buffer_wie[0]>>4)&0X0f)+0X30;
  969   5                    g_scArrTxComSoft[3]=(buffer_wie[0]&0X0F)+0X30;
  970   5                    g_scArrTxComSoft[4]=((buffer_wie[1]>>4)&0X0f)+0X30;
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 17  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 17  
 
  971   5                    g_scArrTxComSoft[5]=(buffer_wie[1]&0X0f)+0X30;
  972   5                    g_scArrTxComSoft[6]=((buffer_wie[2]>>4)&0X0f)+0X30;
@@ -1086,7 +1086,7 @@ line level    source
 1030   6                      xTipo_Vehiculo=2;
 1031   6                    }
 1032   5                    else if(Tipo_Vehiculo=='M')       // Motocycle
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 18  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 18  
 
 1033   5                    {
 1034   6                      xTipo_Vehiculo=1;
@@ -1150,7 +1150,7 @@ line level    source
 1092   5                    
 1093   5                      g_scArrTxComSoft[22]=',';
 1094   5                    send_dataCLK((YearOut-0x30),23);
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 19  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 19  
 
 1095   5                    send_dataCLK((MonthOut-0x30),25);
 1096   5                    send_dataCLK((DayOut-0x30),27);
@@ -1214,7 +1214,7 @@ line level    source
 1154   6                      EscribirCadenaSoft(temp);
 1155   6                    }
 1156   5      
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 20  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 20  
 
 1157   5      //              g_scArrTxComSoft[33]=ETX;
 1158   5      //              EscribirCadenaSoft(34);
@@ -1268,7 +1268,7 @@ line level    source
 1199   3                  {
 1200   4                    buffer_bus[i]=g_scArrDisplay[i];
 1201   4                  }
-1202   3                  buffer_bus[i++]=calculo_bcc();
+1202   3                  
 1203   3                  backup_clk();
 1204   3              
 1205   3                
@@ -1278,7 +1278,7 @@ line level    source
 1209   3                  vdato('N');
 1210   3                  vdato('C');
 1211   3                  txACK=1;
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 21  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 21  
 
 1212   3                  g_cEstadoComSoft=ESPERA_RX;
 1213   3      
@@ -1342,7 +1342,7 @@ line level    source
 1271   6                      {
 1272   7                        lock2=1;              // Alvaro Manda Abrir mensual y tiquete pero notifico
 1273   7                        seg=cte_seg+14;
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 22  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 22  
 
 1274   7                        TH0=0X00;             //Inicializa timer                    *           
 1275   7                        TL0=0X00;
@@ -1406,7 +1406,7 @@ line level    source
 1320   5                    SendRtaBus(NO_IN_PARK);
 1321   5                  }
 1322   4      
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 23  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 23  
 
 1323   4                    else if ((g_scArrDisplay[1]=='X')&&(g_scArrDisplay[2]=='X')&&(g_scArrDisplay[3]=='X')&&(g_scArrDi
              -splay[4]=='X')&&(g_scArrDisplay[5]=='M')&&(g_scArrDisplay[6]=='E')&&(g_scArrDisplay[7]=='N')&&(g_scArrDisplay[8]=='S')&&
@@ -1470,7 +1470,7 @@ line level    source
              -[13]=='N')&&(g_scArrDisplay[14]=='O')&&(g_scArrDisplay[15]==' ')&&(g_scArrDisplay[16]=='P')&&(g_scArrDisplay[17]=='A')&&
              -(g_scArrDisplay[18]=='G'))
 1355   4                  {
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 24  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 24  
 
 1356   5                    SendRtaBus(MENSUAL_NO_PAGO);
 1357   5                  }
@@ -1534,7 +1534,7 @@ line level    source
 1411   1       //   EA = 1;                             // Enable global interrupts             *
 1412   1        prg_disp();
 1413   1      //******************************************************************************************* 
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 25  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 25  
 
 1414   1        TMOD=(TMOD & 0xf0) | 0x01;      //  Coloca el temporizador 0 y 1 en modo 1.  16bITS *
 1415   1        TF0=0;                //  Bandera de Timer                *
@@ -1598,7 +1598,7 @@ line level    source
 1473   1      
 1474   1        lcd_text(0,0,(unsigned char *) " AccesScan v4.5 ");
 1475   1      
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 26  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 26  
 
 1476   1        cont(0xc0);
 1477   1        lcd_puts(msgdir);             /*jp se muestra la direccion*/
@@ -1662,7 +1662,7 @@ line level    source
 1533   5              buffer_bus[1]='W';
 1534   5              buffer_bus[2]=buffer_wie[0];
 1535   5              buffer_bus[3]=buffer_wie[1];
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 27  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 27  
 
 1536   5              buffer_bus[4]=buffer_wie[2];
 1537   5              buffer_bus[5]=ETX;
@@ -1726,7 +1726,7 @@ line level    source
 1587   5                  lock2=1;
 1588   5                  seg=cte_seg+14;
 1589   5                  TH0=0X00;           //Inicializa timer                    *           
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 28  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 28  
 
 1590   5                  TL0=0X00;
 1591   5                  TF0=0;
@@ -1788,1641 +1788,1645 @@ line level    source
 1643   2      //------------------------------------------------------------------------------------------*
 1644   2          if (ready==0)             //Recibe del procesador Aux (Interrupcion generada del Aux)
 1645   2          {
-1646   3            buffer_bus[0]=0xff;
-1647   3            buffer_bus[1]=0xff;
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 29  
+1646   3            
+1647   3            buffer_bus[0]=0xff;
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 29  
 
-1648   3            rx_bus();
-1649   3          /*
-1650   3            lcd_text(0,0,(unsigned char *) " pto P0 ");     //jp
-1651   3            temp=0xff;
-1652   3            while(temp){temp--;}//jp
-1653   3      //-----------------------------------  TEST
-1654   3            for (k=0; k<num_data; k++)
-1655   3              {
-1656   3              tx_chr(buffer_bus[k]);
-1657   3            }
-1658   3      //-----------------------------------   
-1659   3          */
-1660   3            if (num_data!=0)
-1661   3            {
-1662   4                if ((num_data==1)&&(buffer_bus[0]==ACK))                        // ERRORES
-1663   4              {
-1664   5                Habilita_Lectura=1;
-1665   5              }
-1666   4      
-1667   4              if ((num_data==1)&&(buffer_bus[0]>=0xDF)&&(buffer_bus[0]<=0xef))            // ERRORES
-1668   4              {
-1669   5                  prg_disp();
-1670   5                if  ((buffer_bus[0]==0xe2)||(buffer_bus[0]==0xe3)||(buffer_bus[0]==0xe4))
-1671   5                {
-1672   6                    cont(0xc0);
-1673   6                  for (k=0;err_mifare[k]!='\0';k++)
-1674   6                  {
-1675   7                      vdato(err_mifare[k]);
-1676   7                  }
-1677   6                  cont(0xcE);
-1678   6                  vdato((buffer_bus[0]&0x0f)+0x30);
-1679   6                }
-1680   5      
-1681   5                else if(buffer_bus[0]==0xe0)
-1682   5                {
-1683   6                      cont(0xc0);
-1684   6                  for (k=0;sin_sensor[k]!='\0';k++)
-1685   6                  {
-1686   7                      vdato(sin_sensor[k]);
-1687   7                  }
-1688   6      
-1689   6                }
-1690   5                else if(buffer_bus[0]==0xe1)
-1691   5                {
-1692   6                      
-1693   6                  lcd_text(1,0,(unsigned char *) "TARJETA INVALIDA");
-1694   6                   
-1695   6                }
-1696   5                else if(buffer_bus[0]==0xe5)
-1697   5                {
-1698   6                      cont(0xc0);
-1699   6                  for (k=0;err_cod[k]!='\0';k++)
-1700   6                  {
-1701   7                      vdato(err_cod[k]);
-1702   7                  }
-1703   6                }
-1704   5                else if(buffer_bus[0]==0xe6)
-1705   5                {
-1706   6                    cont(0xc0);
-1707   6                  for (k=0;err_in[k]!='\0';k++)
-1708   6                  {
-1709   7                      vdato(err_in[k]);
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 30  
+1648   3            buffer_bus[1]=0xff;
+1649   3            rx_bus();
+1650   3          
+1651   3            
+1652   3            //DebugBufferMF(buffer_bus,num_data);
+1653   3            /*
+1654   3            lcd_text(0,0,(unsigned char *) " pto P0 ");     //jp
+1655   3            temp=0xff;
+1656   3            while(temp){temp--;}//jp
+1657   3      //-----------------------------------  TEST
+1658   3            for (k=0; k<num_data; k++)
+1659   3              {
+1660   3              tx_chr(buffer_bus[k]);
+1661   3            }
+1662   3      //-----------------------------------   
+1663   3          */
+1664   3            if (num_data!=0)
+1665   3            {
+1666   4                if ((num_data==1)&&(buffer_bus[0]==ACK))                        // ERRORES
+1667   4              {
+1668   5                Habilita_Lectura=1;
+1669   5              }
+1670   4      
+1671   4              if ((num_data==1)&&(buffer_bus[0]>=0xDF)&&(buffer_bus[0]<=0xef))            // ERRORES
+1672   4              {
+1673   5                  prg_disp();
+1674   5                if  ((buffer_bus[0]==0xe2)||(buffer_bus[0]==0xe3)||(buffer_bus[0]==0xe4))
+1675   5                {
+1676   6                    cont(0xc0);
+1677   6                  for (k=0;err_mifare[k]!='\0';k++)
+1678   6                  {
+1679   7                      vdato(err_mifare[k]);
+1680   7                  }
+1681   6                  cont(0xcE);
+1682   6                  vdato((buffer_bus[0]&0x0f)+0x30);
+1683   6                }
+1684   5      
+1685   5                else if(buffer_bus[0]==0xe0)
+1686   5                {
+1687   6                      cont(0xc0);
+1688   6                  for (k=0;sin_sensor[k]!='\0';k++)
+1689   6                  {
+1690   7                      vdato(sin_sensor[k]);
+1691   7                  }
+1692   6      
+1693   6                }
+1694   5                else if(buffer_bus[0]==0xe1)
+1695   5                {
+1696   6                      
+1697   6                  lcd_text(1,0,(unsigned char *) "TARJETA INVALIDA");
+1698   6                   
+1699   6                }
+1700   5                else if(buffer_bus[0]==0xe5)
+1701   5                {
+1702   6                      cont(0xc0);
+1703   6                  for (k=0;err_cod[k]!='\0';k++)
+1704   6                  {
+1705   7                      vdato(err_cod[k]);
+1706   7                  }
+1707   6                }
+1708   5                else if(buffer_bus[0]==0xe6)
+1709   5                {
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 30  
 
-1710   7                  }
-1711   6                }
-1712   5                else if(buffer_bus[0]==0xe7)
-1713   5                {
-1714   6                
-1715   6                  cont(0xc0);
-1716   6                  lcd_puts((unsigned char *)"NO REGISTRA PAGO");
-1717   6                  
-1718   6                  
-1719   6                  wait_long1(10000);
-1720   6                  //{
-1721   6                    //  vdato(err_sinpago[k]);
-1722   6                  //}
-1723   6                }
-1724   5                else if(buffer_bus[0]==0xe8)
-1725   5                {
-1726   6                  cont(0xc0);
-1727   6                  for (k=0;err_gracia[k]!='\0';k++)
-1728   6                  {
-1729   7                      vdato(err_gracia[k]);
-1730   7                  }         
-1731   6                }
-1732   5      
-1733   5                else if(buffer_bus[0]==0xe9)
-1734   5                {
-1735   6                  cont(0xc0);
-1736   6                  for (k=0;err_out[k]!='\0';k++)
-1737   6                  {
-1738   7                      vdato(err_out[k]);
-1739   7                  }         
-1740   6                }
-1741   5                else if(buffer_bus[0]==0xea)
-1742   5                {
-1743   6                  cont(0xc0);
-1744   6                  for (k=0;err_data[k]!='\0';k++)
-1745   6                  {
-1746   7                      vdato(err_data[k]);
-1747   7                  }         
-1748   6                }
-1749   5                else if(buffer_bus[0]==0xeB)
-1750   5                {
-1751   6                  cont(0xc0);
-1752   6                  for (k=0;err_Caja[k]!='\0';k++)
-1753   6                  {
-1754   7                      vdato(err_Caja[k]);
-1755   7                  }         
-1756   6                }
-1757   5                else if(buffer_bus[0]==0xec)
-1758   5                {
-1759   6                  cont(0xc0);
-1760   6                  for (k=0;tarjeta_venc[k]!='\0';k++)
-1761   6                  {
-1762   7                      vdato(tarjeta_venc[k]);
-1763   7                  }         
-1764   6                }
-1765   5                else if (buffer_bus[0]==0xed)
-1766   5                {
-1767   6                  cont(0xc0);
-1768   6                  for (k=0;sin_resp[k]!='\0';k++)
-1769   6                  {
-1770   7                      vdato(sin_resp[k]);
-1771   7                  }         
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 31  
+1710   6                    cont(0xc0);
+1711   6                  for (k=0;err_in[k]!='\0';k++)
+1712   6                  {
+1713   7                      vdato(err_in[k]);
+1714   7                  }
+1715   6                }
+1716   5                else if(buffer_bus[0]==0xe7)
+1717   5                {
+1718   6                
+1719   6                  cont(0xc0);
+1720   6                  lcd_puts((unsigned char *)"NO REGISTRA PAGO");
+1721   6                  
+1722   6                  
+1723   6                  wait_long1(10000);
+1724   6                  //{
+1725   6                    //  vdato(err_sinpago[k]);
+1726   6                  //}
+1727   6                }
+1728   5                else if(buffer_bus[0]==0xe8)
+1729   5                {
+1730   6                  cont(0xc0);
+1731   6                  for (k=0;err_gracia[k]!='\0';k++)
+1732   6                  {
+1733   7                      vdato(err_gracia[k]);
+1734   7                  }         
+1735   6                }
+1736   5      
+1737   5                else if(buffer_bus[0]==0xe9)
+1738   5                {
+1739   6                  cont(0xc0);
+1740   6                  for (k=0;err_out[k]!='\0';k++)
+1741   6                  {
+1742   7                      vdato(err_out[k]);
+1743   7                  }         
+1744   6                }
+1745   5                else if(buffer_bus[0]==0xea)
+1746   5                {
+1747   6                  cont(0xc0);
+1748   6                  for (k=0;err_data[k]!='\0';k++)
+1749   6                  {
+1750   7                      vdato(err_data[k]);
+1751   7                  }         
+1752   6                }
+1753   5                else if(buffer_bus[0]==0xeB)
+1754   5                {
+1755   6                  cont(0xc0);
+1756   6                  for (k=0;err_Caja[k]!='\0';k++)
+1757   6                  {
+1758   7                      vdato(err_Caja[k]);
+1759   7                  }         
+1760   6                }
+1761   5                else if(buffer_bus[0]==0xec)
+1762   5                {
+1763   6                  cont(0xc0);
+1764   6                  for (k=0;tarjeta_venc[k]!='\0';k++)
+1765   6                  {
+1766   7                      vdato(tarjeta_venc[k]);
+1767   7                  }         
+1768   6                }
+1769   5                else if (buffer_bus[0]==0xed)
+1770   5                {
+1771   6                  cont(0xc0);
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 31  
 
-1772   6                }
-1773   5                else if (buffer_bus[0]==0xee)
-1774   5                {
-1775   6                  cont(0xc0);
-1776   6                  for (k=0;resp_NACK[k]!='\0';k++)
-1777   6                  {
-1778   7                      vdato(resp_NACK[k]);
-1779   7                  }         
-1780   6                }
-1781   5      
-1782   5                else if (buffer_bus[0]==0xeF)
-1783   5                {
-1784   6                  cont(0xc0);
-1785   6                  vdato('T');
-1786   6                  vdato('A');
-1787   6                  vdato('R');
-1788   6                  vdato('J');
-1789   6                  vdato('E');
-1790   6                  vdato('T');
-1791   6                  vdato('A');
-1792   6                  vdato(' ');
-1793   6                  vdato('A');
+1772   6                  for (k=0;sin_resp[k]!='\0';k++)
+1773   6                  {
+1774   7                      vdato(sin_resp[k]);
+1775   7                  }         
+1776   6                }
+1777   5                else if (buffer_bus[0]==0xee)
+1778   5                {
+1779   6                  cont(0xc0);
+1780   6                  for (k=0;resp_NACK[k]!='\0';k++)
+1781   6                  {
+1782   7                      vdato(resp_NACK[k]);
+1783   7                  }         
+1784   6                }
+1785   5      
+1786   5                else if (buffer_bus[0]==0xeF)
+1787   5                {
+1788   6                  cont(0xc0);
+1789   6                  vdato('T');
+1790   6                  vdato('A');
+1791   6                  vdato('R');
+1792   6                  vdato('J');
+1793   6                  vdato('E');
 1794   6                  vdato('T');
 1795   6                  vdato('A');
-1796   6                  vdato('S');
-1797   6                  vdato('C');
-1798   6                  vdato('A');
-1799   6                  vdato('D');
-1800   6                  vdato('A');
-1801   6      
-1802   6      //            lock1=1;
-1803   6                  Atascado=1;
-1804   6                  seg=cte_seg;
-1805   6                }
-1806   5                else if (buffer_bus[0]==0xDF)
-1807   5                { 
-1808   6                  prg_disp();
-1809   6                  cont(0xc0);
-1810   6                  lcd_puts((unsigned char *) "TAR. SIN FORMATO");
-1811   6                  
-1812   6                }
-1813   5                msg_error=1;
-1814   5                seg=cte_seg;
-1815   5                TH0=0X00;               //Inicializa timer            *           
-1816   5                TL0=0X00;
-1817   5                TF0=0;
-1818   5              }
-1819   4              else if ((num_data==1)&&(buffer_bus[0]==0xa0))
-1820   4              {
-1821   5                audio1=1;
-1822   5                msg1=1;
-1823   5                seg=cte_seg;
-1824   5              }
-1825   4              else if ((num_data==1)&&(buffer_bus[0]==0xa1))
-1826   4              {
-1827   5                audio2=1;
-1828   5                msg2=1;
-1829   5                seg=cte_seg;
-1830   5                lcd_text(0,0,(unsigned char *) "DIRIJASE A CAJA ");
-1831   5              }
-1832   4              else if ((num_data==1)&&(buffer_bus[0]==0xa2))
-1833   4              {
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 32  
+1796   6                  vdato(' ');
+1797   6                  vdato('A');
+1798   6                  vdato('T');
+1799   6                  vdato('A');
+1800   6                  vdato('S');
+1801   6                  vdato('C');
+1802   6                  vdato('A');
+1803   6                  vdato('D');
+1804   6                  vdato('A');
+1805   6      
+1806   6      //            lock1=1;
+1807   6                  Atascado=1;
+1808   6                  seg=cte_seg;
+1809   6                }
+1810   5                else if (buffer_bus[0]==0xDF)
+1811   5                { 
+1812   6                  prg_disp();
+1813   6                  cont(0xc0);
+1814   6                  lcd_puts((unsigned char *) "TAR. SIN FORMATO");
+1815   6                  
+1816   6                }
+1817   5                msg_error=1;
+1818   5                seg=cte_seg;
+1819   5                TH0=0X00;               //Inicializa timer            *           
+1820   5                TL0=0X00;
+1821   5                TF0=0;
+1822   5              }
+1823   4              else if ((num_data==1)&&(buffer_bus[0]==0xa0))
+1824   4              {
+1825   5                audio1=1;
+1826   5                msg1=1;
+1827   5                seg=cte_seg;
+1828   5              }
+1829   4              else if ((num_data==1)&&(buffer_bus[0]==0xa1))
+1830   4              {
+1831   5                audio2=1;
+1832   5                msg2=1;
+1833   5                seg=cte_seg;
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 32  
 
-1834   5                audio3=1;
-1835   5                msg3=1;
-1836   5                seg=cte_seg;
-1837   5              }
-1838   4              else if ((num_data==1)&&(buffer_bus[0]==0xA3))
-1839   4              {
-1840   5                audio4=1;
-1841   5                msg4=1;
-1842   5                seg=cte_seg+14;
-1843   5              }
-1844   4              else if ((num_data==1)&&(buffer_bus[0]==0XAF))
-1845   4              {
-1846   5                cont(0xc0);
-1847   5      
-1848   5                vdato('C');
-1849   5                vdato('O');
-1850   5                vdato('N');
-1851   5                vdato('T');
-1852   5                vdato('.');
-1853   5                vdato(' ');
-1854   5                vdato('E');
-1855   5                vdato('V');
-1856   5                vdato('N');
+1834   5                lcd_text(0,0,(unsigned char *) "DIRIJASE A CAJA ");
+1835   5              }
+1836   4              else if ((num_data==1)&&(buffer_bus[0]==0xa2))
+1837   4              {
+1838   5                audio3=1;
+1839   5                msg3=1;
+1840   5                seg=cte_seg;
+1841   5              }
+1842   4              else if ((num_data==1)&&(buffer_bus[0]==0xA3))
+1843   4              {
+1844   5                audio4=1;
+1845   5                msg4=1;
+1846   5                seg=cte_seg+14;
+1847   5              }
+1848   4              else if ((num_data==1)&&(buffer_bus[0]==0XAF))
+1849   4              {
+1850   5                cont(0xc0);
+1851   5      
+1852   5                vdato('C');
+1853   5                vdato('O');
+1854   5                vdato('N');
+1855   5                vdato('T');
+1856   5                vdato('.');
 1857   5                vdato(' ');
-1858   5                vdato('I');
-1859   5                vdato('N');
-1860   5                vdato('I');
-1861   5                vdato('C');
+1858   5                vdato('E');
+1859   5                vdato('V');
+1860   5                vdato('N');
+1861   5                vdato(' ');
 1862   5                vdato('I');
-1863   5                vdato('.');
-1864   5      
-1865   5              }
-1866   4              else if ((num_data==1)&&(buffer_bus[0]=='N'))
-1867   4              {
-1868   5                notifyEVP=1;
-1869   5      
-1870   5                cont(0x80);
-1871   5                for (k=0;MSGnotify[k]!='\0';k++)
-1872   5                {
-1873   6                  vdato(MSGnotify[k]);
-1874   6                }
-1875   5                cont(0x8D);
-1876   5                vdato('N');
-1877   5                if (ACCESO_USE_LPR==1)
-1878   5                {
-1879   6                  vdato(' ');
-1880   6                  vdato('M');
-1881   6                }
-1882   5                
-1883   5              }
-1884   4              else if ((num_data==1)&&(buffer_bus[0]=='S'))
-1885   4              {
-1886   5                notifyEVP=0;
-1887   5                cont(0x80);
-1888   5                for (k=0;MSGnotify[k]!='\0';k++)
-1889   5                {
-1890   6                  vdato(MSGnotify[k]);
-1891   6                }
-1892   5                cont(0x8D);
-1893   5                vdato('S');
-1894   5                if (ACCESO_USE_LPR==1)
-1895   5                {
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 33  
+1863   5                vdato('N');
+1864   5                vdato('I');
+1865   5                vdato('C');
+1866   5                vdato('I');
+1867   5                vdato('.');
+1868   5      
+1869   5              }
+1870   4              else if ((num_data==1)&&(buffer_bus[0]=='N'))
+1871   4              {
+1872   5                notifyEVP=1;
+1873   5      
+1874   5                cont(0x80);
+1875   5                for (k=0;MSGnotify[k]!='\0';k++)
+1876   5                {
+1877   6                  vdato(MSGnotify[k]);
+1878   6                }
+1879   5                cont(0x8D);
+1880   5                vdato('N');
+1881   5                if (ACCESO_USE_LPR==1)
+1882   5                {
+1883   6                  vdato(' ');
+1884   6                  vdato('M');
+1885   6                }
+1886   5                
+1887   5              }
+1888   4              else if ((num_data==1)&&(buffer_bus[0]=='S'))
+1889   4              {
+1890   5                notifyEVP=0;
+1891   5                cont(0x80);
+1892   5                for (k=0;MSGnotify[k]!='\0';k++)
+1893   5                {
+1894   6                  vdato(MSGnotify[k]);
+1895   6                }
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 33  
 
-1896   6                  vdato(' ');
-1897   6                  vdato('M');
-1898   6                }
-1899   5      
-1900   5      
-1901   5      
-1902   5              }
-1903   4              else if ((num_data==1)&&(buffer_bus[0]=='P'))
-1904   4              {
-1905   5                notifyEVP=0;
-1906   5                cont(0xc0);
-1907   5                for (k=0;matchPlate[k]!='\0';k++)
-1908   5                {
-1909   6                  vdato(matchPlate[k]);
-1910   6                }
-1911   5              }
-1912   4              else if ((num_data==1)&&(buffer_bus[0]=='D'))
-1913   4              {
-1914   5                cont(0xc0);
-1915   5                for (k=0;SendCode[k]!='\0';k++)
-1916   5                {
-1917   6                  vdato(SendCode[k]);
-1918   6                }
-1919   5              }
-1920   4              else if ((num_data==1)&&(buffer_bus[0]==0XF1))
-1921   4              {
-1922   5                cont(0xc0);
-1923   5      
-1924   5                vdato('U');
-1925   5                vdato('N');
-1926   5                vdato(' ');
-1927   5                vdato('M');
-1928   5                vdato('O');
-1929   5                vdato('M');
-1930   5                vdato('E');
-1931   5                vdato('N');
-1932   5                vdato('T');
-1933   5                vdato('O');
-1934   5                vdato('.');
-1935   5                vdato('.');
-1936   5                vdato('.');
-1937   5                vdato(' ');
-1938   5                vdato(' ');
-1939   5                vdato(' ');
-1940   5      
-1941   5      
-1942   5      
-1943   5              }
-1944   4              else if ((num_data==1)&&(buffer_bus[0]==PICO_PLACA))
-1945   4              {
-1946   5                cont(0xc0);
-1947   5      
-1948   5                vdato('P');
-1949   5                vdato('I');
-1950   5                vdato('C');
-1951   5                vdato('O');
-1952   5                vdato(' ');
-1953   5                vdato('Y');
-1954   5                vdato(' ');
-1955   5                vdato('P');
-1956   5                vdato('L');
-1957   5                vdato('A');
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 34  
+1896   5                cont(0x8D);
+1897   5                vdato('S');
+1898   5                if (ACCESO_USE_LPR==1)
+1899   5                {
+1900   6                  vdato(' ');
+1901   6                  vdato('M');
+1902   6                }
+1903   5      
+1904   5      
+1905   5      
+1906   5              }
+1907   4              else if ((num_data==1)&&(buffer_bus[0]=='P'))
+1908   4              {
+1909   5                notifyEVP=0;
+1910   5                cont(0xc0);
+1911   5                for (k=0;matchPlate[k]!='\0';k++)
+1912   5                {
+1913   6                  vdato(matchPlate[k]);
+1914   6                }
+1915   5              }
+1916   4              else if ((num_data==1)&&(buffer_bus[0]=='D'))
+1917   4              {
+1918   5                cont(0xc0);
+1919   5                for (k=0;SendCode[k]!='\0';k++)
+1920   5                {
+1921   6                  vdato(SendCode[k]);
+1922   6                }
+1923   5              }
+1924   4              else if ((num_data==1)&&(buffer_bus[0]==0XF1))
+1925   4              {
+1926   5                cont(0xc0);
+1927   5      
+1928   5                vdato('U');
+1929   5                vdato('N');
+1930   5                vdato(' ');
+1931   5                vdato('M');
+1932   5                vdato('O');
+1933   5                vdato('M');
+1934   5                vdato('E');
+1935   5                vdato('N');
+1936   5                vdato('T');
+1937   5                vdato('O');
+1938   5                vdato('.');
+1939   5                vdato('.');
+1940   5                vdato('.');
+1941   5                vdato(' ');
+1942   5                vdato(' ');
+1943   5                vdato(' ');
+1944   5      
+1945   5      
+1946   5      
+1947   5              }
+1948   4              else if ((num_data==1)&&(buffer_bus[0]==PICO_PLACA))
+1949   4              {
+1950   5                cont(0xc0);
+1951   5      
+1952   5                vdato('P');
+1953   5                vdato('I');
+1954   5                vdato('C');
+1955   5                vdato('O');
+1956   5                vdato(' ');
+1957   5                vdato('Y');
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 34  
 
-1958   5                vdato('C');
-1959   5                vdato('A');
-1960   5                vdato('.');
-1961   5                vdato('.');
-1962   5                vdato('.');
-1963   5                vdato(' ');
-1964   5      
-1965   5              }
-1966   4              else if ((num_data==1)&&(buffer_bus[0]==0XF8))
-1967   4              {
-1968   5                cont(0xc0);
-1969   5      
-1970   5                vdato('V');
-1971   5                vdato('E');
-1972   5                vdato('H');
-1973   5                vdato('I');
-1974   5                vdato('.');
-1975   5                vdato(' ');
-1976   5                vdato('I');
-1977   5                vdato('N');
-1978   5                vdato('V');
-1979   5                vdato('A');
-1980   5                vdato('L');
-1981   5                vdato('I');
-1982   5                vdato('D');
-1983   5                vdato('O');
-1984   5                vdato('.');
-1985   5                vdato('.');
-1986   5                vdato('.');
-1987   5      
-1988   5      
-1989   5              }
-1990   4              else if ((num_data==1)&&(buffer_bus[0]==0XF9))
-1991   4              {
-1992   5                cont(0xc0);
-1993   5      
-1994   5                vdato('S');
-1995   5                vdato('A');
-1996   5                vdato('L');
-1997   5                vdato('I');
-1998   5                vdato('D');
+1958   5                vdato(' ');
+1959   5                vdato('P');
+1960   5                vdato('L');
+1961   5                vdato('A');
+1962   5                vdato('C');
+1963   5                vdato('A');
+1964   5                vdato('.');
+1965   5                vdato('.');
+1966   5                vdato('.');
+1967   5                vdato(' ');
+1968   5      
+1969   5              }
+1970   4              else if ((num_data==1)&&(buffer_bus[0]==0XF8))
+1971   4              {
+1972   5                cont(0xc0);
+1973   5      
+1974   5                vdato('V');
+1975   5                vdato('E');
+1976   5                vdato('H');
+1977   5                vdato('I');
+1978   5                vdato('.');
+1979   5                vdato(' ');
+1980   5                vdato('I');
+1981   5                vdato('N');
+1982   5                vdato('V');
+1983   5                vdato('A');
+1984   5                vdato('L');
+1985   5                vdato('I');
+1986   5                vdato('D');
+1987   5                vdato('O');
+1988   5                vdato('.');
+1989   5                vdato('.');
+1990   5                vdato('.');
+1991   5      
+1992   5      
+1993   5              }
+1994   4              else if ((num_data==1)&&(buffer_bus[0]==0XF9))
+1995   4              {
+1996   5                cont(0xc0);
+1997   5      
+1998   5                vdato('S');
 1999   5                vdato('A');
-2000   5                vdato(' ');
-2001   5                vdato('R');
-2002   5                vdato('E');
-2003   5                vdato('C');
-2004   5                vdato('H');
-2005   5                vdato('A');
-2006   5                vdato('Z');
-2007   5                vdato('A');
-2008   5                vdato('D');
+2000   5                vdato('L');
+2001   5                vdato('I');
+2002   5                vdato('D');
+2003   5                vdato('A');
+2004   5                vdato(' ');
+2005   5                vdato('R');
+2006   5                vdato('E');
+2007   5                vdato('C');
+2008   5                vdato('H');
 2009   5                vdato('A');
-2010   5      
-2011   5      
-2012   5              }
-2013   4              else if ((num_data==1)&&(buffer_bus[0]==SIN_TARJETAS))
-2014   4              {
-2015   5                cont(0xc0);
-2016   5      
-2017   5                vdato('S');
-2018   5                vdato('I');
-2019   5                vdato('N');
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 35  
+2010   5                vdato('Z');
+2011   5                vdato('A');
+2012   5                vdato('D');
+2013   5                vdato('A');
+2014   5      
+2015   5      
+2016   5              }
+2017   4              else if ((num_data==1)&&(buffer_bus[0]==SIN_TARJETAS))
+2018   4              {
+2019   5                cont(0xc0);
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 35  
 
-2020   5                vdato(' ');
-2021   5                vdato('T');
-2022   5                vdato('A');
-2023   5                vdato('R');
-2024   5                vdato('J');
-2025   5                vdato('E');
-2026   5                vdato('T');
-2027   5                vdato('A');
-2028   5                vdato('S');
-2029   5                vdato(' ');
-2030   5                vdato(' ');
-2031   5                vdato(' ');
-2032   5                vdato(' ');
-2033   5      
-2034   5      
-2035   5              }
-2036   4              else if ((num_data==1)&&(buffer_bus[0]==HORARIO))
-2037   4              {
-2038   5                cont(0xc0);
-2039   5      
-2040   5                vdato('F');
-2041   5                vdato('U');
-2042   5                vdato('E');
-2043   5                vdato('R');
-2044   5                vdato('A');
-2045   5                vdato(' ');
-2046   5                vdato('D');
-2047   5                vdato('E');
-2048   5                vdato(' ');
-2049   5                vdato('H');
-2050   5                vdato('O');
-2051   5                vdato('R');
-2052   5                vdato('A');
-2053   5                vdato('R');
-2054   5                vdato('I');
-2055   5                vdato('O');
-2056   5      
-2057   5      
-2058   5              }
-2059   4              else if ((num_data==1)&&(buffer_bus[0]==IN_HORARIO))
-2060   4              {
-2061   5                cont(0x80);
-2062   5      
-2063   5                vdato(' ');
-2064   5                vdato('E');
-2065   5                vdato('N');
-2066   5                vdato('T');
-2067   5                vdato('R');
-2068   5                vdato('A');
-2069   5                vdato('D');
-2070   5                vdato('A');
-2071   5                vdato(' ');
-2072   5                vdato('F');
-2073   5                vdato('U');
-2074   5                vdato('E');
-2075   5                vdato('R');
-2076   5                vdato('A');
-2077   5                vdato(' ');
-2078   5                vdato(' ');
-2079   5      
-2080   5                cont(0xc0);
-2081   5      
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 36  
+2020   5      
+2021   5                vdato('S');
+2022   5                vdato('I');
+2023   5                vdato('N');
+2024   5                vdato(' ');
+2025   5                vdato('T');
+2026   5                vdato('A');
+2027   5                vdato('R');
+2028   5                vdato('J');
+2029   5                vdato('E');
+2030   5                vdato('T');
+2031   5                vdato('A');
+2032   5                vdato('S');
+2033   5                vdato(' ');
+2034   5                vdato(' ');
+2035   5                vdato(' ');
+2036   5                vdato(' ');
+2037   5      
+2038   5      
+2039   5              }
+2040   4              else if ((num_data==1)&&(buffer_bus[0]==HORARIO))
+2041   4              {
+2042   5                cont(0xc0);
+2043   5      
+2044   5                vdato('F');
+2045   5                vdato('U');
+2046   5                vdato('E');
+2047   5                vdato('R');
+2048   5                vdato('A');
+2049   5                vdato(' ');
+2050   5                vdato('D');
+2051   5                vdato('E');
+2052   5                vdato(' ');
+2053   5                vdato('H');
+2054   5                vdato('O');
+2055   5                vdato('R');
+2056   5                vdato('A');
+2057   5                vdato('R');
+2058   5                vdato('I');
+2059   5                vdato('O');
+2060   5      
+2061   5      
+2062   5              }
+2063   4              else if ((num_data==1)&&(buffer_bus[0]==IN_HORARIO))
+2064   4              {
+2065   5                cont(0x80);
+2066   5      
+2067   5                vdato(' ');
+2068   5                vdato('E');
+2069   5                vdato('N');
+2070   5                vdato('T');
+2071   5                vdato('R');
+2072   5                vdato('A');
+2073   5                vdato('D');
+2074   5                vdato('A');
+2075   5                vdato(' ');
+2076   5                vdato('F');
+2077   5                vdato('U');
+2078   5                vdato('E');
+2079   5                vdato('R');
+2080   5                vdato('A');
+2081   5                vdato(' ');
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 36  
 
-2082   5                vdato('D');
-2083   5                vdato('E');
-2084   5                vdato(' ');
-2085   5                vdato('H');
-2086   5                vdato('O');
-2087   5                vdato('R');
-2088   5                vdato('A');
-2089   5                vdato('R');
-2090   5                vdato('I');
-2091   5                vdato('O');
-2092   5                vdato(' ');
-2093   5                vdato('-');
-2094   5                vdato('C');
-2095   5                vdato('A');
-2096   5                vdato('J');
-2097   5                vdato('A');
-2098   5      
-2099   5              }
-2100   4              else if ((num_data==1)&&(buffer_bus[0]==DiaX))
-2101   4              {
-2102   5                cont(0x80);
-2103   5      
-2104   5                vdato('D');
-2105   5                vdato('I');
-2106   5                vdato('A');
-2107   5                vdato(' ');
+2082   5                vdato(' ');
+2083   5      
+2084   5                cont(0xc0);
+2085   5      
+2086   5                vdato('D');
+2087   5                vdato('E');
+2088   5                vdato(' ');
+2089   5                vdato('H');
+2090   5                vdato('O');
+2091   5                vdato('R');
+2092   5                vdato('A');
+2093   5                vdato('R');
+2094   5                vdato('I');
+2095   5                vdato('O');
+2096   5                vdato(' ');
+2097   5                vdato('-');
+2098   5                vdato('C');
+2099   5                vdato('A');
+2100   5                vdato('J');
+2101   5                vdato('A');
+2102   5      
+2103   5              }
+2104   4              else if ((num_data==1)&&(buffer_bus[0]==DiaX))
+2105   4              {
+2106   5                cont(0x80);
+2107   5      
 2108   5                vdato('D');
-2109   5                vdato('E');
-2110   5                vdato(' ');
-2111   5                vdato('A');
-2112   5                vdato('C');
-2113   5                vdato('C');
-2114   5                vdato('E');
-2115   5                vdato('S');
-2116   5                vdato('O');
-2117   5                vdato(' ');
-2118   5                vdato(' ');
-2119   5                vdato(' ');
-2120   5      
-2121   5                cont(0xc0);
-2122   5      
-2123   5                vdato('I');
-2124   5                vdato('N');
-2125   5                vdato('V');
-2126   5                vdato('A');
-2127   5                vdato('L');
-2128   5                vdato('I');
-2129   5                vdato('D');
-2130   5                vdato('O');
-2131   5                vdato(' ');
-2132   5                vdato(' ');
-2133   5                vdato(' ');
-2134   5                vdato(' ');
+2109   5                vdato('I');
+2110   5                vdato('A');
+2111   5                vdato(' ');
+2112   5                vdato('D');
+2113   5                vdato('E');
+2114   5                vdato(' ');
+2115   5                vdato('A');
+2116   5                vdato('C');
+2117   5                vdato('C');
+2118   5                vdato('E');
+2119   5                vdato('S');
+2120   5                vdato('O');
+2121   5                vdato(' ');
+2122   5                vdato(' ');
+2123   5                vdato(' ');
+2124   5      
+2125   5                cont(0xc0);
+2126   5      
+2127   5                vdato('I');
+2128   5                vdato('N');
+2129   5                vdato('V');
+2130   5                vdato('A');
+2131   5                vdato('L');
+2132   5                vdato('I');
+2133   5                vdato('D');
+2134   5                vdato('O');
 2135   5                vdato(' ');
 2136   5                vdato(' ');
 2137   5                vdato(' ');
 2138   5                vdato(' ');
-2139   5      
-2140   5              }
-2141   4              else if ((num_data==1)&&(buffer_bus[0]==0XFb))
-2142   4              {
-2143   5                cont(0xc0);
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 37  
+2139   5                vdato(' ');
+2140   5                vdato(' ');
+2141   5                vdato(' ');
+2142   5                vdato(' ');
+2143   5      
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 37  
 
-2144   5      
-2145   5                vdato('E');
-2146   5                vdato('R');
-2147   5                vdato('R');
-2148   5                vdato('O');
-2149   5                vdato('R');
-2150   5                vdato(' ');
-2151   5                vdato('T');
-2152   5                vdato('R');
-2153   5                vdato('A');
-2154   5                vdato('N');
-2155   5                vdato('S');
-2156   5                vdato('P');
-2157   5                vdato('O');
-2158   5                vdato('R');
-2159   5                vdato('T');
-2160   5                vdato('E');
-2161   5        
-2162   5              }
-2163   4              else if ((num_data==1)&&(buffer_bus[0]==0XFC))
-2164   4              {
-2165   5                cont(0xc0);
-2166   5      
-2167   5                vdato('N');
-2168   5                vdato('O');
-2169   5                vdato(' ');
-2170   5                vdato('E');
-2171   5                vdato('S');
-2172   5                vdato(' ');
-2173   5                vdato('M');
+2144   5              }
+2145   4              else if ((num_data==1)&&(buffer_bus[0]==0XFb))
+2146   4              {
+2147   5                cont(0xc0);
+2148   5      
+2149   5                vdato('E');
+2150   5                vdato('R');
+2151   5                vdato('R');
+2152   5                vdato('O');
+2153   5                vdato('R');
+2154   5                vdato(' ');
+2155   5                vdato('T');
+2156   5                vdato('R');
+2157   5                vdato('A');
+2158   5                vdato('N');
+2159   5                vdato('S');
+2160   5                vdato('P');
+2161   5                vdato('O');
+2162   5                vdato('R');
+2163   5                vdato('T');
+2164   5                vdato('E');
+2165   5        
+2166   5              }
+2167   4              else if ((num_data==1)&&(buffer_bus[0]==0XFC))
+2168   4              {
+2169   5                cont(0xc0);
+2170   5      
+2171   5                vdato('N');
+2172   5                vdato('O');
+2173   5                vdato(' ');
 2174   5                vdato('E');
-2175   5                vdato('N');
-2176   5                vdato('S');
-2177   5                vdato('U');
-2178   5                vdato('A');
-2179   5                vdato('L');
-2180   5                vdato('.');
-2181   5                vdato('.');
-2182   5                vdato('.');
-2183   5        
-2184   5              }
-2185   4              else if ((num_data==1)&&(buffer_bus[0]==0XFD))
-2186   4              {
-2187   5                cont(0xc0);
-2188   5      
-2189   5                vdato('N');
-2190   5                vdato('O');
-2191   5                vdato(' ');
-2192   5                vdato('E');
-2193   5                vdato('S');
-2194   5                vdato(' ');
-2195   5                vdato('D');
+2175   5                vdato('S');
+2176   5                vdato(' ');
+2177   5                vdato('M');
+2178   5                vdato('E');
+2179   5                vdato('N');
+2180   5                vdato('S');
+2181   5                vdato('U');
+2182   5                vdato('A');
+2183   5                vdato('L');
+2184   5                vdato('.');
+2185   5                vdato('.');
+2186   5                vdato('.');
+2187   5        
+2188   5              }
+2189   4              else if ((num_data==1)&&(buffer_bus[0]==0XFD))
+2190   4              {
+2191   5                cont(0xc0);
+2192   5      
+2193   5                vdato('N');
+2194   5                vdato('O');
+2195   5                vdato(' ');
 2196   5                vdato('E');
-2197   5                vdato(' ');
-2198   5                vdato('R');
-2199   5                vdato('O');
-2200   5                vdato('T');
-2201   5                vdato('A');
-2202   5                vdato('C');
-2203   5                vdato('I');
-2204   5                vdato('O');
-2205   5        
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 38  
+2197   5                vdato('S');
+2198   5                vdato(' ');
+2199   5                vdato('D');
+2200   5                vdato('E');
+2201   5                vdato(' ');
+2202   5                vdato('R');
+2203   5                vdato('O');
+2204   5                vdato('T');
+2205   5                vdato('A');
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 38  
 
-2206   5              }
-2207   4              else if ((num_data==1)&&(buffer_bus[0]==0XFe))
-2208   4              {
-2209   5                cont(0xc0);
-2210   5      
-2211   5                vdato('B');
-2212   5                vdato('I');
-2213   5                vdato('E');
-2214   5                vdato('N');
-2215   5                vdato('V');
-2216   5                vdato('E');
-2217   5                vdato('N');
-2218   5                vdato('I');
-2219   5                vdato('D');
-2220   5                vdato('O');
-2221   5                vdato(' ');
-2222   5                vdato(' ');
-2223   5                vdato(' ');
-2224   5                vdato(' ');
+2206   5                vdato('C');
+2207   5                vdato('I');
+2208   5                vdato('O');
+2209   5        
+2210   5              }
+2211   4              else if ((num_data==1)&&(buffer_bus[0]==0XFe))
+2212   4              {
+2213   5                cont(0xc0);
+2214   5      
+2215   5                vdato('B');
+2216   5                vdato('I');
+2217   5                vdato('E');
+2218   5                vdato('N');
+2219   5                vdato('V');
+2220   5                vdato('E');
+2221   5                vdato('N');
+2222   5                vdato('I');
+2223   5                vdato('D');
+2224   5                vdato('O');
 2225   5                vdato(' ');
 2226   5                vdato(' ');
-2227   5        
-2228   5              }
-2229   4              else if ((num_data==1)&&(buffer_bus[0]==0XFF))
-2230   4              {
-2231   5                cont(0x80);
-2232   5      
-2233   5                vdato('G');
-2234   5                vdato('R');
-2235   5                vdato('A');
-2236   5                vdato('C');
-2237   5                vdato('I');
-2238   5                vdato('A');
-2239   5                vdato('S');
-2240   5                vdato('.');
-2241   5                vdato('.');
-2242   5                vdato('.');
-2243   5                vdato(' ');
-2244   5                vdato(' ');
-2245   5                vdato(' ');
-2246   5                vdato(' ');
+2227   5                vdato(' ');
+2228   5                vdato(' ');
+2229   5                vdato(' ');
+2230   5                vdato(' ');
+2231   5        
+2232   5              }
+2233   4              else if ((num_data==1)&&(buffer_bus[0]==0XFF))
+2234   4              {
+2235   5                cont(0x80);
+2236   5      
+2237   5                vdato('G');
+2238   5                vdato('R');
+2239   5                vdato('A');
+2240   5                vdato('C');
+2241   5                vdato('I');
+2242   5                vdato('A');
+2243   5                vdato('S');
+2244   5                vdato('.');
+2245   5                vdato('.');
+2246   5                vdato('.');
 2247   5                vdato(' ');
 2248   5                vdato(' ');
-2249   5        
-2250   5              }
-2251   4              else if ((buffer_bus[0]==0x02)&&(buffer_bus[1]=='i'))  // (num_data>=18)&&
-2252   4              {
-2253   5      
-2254   5                  prg_disp();
-2255   5                  
-2256   5                  lcd_text(0,0,(unsigned char *) "Fecha Hora:     ");   //  muestra en el lcd la fecha                  
-             -                   *
+2249   5                vdato(' ');
+2250   5                vdato(' ');
+2251   5                vdato(' ');
+2252   5                vdato(' ');
+2253   5        
+2254   5              }
+2255   4              else if ((buffer_bus[0]==0x02)&&(buffer_bus[1]=='i'))  // (num_data>=18)&&
+2256   4              {
 2257   5      
-2258   5      //            cont(0x80);
-2259   5      //            for (k=0;informa[k]!='\0';k++)
-2260   5      //            {
-2261   5      //              vdato(informa[k]);
-2262   5      //            }
-2263   5            
-2264   5                  cont(0xc0); 
-2265   5                  vdata_clk(buffer_bus[2]);     //año  [2]
-2266   5                  vdato('/');
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 39  
+2258   5                  prg_disp();
+2259   5                  
+2260   5                  lcd_text(0,0,(unsigned char *) "Fecha Hora:     ");   //  muestra en el lcd la fecha                  
+             -                   *
+2261   5      
+2262   5      //            cont(0x80);
+2263   5      //            for (k=0;informa[k]!='\0';k++)
+2264   5      //            {
+2265   5      //              vdato(informa[k]);
+2266   5      //            }
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 39  
 
-2267   5      
-2268   5                  vdata_clk(buffer_bus[3]);     //mes
-2269   5                  vdato('/');
-2270   5      
-2271   5                  vdata_clk(buffer_bus[4]);   //dia
-2272   5                  vdato(' ');
-2273   5      
-2274   5                  vdata_clk(buffer_bus[5]);   //hora
-2275   5                  vdato(':');
-2276   5      
-2277   5                  vdata_clk(buffer_bus[6]);   //minuto
-2278   5                    
-2279   5                    vdata_clk(buffer_bus[7]);   //segundo
+2267   5            
+2268   5                  cont(0xc0); 
+2269   5                  vdata_clk(buffer_bus[2]);     //año  [2]
+2270   5                  vdato('/');
+2271   5      
+2272   5                  vdata_clk(buffer_bus[3]);     //mes
+2273   5                  vdato('/');
+2274   5      
+2275   5                  vdata_clk(buffer_bus[4]);   //dia
+2276   5                  vdato(' ');
+2277   5      
+2278   5                  vdata_clk(buffer_bus[5]);   //hora
+2279   5                  vdato(':');
 2280   5      
-2281   5                  cont(0x8c);
-2282   5                  if (buffer_bus[8]==1)
-2283   5                  {
-2284   6                    vdato('D');
-2285   6                    vdato('o');
-2286   6                    vdato('m');
-2287   6                  
-2288   6                  }
-2289   5                  else if (buffer_bus[8]==2)
-2290   5                  {
-2291   6                    vdato('L');
-2292   6                    vdato('u');
-2293   6                    vdato('n');
-2294   6      
-2295   6                  }
-2296   5                  else if (buffer_bus[8]==3)
-2297   5                  {
-2298   6                    vdato('M');
-2299   6                    vdato('a');
-2300   6                    vdato('r');
-2301   6      
-2302   6                  }
-2303   5                  else if (buffer_bus[8]==4)
-2304   5                  {
-2305   6                    vdato('M');
-2306   6                    vdato('i');
-2307   6                    vdato('e');
-2308   6                  }
-2309   5                  else if (buffer_bus[8]==5)
-2310   5                  {
-2311   6                    vdato('J');
-2312   6                    vdato('u');
-2313   6                    vdato('e');
-2314   6                  }
-2315   5                  else if (buffer_bus[8]==6)
-2316   5                  {
-2317   6                    vdato('V');
-2318   6                    vdato('i');
-2319   6                    vdato('e');
-2320   6                  }
-2321   5                  else if (buffer_bus[8]==7)
-2322   5                  {
-2323   6                    vdato('S');
-2324   6                    vdato('a');
-2325   6                    vdato('b');
-2326   6                  }                         
-2327   5              }
-2328   4              else if ((buffer_bus[0]==0x02)&&(buffer_bus[1]=='I'))  // (num_data>=18)&&
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 40  
+2281   5                  vdata_clk(buffer_bus[6]);   //minuto
+2282   5                    
+2283   5                    vdata_clk(buffer_bus[7]);   //segundo
+2284   5      
+2285   5                  cont(0x8c);
+2286   5                  if (buffer_bus[8]==1)
+2287   5                  {
+2288   6                    vdato('D');
+2289   6                    vdato('o');
+2290   6                    vdato('m');
+2291   6                  
+2292   6                  }
+2293   5                  else if (buffer_bus[8]==2)
+2294   5                  {
+2295   6                    vdato('L');
+2296   6                    vdato('u');
+2297   6                    vdato('n');
+2298   6      
+2299   6                  }
+2300   5                  else if (buffer_bus[8]==3)
+2301   5                  {
+2302   6                    vdato('M');
+2303   6                    vdato('a');
+2304   6                    vdato('r');
+2305   6      
+2306   6                  }
+2307   5                  else if (buffer_bus[8]==4)
+2308   5                  {
+2309   6                    vdato('M');
+2310   6                    vdato('i');
+2311   6                    vdato('e');
+2312   6                  }
+2313   5                  else if (buffer_bus[8]==5)
+2314   5                  {
+2315   6                    vdato('J');
+2316   6                    vdato('u');
+2317   6                    vdato('e');
+2318   6                  }
+2319   5                  else if (buffer_bus[8]==6)
+2320   5                  {
+2321   6                    vdato('V');
+2322   6                    vdato('i');
+2323   6                    vdato('e');
+2324   6                  }
+2325   5                  else if (buffer_bus[8]==7)
+2326   5                  {
+2327   6                    vdato('S');
+2328   6                    vdato('a');
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 40  
 
-2329   4              {
-2330   5                cont(0x80);
-2331   5                for (k=0;serie[k]!='\0';k++)
-2332   5                {
-2333   6                  vdato(serie[k]);
-2334   6                }
-2335   5                  temp=num_data-2;
-2336   5                cont(0xc0);
-2337   5                num_chr=0;
-2338   5                for (k=0; k<temp; k++)
-2339   5                {
-2340   6                  if (buffer_bus[k+2]==ETX)
-2341   6                  {
-2342   7                    k=temp+1;
-2343   7                  }
-2344   6                  else
+2329   6                    vdato('b');
+2330   6                  }                         
+2331   5              }
+2332   4              else if ((buffer_bus[0]==0x02)&&(buffer_bus[1]=='I'))  // (num_data>=18)&&
+2333   4              {
+2334   5                cont(0x80);
+2335   5                for (k=0;serie[k]!='\0';k++)
+2336   5                {
+2337   6                  vdato(serie[k]);
+2338   6                }
+2339   5                  temp=num_data-2;
+2340   5                cont(0xc0);
+2341   5                num_chr=0;
+2342   5                for (k=0; k<temp; k++)
+2343   5                {
+2344   6                  if (buffer_bus[k+2]==ETX)
 2345   6                  {
-2346   7                    vdato(buffer_bus[k+2]);
-2347   7                    num_chr++;
-2348   7                  }
-2349   6                }
-2350   5                for (k=0; k<(16-num_chr); k++)
-2351   5                {
-2352   6                  vdato(' ');
+2346   7                    k=temp+1;
+2347   7                  }
+2348   6                  else
+2349   6                  {
+2350   7                    vdato(buffer_bus[k+2]);
+2351   7                    num_chr++;
+2352   7                  }
 2353   6                }
-2354   5              }
-2355   4              else if ((buffer_bus[0]==0x02)&&(buffer_bus[1]=='D'))  // (num_data>=18)&&
-2356   4              {
-2357   5                prg_disp();
-2358   5                 cont(0x80);
-2359   5                lcd_puts((unsigned char *) "ID_CLIENTE:");
-2360   5                  for(k=2;;k++)
-2361   5                  {
-2362   6                    if(buffer_bus[k]!=';')
-2363   6                     {
-2364   7                      vdato(buffer_bus[k]);
-2365   7                     }  else break;
-2366   6                  }
-2367   5                cont(0xc0);
-2368   5                k++;
-2369   5                  lcd_puts((unsigned char *) "COD_PARK:");
-2370   5                    for(i=2;;k++)
-2371   5                    {
-2372   6                      if(buffer_bus[k]!=';')
-2373   6                      {
-2374   7                        vdato(buffer_bus[k]);
-2375   7                      }else break;
-2376   6                    }
-2377   5                }
-2378   4              
-2379   4                else if ((buffer_bus[0]==0x02)&&(buffer_bus[1]==05)&&(buffer_bus[2]==0x03))  // bcc hora
-2380   4              {
-2381   5                Debug_txt_uart((unsigned char *) "recibo trama Hora: ");
-2382   5                Retransmitir_trama_hora();
-2383   5              }
-2384   4                
-2385   4                
-2386   4              else if ((buffer_bus[0]==0x02)&&(buffer_bus[1]=='W')&&(buffer_bus[num_data-1]==ETX)&&(num_data==18))  /
+2354   5                for (k=0; k<(16-num_chr); k++)
+2355   5                {
+2356   6                  vdato(' ');
+2357   6                }
+2358   5              }
+2359   4              else if ((buffer_bus[0]==0x02)&&(buffer_bus[1]=='D'))  // (num_data>=18)&&
+2360   4              {
+2361   5                prg_disp();
+2362   5                 cont(0x80);
+2363   5                lcd_puts((unsigned char *) "ID_CLIENTE:");
+2364   5                  for(k=2;;k++)
+2365   5                  {
+2366   6                    if(buffer_bus[k]!=';')
+2367   6                     {
+2368   7                      vdato(buffer_bus[k]);
+2369   7                     }  else break;
+2370   6                  }
+2371   5                cont(0xc0);
+2372   5                k++;
+2373   5                  lcd_puts((unsigned char *) "COD_PARK:");
+2374   5                    for(i=2;;k++)
+2375   5                    {
+2376   6                      if(buffer_bus[k]!=';')
+2377   6                      {
+2378   7                        vdato(buffer_bus[k]);
+2379   7                      }else break;
+2380   6                    }
+2381   5                }
+2382   4              
+2383   4                else if ((buffer_bus[0]==0x02)&&(buffer_bus[1]==05)&&(buffer_bus[2]==0x03))  // bcc hora
+2384   4              {
+2385   5                //Debug_txt_uart((unsigned char *) "recibo trama Hora: ");
+2386   5                Retransmitir_trama_hora();
+2387   5              }
+2388   4                
+2389   4                
+2390   4              else if ((buffer_bus[0]==0x02)&&(buffer_bus[1]=='W')&&(buffer_bus[num_data-1]==ETX)&&(num_data==18))  /
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 41  
+
              -/  
-2387   4              {
-2388   5                
-2389   5                iTimeEsperaRtaLPR=0;
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 41  
-
-2390   5                
-2391   5                Dato_OffLine=0;
-2392   5                SalidaW=1;
-2393   5      
-2394   5                buffer_wie[0]=buffer_bus[4];
-2395   5                buffer_wie[1]=buffer_bus[3];
-2396   5                buffer_wie[2]=buffer_bus[2];
+2391   4              {
+2392   5                
+2393   5                iTimeEsperaRtaLPR=0;
+2394   5                
+2395   5                Dato_OffLine=0;
+2396   5                SalidaW=1;
 2397   5      
-2398   5                YearIn=buffer_bus[6];
-2399   5                MonthIn=buffer_bus[7];
-2400   5                DayIn=buffer_bus[8];
-2401   5                HourIn=buffer_bus[9];
-2402   5                MinutIn=buffer_bus[10];
-2403   5        
-2404   5                YearOut=buffer_bus[11];
-2405   5                MonthOut=buffer_bus[12];
-2406   5                DayOut=buffer_bus[13];
-2407   5                HourOut=buffer_bus[14];
-2408   5                MinutOut=buffer_bus[15];
-2409   5                Tipo_Vehiculo=buffer_bus[16];
-2410   5                 
-2411   5      
-2412   5                g_cEstadoTxSoft |= LECTURA_WIEG_TX;
-2413   5                TimeOut_Wiegand=5;
-2414   5      
-2415   5                
-2416   5              }
-2417   4              else if ((buffer_bus[0]==0x02)&&(buffer_bus[1]=='W')) //  
-2418   4              {
-2419   5                iTimeEsperaRtaLPR=0;
-2420   5                
-2421   5                Dato_OffLine=0;
-2422   5                SalidaW=0;
-2423   5      
-2424   5                buffer_wie[0]=buffer_bus[4];
-2425   5                buffer_wie[1]=buffer_bus[3];
-2426   5                buffer_wie[2]=buffer_bus[2];
-2427   5                g_cEstadoTxSoft |= LECTURA_WIEG_TX;
-2428   5                TimeOut_Wiegand=5;
-2429   5      
-2430   5                
-2431   5              }
-2432   4              else if ((buffer_bus[0]==0x02)&&((buffer_bus[1]=='M'))) //  
-2433   4              {
-2434   5      
-2435   5                iTimeEsperaRtaLPR=0;
-2436   5                 lcd_wiegand();
-2437   5              //  lcd_text(0,0,(unsigned char *) "LECT.           ");
-2438   5                //  cont(0x87);               // Visualiza FC + ID
-2439   5      //ojo         ve_fc(buffer_wie[0]);
-2440   5              //  cont(0x8b);               // Visualiza FC + ID
-2441   5      //          ve_id(buffer_wie[1],buffer_wie[2]);
-2442   5      
-2443   5                Dato_OffLine=0;
-2444   5                buffer_wie[0]=buffer_bus[4];
-2445   5                buffer_wie[1]=buffer_bus[3];
-2446   5                buffer_wie[2]=buffer_bus[2];
-2447   5                g_cEstadoTxSoft |= LECTURA_WIEG_TX;
-2448   5                TimeOut_Wiegand=5;
-2449   5                TimeOut_Send_Acceso=cte_seg*5;
-2450   5      
-2451   5              }
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 42  
+2398   5                buffer_wie[0]=buffer_bus[4];
+2399   5                buffer_wie[1]=buffer_bus[3];
+2400   5                buffer_wie[2]=buffer_bus[2];
+2401   5      
+2402   5                YearIn=buffer_bus[6];
+2403   5                MonthIn=buffer_bus[7];
+2404   5                DayIn=buffer_bus[8];
+2405   5                HourIn=buffer_bus[9];
+2406   5                MinutIn=buffer_bus[10];
+2407   5        
+2408   5                YearOut=buffer_bus[11];
+2409   5                MonthOut=buffer_bus[12];
+2410   5                DayOut=buffer_bus[13];
+2411   5                HourOut=buffer_bus[14];
+2412   5                MinutOut=buffer_bus[15];
+2413   5                Tipo_Vehiculo=buffer_bus[16];
+2414   5                 
+2415   5      
+2416   5                g_cEstadoTxSoft |= LECTURA_WIEG_TX;
+2417   5                TimeOut_Wiegand=5;
+2418   5      
+2419   5                
+2420   5              }
+2421   4              else if ((buffer_bus[0]==0x02)&&(buffer_bus[1]=='W')) //  
+2422   4              {
+2423   5                iTimeEsperaRtaLPR=0;
+2424   5                
+2425   5                Dato_OffLine=0;
+2426   5                SalidaW=0;
+2427   5      
+2428   5                buffer_wie[0]=buffer_bus[4];
+2429   5                buffer_wie[1]=buffer_bus[3];
+2430   5                buffer_wie[2]=buffer_bus[2];
+2431   5                g_cEstadoTxSoft |= LECTURA_WIEG_TX;
+2432   5                TimeOut_Wiegand=5;
+2433   5      
+2434   5                
+2435   5              }
+2436   4              else if ((buffer_bus[0]==0x02)&&((buffer_bus[1]=='M'))) //  
+2437   4              {
+2438   5      
+2439   5                iTimeEsperaRtaLPR=0;
+2440   5                 lcd_wiegand();
+2441   5              //  lcd_text(0,0,(unsigned char *) "LECT.           ");
+2442   5                //  cont(0x87);               // Visualiza FC + ID
+2443   5      //ojo         ve_fc(buffer_wie[0]);
+2444   5              //  cont(0x8b);               // Visualiza FC + ID
+2445   5      //          ve_id(buffer_wie[1],buffer_wie[2]);
+2446   5      
+2447   5                Dato_OffLine=0;
+2448   5                buffer_wie[0]=buffer_bus[4];
+2449   5                buffer_wie[1]=buffer_bus[3];
+2450   5                buffer_wie[2]=buffer_bus[2];
+2451   5                g_cEstadoTxSoft |= LECTURA_WIEG_TX;
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 42  
 
-2452   4              else if ((buffer_bus[0]==0x02)&&(buffer_bus[1]=='w')&&(buffer_bus[num_data-1]==ETX))  //   inf del mc au
+2452   5                TimeOut_Wiegand=5;
+2453   5                TimeOut_Send_Acceso=cte_seg*5;
+2454   5      
+2455   5              }
+2456   4              else if ((buffer_bus[0]==0x02)&&(buffer_bus[1]=='w')&&(buffer_bus[num_data-1]==ETX))  //   inf del mc au
              -x    jp
-2453   4              {
-2454   5                
-2455   5                iTimeEsperaRtaLPR=0;
-2456   5      
-2457   5                Dato_OffLine=1;
-2458   5                Off_Line_Salida=0;
-2459   5                Dato_Placa=0;
+2457   4              {
+2458   5                
+2459   5                iTimeEsperaRtaLPR=0;
 2460   5      
-2461   5                // buffer_bus[5];    Parte del codigo de la tarjeta 4 bytes
-2462   5              
-2463   5                buffer_wie[0]=buffer_bus[4];
-2464   5                buffer_wie[1]=buffer_bus[3];
-2465   5                buffer_wie[2]=buffer_bus[2];
-2466   5      
-2467   5                YearIn=buffer_bus[6];
-2468   5                MonthIn=buffer_bus[7];
-2469   5                DayIn=buffer_bus[8];
-2470   5                HourIn=buffer_bus[9];
-2471   5                MinutIn=buffer_bus[10];
-2472   5        
-2473   5                if (num_data==18)
-2474   5                {
-2475   6                  YearOut=buffer_bus[11];
-2476   6                  MonthOut=buffer_bus[12];
-2477   6                  DayOut=buffer_bus[13];
-2478   6                  HourOut=buffer_bus[14];
-2479   6                  MinutOut=buffer_bus[15];
-2480   6                  Tipo_Vehiculo=buffer_bus[16];
-2481   6                  Off_Line_Salida=1;
-2482   6                  Dato_Placa=0;
-2483   6                                     // ojo jp
-2484   6                   //lcd_text(1,0,(unsigned char *) "q pasa");
-2485   6                   //while(1){};//jp
-2486   6                }
-2487   5                else if (num_data>18)
-2488   5                {
-2489   6      
-2490   6                  YearOut=buffer_bus[11];
-2491   6                  MonthOut=buffer_bus[12];
-2492   6                  DayOut=buffer_bus[13];
-2493   6                  HourOut=buffer_bus[14];
-2494   6                  MinutOut=buffer_bus[15];
-2495   6      
-2496   6                  Tipo_Vehiculo=buffer_bus[num_data-2];
-2497   6                    // lcd_text(1,0,(unsigned char *) buffer_bus[num_data-2]);  //jp
-2498   6                  //   while(1){};//jp
-2499   6                  Off_Line_Salida=1;
-2500   6                  Dato_Placa=1;
-2501   6                  NumDatosPlate=0;
-2502   6                  Max_Len_Placa=10;
-2503   6        
-2504   6                  for (k=16; k<num_data-2; k++)
-2505   6                  {
-2506   7                    if (buffer_bus[k]!=ETX)
-2507   7                    {
-2508   8                      buffer_placa[k-16]=buffer_bus[k];
-2509   8                      NumDatosPlate++;
-2510   8                    }
-2511   7                    else
-2512   7                    {
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 43  
+2461   5                Dato_OffLine=1;
+2462   5                Off_Line_Salida=0;
+2463   5                Dato_Placa=0;
+2464   5      
+2465   5                // buffer_bus[5];    Parte del codigo de la tarjeta 4 bytes
+2466   5              
+2467   5                buffer_wie[0]=buffer_bus[4];
+2468   5                buffer_wie[1]=buffer_bus[3];
+2469   5                buffer_wie[2]=buffer_bus[2];
+2470   5      
+2471   5                YearIn=buffer_bus[6];
+2472   5                MonthIn=buffer_bus[7];
+2473   5                DayIn=buffer_bus[8];
+2474   5                HourIn=buffer_bus[9];
+2475   5                MinutIn=buffer_bus[10];
+2476   5        
+2477   5                if (num_data==18)
+2478   5                {
+2479   6                  YearOut=buffer_bus[11];
+2480   6                  MonthOut=buffer_bus[12];
+2481   6                  DayOut=buffer_bus[13];
+2482   6                  HourOut=buffer_bus[14];
+2483   6                  MinutOut=buffer_bus[15];
+2484   6                  Tipo_Vehiculo=buffer_bus[16];
+2485   6                  Off_Line_Salida=1;
+2486   6                  Dato_Placa=0;
+2487   6                                     // ojo jp
+2488   6                   //lcd_text(1,0,(unsigned char *) "q pasa");
+2489   6                   //while(1){};//jp
+2490   6                }
+2491   5                else if (num_data>18)
+2492   5                {
+2493   6      
+2494   6                  YearOut=buffer_bus[11];
+2495   6                  MonthOut=buffer_bus[12];
+2496   6                  DayOut=buffer_bus[13];
+2497   6                  HourOut=buffer_bus[14];
+2498   6                  MinutOut=buffer_bus[15];
+2499   6      
+2500   6                  Tipo_Vehiculo=buffer_bus[num_data-2];
+2501   6                    // lcd_text(1,0,(unsigned char *) buffer_bus[num_data-2]);  //jp
+2502   6                  //   while(1){};//jp
+2503   6                  Off_Line_Salida=1;
+2504   6                  Dato_Placa=1;
+2505   6                  NumDatosPlate=0;
+2506   6                  Max_Len_Placa=10;
+2507   6        
+2508   6                  for (k=16; k<num_data-2; k++)
+2509   6                  {
+2510   7                    if (buffer_bus[k]!=ETX)
+2511   7                    {
+2512   8                      buffer_placa[k-16]=buffer_bus[k];
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 43  
 
-2513   8                      k=num_data;
+2513   8                      NumDatosPlate++;
 2514   8                    }
-2515   7                    
-2516   7                  }
-2517   6                }
-2518   5                else
-2519   5                {
-2520   6                  Tipo_Vehiculo=buffer_bus[11];
-2521   6                  //   lcd_text(1,0,(unsigned char *) buffer_bus[11]);  //jp
-2522   6                  //   while(1){};//jp
-2523   6                  Off_Line_Salida=0;
-2524   6                }
-2525   5                
-2526   5      
-2527   5                g_cEstadoTxSoft |= LECTURA_WIEG_TX;
-2528   5                TimeOut_Wiegand=10;
-2529   5       
-2530   5              }
-2531   4              else if ((buffer_bus[0]==STX)&&((buffer_bus[1]=='P')||(buffer_bus[1]=='T')||(buffer_bus[1]=='V')||(buf
+2515   7                    else
+2516   7                    {
+2517   8                      k=num_data;
+2518   8                    }
+2519   7                    
+2520   7                  }
+2521   6                }
+2522   5                else
+2523   5                {
+2524   6                  Tipo_Vehiculo=buffer_bus[11];
+2525   6                  //   lcd_text(1,0,(unsigned char *) buffer_bus[11]);  //jp
+2526   6                  //   while(1){};//jp
+2527   6                  Off_Line_Salida=0;
+2528   6                }
+2529   5                
+2530   5      
+2531   5                g_cEstadoTxSoft |= LECTURA_WIEG_TX;
+2532   5                TimeOut_Wiegand=10;
+2533   5       
+2534   5              }
+2535   4              else if ((buffer_bus[0]==STX)&&((buffer_bus[1]=='P')||(buffer_bus[1]=='T')||(buffer_bus[1]=='V')||(buf
              -fer_bus[1]=='E')||(buffer_bus[1]=='G')))  //  
-2532   4              {
-2533   5                iTimeEsperaRtaLPR=0;
-2534   5                
-2535   5                Rechazo=buffer_bus[1];
-2536   5                len_buffer=num_data;
-2537   5      //          len_buffer=buffer_bus[2];               //  Numero de Datos recibidos del Secunadario
-2538   5                BorraLCD_L1();
-2539   5                send_markCashierAut=0;                  // Incializa Marca de Liquidacion en Cajero
-2540   5                Flag_Dcto=0;                      // Inicializa bandera de Salida con descuento
-2541   5                cont(0x80);                       // Visualiza Lectura (hasta 1er separador)
-2542   5                for (k=3; k<len_buffer; k++)            // Chequea datos
-2543   5                {
-2544   6                  if (((buffer_bus[k]>='0')&&(buffer_bus[k]<='9'))||((buffer_bus[k]>='A')&&(buffer_bus[k]<='Z'))||(buf
+2536   4              {
+2537   5                iTimeEsperaRtaLPR=0;
+2538   5                
+2539   5                Rechazo=buffer_bus[1];
+2540   5                len_buffer=num_data;
+2541   5      //          len_buffer=buffer_bus[2];               //  Numero de Datos recibidos del Secunadario
+2542   5                BorraLCD_L1();
+2543   5                send_markCashierAut=0;                  // Incializa Marca de Liquidacion en Cajero
+2544   5                Flag_Dcto=0;                      // Inicializa bandera de Salida con descuento
+2545   5                cont(0x80);                       // Visualiza Lectura (hasta 1er separador)
+2546   5                for (k=3; k<len_buffer; k++)            // Chequea datos
+2547   5                {
+2548   6                  if (((buffer_bus[k]>='0')&&(buffer_bus[k]<='9'))||((buffer_bus[k]>='A')&&(buffer_bus[k]<='Z'))||(buf
              -fer_bus[k]=='-')||(buffer_bus[k]=='.'))
-2545   6                  {
-2546   7                    datos_validos=1;
-2547   7                  }
-2548   6                  else
 2549   6                  {
-2550   7                    datos_validos=0;
-2551   7                    k=len_buffer+1;
-2552   7                  }
-2553   6                  vdato(buffer_bus[k]);
-2554   6                }
-2555   5                if  (datos_validos==1)
-2556   5                {
-2557   6      //--------------------------------------------------------------------------------------------------------
+2550   7                    datos_validos=1;
+2551   7                  }
+2552   6                  else
+2553   6                  {
+2554   7                    datos_validos=0;
+2555   7                    k=len_buffer+1;
+2556   7                  }
+2557   6                  vdato(buffer_bus[k]);
+2558   6                }
+2559   5                if  (datos_validos==1)
+2560   5                {
+2561   6      //--------------------------------------------------------------------------------------------------------
              ------------------------------
-2558   6                  i=0;
-2559   6                  Tipo_Vehiculo=0;                 // Borra Tipo
-2560   6                  for (k=0; k<len_buffer; k++)           // Busca Separador de Datos para Tipo Vehiculo
-2561   6                  {
-2562   7                    if (buffer_bus[k]=='.')
-2563   7                    {
-2564   8                      Tipo_Vehiculo=buffer_bus[k+1];      // Almacena Tipo Vehiculo de la tarjeta
-2565   8                      k=len_buffer;
-2566   8                    }
-2567   7                  }
-2568   6                  if (Tipo_Vehiculo!=0)
-2569   6                  {
-2570   7                    len_buffer=len_buffer-0x05;           // Quita: STX Letra #  punto TipoVehiculo = 5 Caracteres del tota
-             -l
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 44  
-
+2562   6                  i=0;
+2563   6                  Tipo_Vehiculo=0;                 // Borra Tipo
+2564   6                  for (k=0; k<len_buffer; k++)           // Busca Separador de Datos para Tipo Vehiculo
+2565   6                  {
+2566   7                    if (buffer_bus[k]=='.')
+2567   7                    {
+2568   8                      Tipo_Vehiculo=buffer_bus[k+1];      // Almacena Tipo Vehiculo de la tarjeta
+2569   8                      k=len_buffer;
+2570   8                    }
 2571   7                  }
-2572   6      //--------------------------------------------------------------------------------------------------------
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 44  
+
+2572   6                  if (Tipo_Vehiculo!=0)
+2573   6                  {
+2574   7                    len_buffer=len_buffer-0x05;           // Quita: STX Letra #  punto TipoVehiculo = 5 Caracteres del tota
+             -l
+2575   7                  }
+2576   6      //--------------------------------------------------------------------------------------------------------
              ------------------------------- 
-2573   6                  g_cEstadoTxSoft |= LECTURA_COD_TX;
-2574   6                  
-2575   6                  for (k=0; k<len_buffer; k++)
-2576   6                  {
-2577   7                    buffer_ticket[k]=buffer_bus[k+3];       //
-2578   7                  }
-2579   6      
-2580   6                  //Habilita_Lectura=0;               // Inhabilita Aproximacion
-2581   6                  //lcd_text(1,0,(unsigned char *) "APX. NO ACTIVA  ");
-2582   6                }
-2583   5                TimeOutLinea=TIMEW;
-2584   5                TimeOut_Codigo=30;
-2585   5              }
-2586   4      //--------------------------------------------------------------------------------------------------------
+2577   6                  g_cEstadoTxSoft |= LECTURA_COD_TX;
+2578   6                  
+2579   6                  for (k=0; k<len_buffer; k++)
+2580   6                  {
+2581   7                    buffer_ticket[k]=buffer_bus[k+3];       //
+2582   7                  }
+2583   6      
+2584   6                  //Habilita_Lectura=0;               // Inhabilita Aproximacion
+2585   6                  //lcd_text(1,0,(unsigned char *) "APX. NO ACTIVA  ");
+2586   6                }
+2587   5                TimeOutLinea=TIMEW;
+2588   5                TimeOut_Codigo=30;
+2589   5              }
+2590   4      //--------------------------------------------------------------------------------------------------------
              ------------------------------*
-2587   4              else if ((buffer_bus[0]==STX)&&((buffer_bus[1]=='a'))&&(buffer_bus[num_data-1]==ETX)) //      STX "a" Ti
+2591   4              else if ((buffer_bus[0]==STX)&&((buffer_bus[1]=='a'))&&(buffer_bus[num_data-1]==ETX)) //      STX "a" Ti
              -quete - Fecha_In - LPR ETX
-2588   4              {
-2589   5                  
-2590   5      //            tx_chr(ACK);
-2591   5      
-2592   5                  iTimeEsperaRtaLPR=0;
-2593   5      
-2594   5      
-2595   5                  Tiquete_Placa=1;
-2596   5                  Tiquete_Salida=0;
-2597   5                  NumChrTicket=0;
+2592   4              {
+2593   5                  
+2594   5      //            tx_chr(ACK);
+2595   5      
+2596   5                  iTimeEsperaRtaLPR=0;
+2597   5      
 2598   5      
-2599   5                  for (k=2; k<num_data; k++)            // Busca Separador de Datos para Tipo Vehiculo
-2600   5                  {
-2601   6                    if (buffer_bus[k]=='-')
-2602   6                    {
-2603   7                      Ini_Fecha=k+1;
-2604   7                      k=num_data;
-2605   7                    }
-2606   6                  }
-2607   5                  
-2608   5                
-2609   5      
-2610   5                  for (k=2; k<Ini_Fecha-1; k++)
-2611   5                  {
-2612   6                              
-2613   6                    buffer_ticket[k-2]=buffer_bus[k];       //
-2614   6                    NumChrTicket++;
-2615   6                  }
-2616   5                  
-2617   5      
-2618   5                    YearIn=buffer_bus[Ini_Fecha++];
-2619   5                  MonthIn=buffer_bus[Ini_Fecha++];
-2620   5                  DayIn=buffer_bus[Ini_Fecha++];
-2621   5                  HourIn=buffer_bus[Ini_Fecha++];
-2622   5                  MinutIn=buffer_bus[Ini_Fecha++];
-2623   5      
-2624   5      
-2625   5                  Num_Char_LPR=0;
-2626   5                  for (k=Ini_Fecha+1; k<num_data-1; k++)
-2627   5                  {
-2628   6                    buffer_placa[Num_Char_LPR++]=buffer_bus[k];
-2629   6                  }
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 45  
+2599   5                  Tiquete_Placa=1;
+2600   5                  Tiquete_Salida=0;
+2601   5                  NumChrTicket=0;
+2602   5      
+2603   5                  for (k=2; k<num_data; k++)            // Busca Separador de Datos para Tipo Vehiculo
+2604   5                  {
+2605   6                    if (buffer_bus[k]=='-')
+2606   6                    {
+2607   7                      Ini_Fecha=k+1;
+2608   7                      k=num_data;
+2609   7                    }
+2610   6                  }
+2611   5                  
+2612   5                
+2613   5      
+2614   5                  for (k=2; k<Ini_Fecha-1; k++)
+2615   5                  {
+2616   6                              
+2617   6                    buffer_ticket[k-2]=buffer_bus[k];       //
+2618   6                    NumChrTicket++;
+2619   6                  }
+2620   5                  
+2621   5      
+2622   5                    YearIn=buffer_bus[Ini_Fecha++];
+2623   5                  MonthIn=buffer_bus[Ini_Fecha++];
+2624   5                  DayIn=buffer_bus[Ini_Fecha++];
+2625   5                  HourIn=buffer_bus[Ini_Fecha++];
+2626   5                  MinutIn=buffer_bus[Ini_Fecha++];
+2627   5      
+2628   5      
+2629   5                  Num_Char_LPR=0;
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 45  
 
-2630   5                  
-2631   5                              
-2632   5                  g_cEstadoTxSoft |= LECTURA_COD_TX;
-2633   5                  TimeOutLinea=TIMEW;
-2634   5                  TimeOut_Codigo=30;            
-2635   5      
-2636   5      
-2637   5              }
-2638   4      //--------------------------------------------------------------------------------------------------------
+2630   5                  for (k=Ini_Fecha+1; k<num_data-1; k++)
+2631   5                  {
+2632   6                    buffer_placa[Num_Char_LPR++]=buffer_bus[k];
+2633   6                  }
+2634   5                  
+2635   5                              
+2636   5                  g_cEstadoTxSoft |= LECTURA_COD_TX;
+2637   5                  TimeOutLinea=TIMEW;
+2638   5                  TimeOut_Codigo=30;            
+2639   5      
+2640   5      
+2641   5              }
+2642   4      //--------------------------------------------------------------------------------------------------------
              ------------------------------*
-2639   4              else if (((buffer_bus[0]==STX)&&(buffer_bus[num_data-1]==ETX))&&((buffer_bus[1]=='m')||(buffer_bus[1]=
+2643   4              else if (((buffer_bus[0]==STX)&&(buffer_bus[num_data-1]==ETX))&&((buffer_bus[1]=='m')||(buffer_bus[1]=
              -='n')||(buffer_bus[1]=='o')||(buffer_bus[1]=='A')||(buffer_bus[1]=='R'))) //  STX *** "m" "n" "o" *** ETX
-2640   4              {
-2641   5                if (buffer_bus[1]=='n')
-2642   5                {
-2643   6                  iTimeEsperaRtaLPR=0;
-2644   6                  
-2645   6                  ACCESO_USE_LPR=0;
-2646   6                  cont(0x80);
-2647   6                  for (k=0;MSGnotify[k]!='\0';k++)
-2648   6                  {
-2649   7                    vdato(MSGnotify[k]);
-2650   7                  }
-2651   6                  cont(0x8D);
-2652   6                  (notifyEVP==1)?(vdato('N')):(vdato('S'));
-2653   6                  
-2654   6                  vdato(' ');
-2655   6                  vdato('N');
-2656   6      
-2657   6      
-2658   6                }
-2659   5                else if (buffer_bus[1]=='m')
-2660   5                {
-2661   6                  ACCESO_USE_LPR=1;
-2662   6      
-2663   6                  cont(0x80);
-2664   6                  for (k=0;MSGnotify[k]!='\0';k++)
-2665   6                  {
-2666   7                    vdato(MSGnotify[k]);
-2667   7                  }
-2668   6                  cont(0x8D);
-2669   6                  (notifyEVP==1)?(vdato('N')):(vdato('S'));
-2670   6                  
-2671   6                  vdato(' ');
-2672   6                  vdato('M');
-2673   6                  
-2674   6      
-2675   6      
-2676   6      
-2677   6                }
-2678   5                else if (buffer_bus[1]=='o')
-2679   5                {
-2680   6                  if (buffer_bus[2]=='0')
-2681   6                  {
-2682   7                    ACCESO_USE_LPR=0;
-2683   7                    iTimeEsperaRtaLPR=0;
-2684   7      
-2685   7                    cont(0x80);
-2686   7                    for (k=0;MSGnotify[k]!='\0';k++)
-2687   7                    {
-2688   8                      vdato(MSGnotify[k]);
-2689   8                    }
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 46  
+2644   4              {
+2645   5                if (buffer_bus[1]=='n')
+2646   5                {
+2647   6                  iTimeEsperaRtaLPR=0;
+2648   6                  
+2649   6                  ACCESO_USE_LPR=0;
+2650   6                  cont(0x80);
+2651   6                  for (k=0;MSGnotify[k]!='\0';k++)
+2652   6                  {
+2653   7                    vdato(MSGnotify[k]);
+2654   7                  }
+2655   6                  cont(0x8D);
+2656   6                  (notifyEVP==1)?(vdato('N')):(vdato('S'));
+2657   6                  
+2658   6                  vdato(' ');
+2659   6                  vdato('N');
+2660   6      
+2661   6      
+2662   6                }
+2663   5                else if (buffer_bus[1]=='m')
+2664   5                {
+2665   6                  ACCESO_USE_LPR=1;
+2666   6      
+2667   6                  cont(0x80);
+2668   6                  for (k=0;MSGnotify[k]!='\0';k++)
+2669   6                  {
+2670   7                    vdato(MSGnotify[k]);
+2671   7                  }
+2672   6                  cont(0x8D);
+2673   6                  (notifyEVP==1)?(vdato('N')):(vdato('S'));
+2674   6                  
+2675   6                  vdato(' ');
+2676   6                  vdato('M');
+2677   6                  
+2678   6      
+2679   6      
+2680   6      
+2681   6                }
+2682   5                else if (buffer_bus[1]=='o')
+2683   5                {
+2684   6                  if (buffer_bus[2]=='0')
+2685   6                  {
+2686   7                    ACCESO_USE_LPR=0;
+2687   7                    iTimeEsperaRtaLPR=0;
+2688   7      
+2689   7                    cont(0x80);
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 46  
 
-2690   7                    cont(0x8D);
-2691   7                    (notifyEVP==1)?(vdato('N')):(vdato('S'));
-2692   7                    
-2693   7                    vdato(' ');
-2694   7                    vdato('o');
-2695   7      
-2696   7                  }
-2697   6                  else if (buffer_bus[2]=='1')
-2698   6                  {
-2699   7                    ACCESO_USE_LPR=1;
-2700   7                    cont(0x80);
-2701   7                    for (k=0;MSGnotify[k]!='\0';k++)
-2702   7                    {
-2703   8                      vdato(MSGnotify[k]);
-2704   8                    }
-2705   7                    cont(0x8D);
-2706   7                    (notifyEVP==1)?(vdato('N')):(vdato('S'));
-2707   7                    
-2708   7                    vdato(' ');
-2709   7                    vdato('M');
-2710   7                  }
-2711   6                }
-2712   5                else if (buffer_bus[1]=='A')              // Acepta de LPR
-2713   5                {
-2714   6                  if (iTimeEsperaRtaLPR!=0)
-2715   6                  {
-2716   7                    iTimeEsperaRtaLPR=0;
-2717   7      
-2718   7                    buffer_wie[0]=buffer_wieLPR[0];
-2719   7                    buffer_wie[1]=buffer_wieLPR[1];
-2720   7                    buffer_wie[2]=buffer_wieLPR[2];
-2721   7                    g_cEstadoTxSoft |= LECTURA_WIEG_TX;
-2722   7                    TimeOut_Wiegand=5;
-2723   7                    SalidaW=0;
-2724   7                  }
-2725   6       
-2726   6                }
-2727   5                else if (buffer_bus[1]=='R')            // Rechaza de LPR
-2728   5                {
-2729   6                      iTimeEsperaRtaLPR=0;
-2730   6                    cont(0x80);
-2731   6                    for (k=0;MSGnegado[k]!='\0';k++)
-2732   6                    {
-2733   7                      vdato(MSGnegado[k]);
-2734   7                    }
-2735   6       
-2736   6                }
-2737   5                buffer_bus[1]=0xff;                 
-2738   5       
-2739   5              }
-2740   4      //--------------------------------------------------------------------------------------------------------
+2690   7                    for (k=0;MSGnotify[k]!='\0';k++)
+2691   7                    {
+2692   8                      vdato(MSGnotify[k]);
+2693   8                    }
+2694   7                    cont(0x8D);
+2695   7                    (notifyEVP==1)?(vdato('N')):(vdato('S'));
+2696   7                    
+2697   7                    vdato(' ');
+2698   7                    vdato('o');
+2699   7      
+2700   7                  }
+2701   6                  else if (buffer_bus[2]=='1')
+2702   6                  {
+2703   7                    ACCESO_USE_LPR=1;
+2704   7                    cont(0x80);
+2705   7                    for (k=0;MSGnotify[k]!='\0';k++)
+2706   7                    {
+2707   8                      vdato(MSGnotify[k]);
+2708   8                    }
+2709   7                    cont(0x8D);
+2710   7                    (notifyEVP==1)?(vdato('N')):(vdato('S'));
+2711   7                    
+2712   7                    vdato(' ');
+2713   7                    vdato('M');
+2714   7                  }
+2715   6                }
+2716   5                else if (buffer_bus[1]=='A')              // Acepta de LPR
+2717   5                {
+2718   6                  if (iTimeEsperaRtaLPR!=0)
+2719   6                  {
+2720   7                    iTimeEsperaRtaLPR=0;
+2721   7      
+2722   7                    buffer_wie[0]=buffer_wieLPR[0];
+2723   7                    buffer_wie[1]=buffer_wieLPR[1];
+2724   7                    buffer_wie[2]=buffer_wieLPR[2];
+2725   7                    g_cEstadoTxSoft |= LECTURA_WIEG_TX;
+2726   7                    TimeOut_Wiegand=5;
+2727   7                    SalidaW=0;
+2728   7                  }
+2729   6       
+2730   6                }
+2731   5                else if (buffer_bus[1]=='R')            // Rechaza de LPR
+2732   5                {
+2733   6                      iTimeEsperaRtaLPR=0;
+2734   6                    cont(0x80);
+2735   6                    for (k=0;MSGnegado[k]!='\0';k++)
+2736   6                    {
+2737   7                      vdato(MSGnegado[k]);
+2738   7                    }
+2739   6       
+2740   6                }
+2741   5                buffer_bus[1]=0xff;                 
+2742   5       
+2743   5              }
+2744   4      //--------------------------------------------------------------------------------------------------------
              ------------------------------*
-2741   4              else if ((buffer_bus[0]==STX)&&((buffer_bus[1]=='s')||(buffer_bus[1]=='C'))&&(buffer_bus[num_data-1]==
+2745   4              else if ((buffer_bus[0]==STX)&&((buffer_bus[1]=='s')||(buffer_bus[1]=='C'))&&(buffer_bus[num_data-1]==
              -ETX))  //      STX "s" Tiquete - Fecha_In - Fecha Out - LPR ETX
-2742   4              {
-2743   5                  
-2744   5                  iTimeEsperaRtaLPR=0;
-2745   5      
-2746   5                  Tiquete_Placa=1;
-2747   5                  Tiquete_Salida=1;
-2748   5                  NumChrTicket=0;
+2746   4              {
+2747   5                  
+2748   5                  iTimeEsperaRtaLPR=0;
 2749   5      
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 47  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 47  
 
-2750   5                  if (buffer_bus[1]=='C')
-2751   5                  {
-2752   6                    send_markCashierAut=1;
-2753   6                  }
-2754   5                  else
+2750   5                  Tiquete_Placa=1;
+2751   5                  Tiquete_Salida=1;
+2752   5                  NumChrTicket=0;
+2753   5      
+2754   5                  if (buffer_bus[1]=='C')
 2755   5                  {
-2756   6                    send_markCashierAut=0;
+2756   6                    send_markCashierAut=1;
 2757   6                  }
-2758   5      
-2759   5      
-2760   5      
-2761   5                  for (k=2; k<num_data; k++)            // Busca Separador de Datos para Tipo Vehiculo
-2762   5                  {
-2763   6                    if (buffer_bus[k]=='-')
-2764   6                    {
-2765   7                      Ini_Dcto=k+1;
-2766   7                      k=num_data;
-2767   7                    }
-2768   6                  }
-2769   5      
-2770   5                  Cod_Dcto=buffer_bus[Ini_Dcto];
-2771   5      
-2772   5                  for (k=2; k<Ini_Dcto-1; k++)
-2773   5                  {
-2774   6                    buffer_ticket[k-2]=buffer_bus[k];       //
-2775   6                    NumChrTicket++;
-2776   6                  }
-2777   5      
-2778   5                  
-2779   5                  Ini_Fecha=Ini_Dcto+2;
-2780   5      
+2758   5                  else
+2759   5                  {
+2760   6                    send_markCashierAut=0;
+2761   6                  }
+2762   5      
+2763   5      
+2764   5      
+2765   5                  for (k=2; k<num_data; k++)            // Busca Separador de Datos para Tipo Vehiculo
+2766   5                  {
+2767   6                    if (buffer_bus[k]=='-')
+2768   6                    {
+2769   7                      Ini_Dcto=k+1;
+2770   7                      k=num_data;
+2771   7                    }
+2772   6                  }
+2773   5      
+2774   5                  Cod_Dcto=buffer_bus[Ini_Dcto];
+2775   5      
+2776   5                  for (k=2; k<Ini_Dcto-1; k++)
+2777   5                  {
+2778   6                    buffer_ticket[k-2]=buffer_bus[k];       //
+2779   6                    NumChrTicket++;
+2780   6                  }
 2781   5      
-2782   5                    YearIn=buffer_bus[Ini_Fecha++];
-2783   5                  MonthIn=buffer_bus[Ini_Fecha++];
-2784   5                  DayIn=buffer_bus[Ini_Fecha++];
-2785   5                  HourIn=buffer_bus[Ini_Fecha++];
-2786   5                  MinutIn=buffer_bus[Ini_Fecha++];
-2787   5      
-2788   5                  Ini_Fecha++;
-2789   5      
-2790   5                  YearOut=buffer_bus[Ini_Fecha++];
-2791   5                  MonthOut=buffer_bus[Ini_Fecha++];
-2792   5                  DayOut=buffer_bus[Ini_Fecha++];
-2793   5                  HourOut=buffer_bus[Ini_Fecha++];
-2794   5                  MinutOut=buffer_bus[Ini_Fecha++];
-2795   5      
-2796   5                  Ini_Fecha++;
-2797   5      
-2798   5                  Tipo_Vehiculo=buffer_bus[Ini_Fecha++];
+2782   5                  
+2783   5                  Ini_Fecha=Ini_Dcto+2;
+2784   5      
+2785   5      
+2786   5                    YearIn=buffer_bus[Ini_Fecha++];
+2787   5                  MonthIn=buffer_bus[Ini_Fecha++];
+2788   5                  DayIn=buffer_bus[Ini_Fecha++];
+2789   5                  HourIn=buffer_bus[Ini_Fecha++];
+2790   5                  MinutIn=buffer_bus[Ini_Fecha++];
+2791   5      
+2792   5                  Ini_Fecha++;
+2793   5      
+2794   5                  YearOut=buffer_bus[Ini_Fecha++];
+2795   5                  MonthOut=buffer_bus[Ini_Fecha++];
+2796   5                  DayOut=buffer_bus[Ini_Fecha++];
+2797   5                  HourOut=buffer_bus[Ini_Fecha++];
+2798   5                  MinutOut=buffer_bus[Ini_Fecha++];
 2799   5      
-2800   5                  Num_Char_LPR=0;
-2801   5                              
-2802   5                  g_cEstadoTxSoft |= LECTURA_COD_TX;
-2803   5                  TimeOutLinea=TIMEW;
-2804   5                  TimeOut_Codigo=30;
-2805   5                            
-2806   5      
-2807   5      
-2808   5              }
-2809   4              else if ((buffer_bus[0]==0x02)&&(buffer_bus[1]=='d')&&(buffer_bus[num_data-1]==ETX)&&(num_data==9)) //
+2800   5                  Ini_Fecha++;
+2801   5      
+2802   5                  Tipo_Vehiculo=buffer_bus[Ini_Fecha++];
+2803   5      
+2804   5                  Num_Char_LPR=0;
+2805   5                              
+2806   5                  g_cEstadoTxSoft |= LECTURA_COD_TX;
+2807   5                  TimeOutLinea=TIMEW;
+2808   5                  TimeOut_Codigo=30;
+2809   5                            
+2810   5      
+2811   5      
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 48  
+
+2812   5              }
+2813   4              else if ((buffer_bus[0]==0x02)&&(buffer_bus[1]=='d')&&(buffer_bus[num_data-1]==ETX)&&(num_data==9)) //
              -    DINERO de SALDO
-2810   4              {
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 48  
-
-2811   5                BorraLCD_L1();  
-2812   5                  cont(0x80); 
-2813   5      
-2814   5                vdato('S');
-2815   5                vdato('a');
-2816   5                vdato('l');
-2817   5                vdato('d');
-2818   5                vdato('o');
-2819   5                vdato(' ');
-2820   5                vdato('D');
-2821   5                vdato('i');
-2822   5                vdato('s');
-2823   5                vdato('p');
-2824   5                vdato('o');
-2825   5                vdato('n');
-2826   5                vdato('i');
-2827   5                vdato('b');
-2828   5                vdato('l');
-2829   5                vdato('e'); 
-2830   5      
-2831   5                BorraLCD_L2();
-2832   5                cont(0xc0);
-2833   5                
-2834   5                for (k=2; k<8; k++)
-2835   5                {
-2836   6                  vdato(buffer_bus[k]);
-2837   6                }       
-2838   5              }
-2839   4              else                          //
-2840   4              {
-2841   5      //--------------------------------------------------------------------------------------------------------
+2814   4              {
+2815   5                BorraLCD_L1();  
+2816   5                  cont(0x80); 
+2817   5      
+2818   5                vdato('S');
+2819   5                vdato('a');
+2820   5                vdato('l');
+2821   5                vdato('d');
+2822   5                vdato('o');
+2823   5                vdato(' ');
+2824   5                vdato('D');
+2825   5                vdato('i');
+2826   5                vdato('s');
+2827   5                vdato('p');
+2828   5                vdato('o');
+2829   5                vdato('n');
+2830   5                vdato('i');
+2831   5                vdato('b');
+2832   5                vdato('l');
+2833   5                vdato('e'); 
+2834   5      
+2835   5                BorraLCD_L2();
+2836   5                cont(0xc0);
+2837   5                
+2838   5                for (k=2; k<8; k++)
+2839   5                {
+2840   6                  vdato(buffer_bus[k]);
+2841   6                }       
+2842   5              }
+2843   4              else                          //
+2844   4              {
+2845   5      //--------------------------------------------------------------------------------------------------------
              ------------------------------*
-2842   5                len_buffer=num_data;                  //  Numero de Datos recibidos del Secunadario
-2843   5                BorraLCD_L1();
-2844   5      //--------------------------------------------------------------------------------------------------------
+2846   5                len_buffer=num_data;                  //  Numero de Datos recibidos del Secunadario
+2847   5                BorraLCD_L1();
+2848   5      //--------------------------------------------------------------------------------------------------------
              ------------------------------*
-2845   5                Tipo_Vehiculo=0;                  // Borra Tipo
-2846   5                for (k=0; k<len_buffer; k++)            // Busca Separador de Datos para Tipo Vehiculo
-2847   5                {
-2848   6                  if (buffer_bus[k]=='.')
-2849   6                  {
-2850   7                    Tipo_Vehiculo=buffer_bus[k+1];        // Almacena Tipo Vehiculo de la tarjeta
-2851   7                    k=len_buffer;
-2852   7                  }
-2853   6                }
-2854   5                if (Tipo_Vehiculo!=0)               // H T B M C (LETRAS DEL TIPO DE VEHICULO)
-2855   5                {
-2856   6                    len_buffer=len_buffer-0x02;           // Quita: punto TipoVehiculo = 2 Caracteres del total
+2849   5                Tipo_Vehiculo=0;                  // Borra Tipo
+2850   5                for (k=0; k<len_buffer; k++)            // Busca Separador de Datos para Tipo Vehiculo
+2851   5                {
+2852   6                  if (buffer_bus[k]=='.')
+2853   6                  {
+2854   7                    Tipo_Vehiculo=buffer_bus[k+1];        // Almacena Tipo Vehiculo de la tarjeta
+2855   7                    k=len_buffer;
+2856   7                  }
 2857   6                }
-2858   5      //--------------------------------------------------------------------------------------------------------
+2858   5                if (Tipo_Vehiculo!=0)               // H T B M C (LETRAS DEL TIPO DE VEHICULO)
+2859   5                {
+2860   6                    len_buffer=len_buffer-0x02;           // Quita: punto TipoVehiculo = 2 Caracteres del total
+2861   6                }
+2862   5      //--------------------------------------------------------------------------------------------------------
              -------------------------------
-2859   5                send_markCashierAut=0;                 // Incializa Marca de Liquidacion en Cajero
-2860   5                Flag_Dcto=0;                     // Inicializa bandera de Salida con descuento
-2861   5                i=0;
-2862   5                for (k=0; k<len_buffer; k++)             // Busca Separador de Datos
-2863   5                {
-2864   6                  if (buffer_bus[k]=='-')
-2865   6                  {
-2866   7                    PosComa[i++]=k;
-2867   7                  }
-2868   6                }
-2869   5      //--------------------------------------------------------------------------------------------------------
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 49  
+2863   5                send_markCashierAut=0;                 // Incializa Marca de Liquidacion en Cajero
+2864   5                Flag_Dcto=0;                     // Inicializa bandera de Salida con descuento
+2865   5                i=0;
+2866   5                for (k=0; k<len_buffer; k++)             // Busca Separador de Datos
+2867   5                {
+2868   6                  if (buffer_bus[k]=='-')
+2869   6                  {
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 49  
 
+2870   7                    PosComa[i++]=k;
+2871   7                  }
+2872   6                }
+2873   5      //--------------------------------------------------------------------------------------------------------
              -------------------------------
-2870   5                (i!=0)?(NumDatValidar=PosComa[0]+1):(NumDatValidar=len_buffer);   // EXTRAE SOLO EL CODIGO PARA VALID
+2874   5                (i!=0)?(NumDatValidar=PosComa[0]+1):(NumDatValidar=len_buffer);   // EXTRAE SOLO EL CODIGO PARA VALID
              -AD DATOS
-2871   5      //--------------------------------------------------------------------------------------------------------
+2875   5      //--------------------------------------------------------------------------------------------------------
              -------------------------------
-2872   5                cont(0x80);                       // Visualiza Lectura (hasta 1er separador)
-2873   5                for (k=0; k<NumDatValidar; k++)           // Chequea datos
-2874   5                {
-2875   6                  if (((buffer_bus[k]>='0')&&(buffer_bus[k]<='9'))||((buffer_bus[k]>='A')&&(buffer_bus[k]<='Z'))||(buf
+2876   5                cont(0x80);                       // Visualiza Lectura (hasta 1er separador)
+2877   5                for (k=0; k<NumDatValidar; k++)           // Chequea datos
+2878   5                {
+2879   6                  if (((buffer_bus[k]>='0')&&(buffer_bus[k]<='9'))||((buffer_bus[k]>='A')&&(buffer_bus[k]<='Z'))||(buf
              -fer_bus[k]=='-')||(buffer_bus[k]=='.'))
-2876   6                  {
-2877   7                    datos_validos=1;
-2878   7                  }
-2879   6                  else
 2880   6                  {
-2881   7                    datos_validos=0;
-2882   7                    k=NumDatValidar+1;
-2883   7                  }
-2884   6                  vdato(buffer_bus[k]);
-2885   6                }
-2886   5      //----------------------------------------------------------------------
-2887   5                if  (datos_validos==1)
-2888   5                {
-2889   6                  iTimeEsperaRtaLPR=0;
-2890   6                  
-2891   6                  g_cEstadoTxSoft |= LECTURA_COD_TX;
-2892   6                
-2893   6                  //Habilita_Lectura=0;               // Inhabilita Aproximacion
-2894   6                  //lcd_text(1,0,(unsigned char *) "APX. NO ACTIVA  ");
-2895   6              
-2896   6                  if (i!=0)
-2897   6                  {
-2898   7                    if (i==1)
-2899   7                    {
-2900   8                      if ((len_buffer-1-PosComa[0])==1)       // Solo Cod Descuento, Evalua cantidad de datos si es 1 xq e
+2881   7                    datos_validos=1;
+2882   7                  }
+2883   6                  else
+2884   6                  {
+2885   7                    datos_validos=0;
+2886   7                    k=NumDatValidar+1;
+2887   7                  }
+2888   6                  vdato(buffer_bus[k]);
+2889   6                }
+2890   5      //----------------------------------------------------------------------
+2891   5                if  (datos_validos==1)
+2892   5                {
+2893   6                  iTimeEsperaRtaLPR=0;
+2894   6                  
+2895   6                  g_cEstadoTxSoft |= LECTURA_COD_TX;
+2896   6                
+2897   6                  //Habilita_Lectura=0;               // Inhabilita Aproximacion
+2898   6                  //lcd_text(1,0,(unsigned char *) "APX. NO ACTIVA  ");
+2899   6              
+2900   6                  if (i!=0)
+2901   6                  {
+2902   7                    if (i==1)
+2903   7                    {
+2904   8                      if ((len_buffer-1-PosComa[0])==1)       // Solo Cod Descuento, Evalua cantidad de datos si es 1 xq e
              -s solo codigo Dcto
-2901   8                      {
-2902   9                        for (k=0; k<len_buffer; k++)
-2903   9                        {
-2904  10                          buffer_ticket[k]=buffer_bus[k];
-2905  10                    
-2906  10                        }
-2907   9                        Flag_Dcto=1;
-2908   9                        Cod_Dcto= buffer_ticket[len_buffer-1];
-2909   9                        vdato('D');
-2910   9                        vdato(Cod_Dcto);
-2911   9                        len_buffer=len_buffer-2;                
-2912   9                      }
-2913   8                      else                      // Solo Liquidacion en Cajero Posee mas de un dato, o sea la fecha
-2914   8                      {
-2915   9                        Flag_Dcto=0;
-2916   9                        for (k=0; k<PosComa[0]; k++)
-2917   9                        {
-2918  10                          buffer_ticket[k]=buffer_bus[k];
-2919  10                          
-2920  10                        }
-2921   9                                          
-2922   9                        if ((len_buffer-1-PosComa[0])==5)     // 5 datos de: YMDHM  (Año Mes Dia Hor Min)
-2923   9                        {
-2924  10                          send_markCashierAut=1;
-2925  10      
-2926  10                          vdato('C');
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 50  
+2905   8                      {
+2906   9                        for (k=0; k<len_buffer; k++)
+2907   9                        {
+2908  10                          buffer_ticket[k]=buffer_bus[k];
+2909  10                    
+2910  10                        }
+2911   9                        Flag_Dcto=1;
+2912   9                        Cod_Dcto= buffer_ticket[len_buffer-1];
+2913   9                        vdato('D');
+2914   9                        vdato(Cod_Dcto);
+2915   9                        len_buffer=len_buffer-2;                
+2916   9                      }
+2917   8                      else                      // Solo Liquidacion en Cajero Posee mas de un dato, o sea la fecha
+2918   8                      {
+2919   9                        Flag_Dcto=0;
+2920   9                        for (k=0; k<PosComa[0]; k++)
+2921   9                        {
+2922  10                          buffer_ticket[k]=buffer_bus[k];
+2923  10                          
+2924  10                        }
+2925   9                                          
+2926   9                        if ((len_buffer-1-PosComa[0])==5)     // 5 datos de: YMDHM  (Año Mes Dia Hor Min)
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 50  
 
-2927  10                          vdato('a');
-2928  10                          vdato('j');
-2929  10                          vdato('e');
-2930  10                          vdato('r');
-2931  10                          vdato('o');
-2932  10      
-2933  10                          Ini_Fecha=PosComa[0]+1; 
-2934  10                                            
-2935  10                          YearIn=buffer_bus[Ini_Fecha++];
-2936  10                          MonthIn=buffer_bus[Ini_Fecha++];
-2937  10                          DayIn=buffer_bus[Ini_Fecha++];
-2938  10                          HourIn=buffer_bus[Ini_Fecha++];
-2939  10                          MinutIn=buffer_bus[Ini_Fecha];
-2940  10                          
-2941  10                        }
-2942   9                        len_buffer=PosComa[0];
-2943   9                      } 
-2944   8                    }
-2945   7                    else                            // Posee Codigo de descuento y Liquidado en Cajero
-2946   7                    {
-2947   8                        for (k=0; k<PosComa[0]; k++)
-2948   8                      {
-2949   9                        buffer_ticket[k]=buffer_bus[k];
-2950   9                      }
-2951   8                      
-2952   8                      Flag_Dcto=1;
-2953   8                      Cod_Dcto= buffer_ticket[PosComa[0]+1];
-2954   8                      
+2927   9                        {
+2928  10                          send_markCashierAut=1;
+2929  10      
+2930  10                          vdato('C');
+2931  10                          vdato('a');
+2932  10                          vdato('j');
+2933  10                          vdato('e');
+2934  10                          vdato('r');
+2935  10                          vdato('o');
+2936  10      
+2937  10                          Ini_Fecha=PosComa[0]+1; 
+2938  10                                            
+2939  10                          YearIn=buffer_bus[Ini_Fecha++];
+2940  10                          MonthIn=buffer_bus[Ini_Fecha++];
+2941  10                          DayIn=buffer_bus[Ini_Fecha++];
+2942  10                          HourIn=buffer_bus[Ini_Fecha++];
+2943  10                          MinutIn=buffer_bus[Ini_Fecha];
+2944  10                          
+2945  10                        }
+2946   9                        len_buffer=PosComa[0];
+2947   9                      } 
+2948   8                    }
+2949   7                    else                            // Posee Codigo de descuento y Liquidado en Cajero
+2950   7                    {
+2951   8                        for (k=0; k<PosComa[0]; k++)
+2952   8                      {
+2953   9                        buffer_ticket[k]=buffer_bus[k];
+2954   9                      }
 2955   8                      
-2956   8                      send_markCashierAut=1;
-2957   8                      Ini_Fecha=PosComa[1]+1;
-2958   8                                          
-2959   8                      YearIn=buffer_bus[Ini_Fecha++];
-2960   8                      MonthIn=buffer_bus[Ini_Fecha++];
-2961   8                      DayIn=buffer_bus[Ini_Fecha++];
-2962   8                      HourIn=buffer_bus[Ini_Fecha++];
-2963   8                      MinutIn=buffer_bus[Ini_Fecha];
-2964   8      
-2965   8                      len_buffer=PosComa[0];                                
-2966   8                    }
-2967   7                  }
-2968   6                  else                            // Dato sin nada fuera de lo normal.
-2969   6                  {
-2970   7                    for (k=0; k<len_buffer; k++)
-2971   7                    {
-2972   8                      buffer_ticket[k]=buffer_bus[k];
-2973   8                    }
-2974   7                      Flag_Dcto=0;
-2975   7                    send_markCashierAut=0;
-2976   7                  }
-2977   6      
-2978   6                  TimeOutLinea=TIMEW;
-2979   6                  TimeOut_Codigo=30;
-2980   6                }
-2981   5      //---------------------------------------------------------------------         
-2982   5                }
-2983   4            }
-2984   3            else
-2985   3            {
-2986   4      //        cont(0x8E);
-2987   4      //        temp=(buffer_bus[0]&0xf0);
-2988   4      //        temp>>=4;
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 51  
+2956   8                      Flag_Dcto=1;
+2957   8                      Cod_Dcto= buffer_ticket[PosComa[0]+1];
+2958   8                      
+2959   8                      
+2960   8                      send_markCashierAut=1;
+2961   8                      Ini_Fecha=PosComa[1]+1;
+2962   8                                          
+2963   8                      YearIn=buffer_bus[Ini_Fecha++];
+2964   8                      MonthIn=buffer_bus[Ini_Fecha++];
+2965   8                      DayIn=buffer_bus[Ini_Fecha++];
+2966   8                      HourIn=buffer_bus[Ini_Fecha++];
+2967   8                      MinutIn=buffer_bus[Ini_Fecha];
+2968   8      
+2969   8                      len_buffer=PosComa[0];                                
+2970   8                    }
+2971   7                  }
+2972   6                  else                            // Dato sin nada fuera de lo normal.
+2973   6                  {
+2974   7                    for (k=0; k<len_buffer; k++)
+2975   7                    {
+2976   8                      buffer_ticket[k]=buffer_bus[k];
+2977   8                    }
+2978   7                      Flag_Dcto=0;
+2979   7                    send_markCashierAut=0;
+2980   7                  }
+2981   6      
+2982   6                  TimeOutLinea=TIMEW;
+2983   6                  TimeOut_Codigo=30;
+2984   6                }
+2985   5      //---------------------------------------------------------------------         
+2986   5                }
+2987   4            }
+2988   3            else
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 51  
 
-2989   4      //        vdato(temp);
-2990   4      //        vdato((buffer_bus[0]&0x0f)+0x30);
-2991   4      
-2992   4            }
-2993   3          }
-2994   2      
-2995   2          if(TF0==1)
-2996   2          {
-2997   3            TF0=0;
-2998   3      //----------------------------------------------------------------------------------------------*
-2999   3            if (TimeRetryCmd!=0)
-3000   3            {
-3001   4              TimeRetryCmd--;
-3002   4              if (TimeRetryCmd==0)
-3003   4              {
-3004   5                RetryCmd=1;
-3005   5              }
-3006   4            }
-3007   3      //----------------------------------------------------------------------------------------------*
-3008   3            if (TimeOut_Send_Acceso!=0)
-3009   3            {
-3010   4              TimeOut_Send_Acceso--;
-3011   4            }
-3012   3            if (OpenMensual_Apx!=0)
+2989   3            {
+2990   4      //        cont(0x8E);
+2991   4      //        temp=(buffer_bus[0]&0xf0);
+2992   4      //        temp>>=4;
+2993   4      //        vdato(temp);
+2994   4      //        vdato((buffer_bus[0]&0x0f)+0x30);
+2995   4      
+2996   4            }
+2997   3          }
+2998   2      
+2999   2          if(TF0==1)
+3000   2          {
+3001   3            TF0=0;
+3002   3      //----------------------------------------------------------------------------------------------*
+3003   3            if (TimeRetryCmd!=0)
+3004   3            {
+3005   4              TimeRetryCmd--;
+3006   4              if (TimeRetryCmd==0)
+3007   4              {
+3008   5                RetryCmd=1;
+3009   5              }
+3010   4            }
+3011   3      //----------------------------------------------------------------------------------------------*
+3012   3            if (TimeOut_Send_Acceso!=0)
 3013   3            {
-3014   4              OpenMensual_Apx--;
+3014   4              TimeOut_Send_Acceso--;
 3015   4            }
-3016   3      //----------------------------------------------------------------------------------------------*
-3017   3            if (iTimeEsperaRtaLPR!=0)
-3018   3            {
-3019   4              iTimeEsperaRtaLPR--;
-3020   4              if (iTimeEsperaRtaLPR==0)
-3021   4              {
-3022   5                  buffer_wie[0]=buffer_wieLPR[0];
-3023   5                  buffer_wie[1]=buffer_wieLPR[1];
-3024   5                  buffer_wie[2]=buffer_wieLPR[2];
-3025   5                  g_cEstadoTxSoft |= LECTURA_WIEG_TX;
-3026   5                  TimeOut_Wiegand=5;
-3027   5                  SalidaW=0;
-3028   5              }
-3029   4            }
-3030   3      //----------------------------------------------------------------------------------------------*
-3031   3            if (SignalAcceso==0)
-3032   3            {
-3033   4              if ((seg==cte_seg/2)||(seg==0))
-3034   4              {
-3035   5                if (toggle==1)
-3036   5                {
-3037   6                  ledv=0;
-3038   6                  toggle=0;
-3039   6                }
-3040   5                else
-3041   5                {
-3042   6                  ledv=1;
-3043   6                  toggle=1;
-3044   6                }
-3045   5              }
-3046   4            }
-3047   3            else
-3048   3            {
-3049   4              ledv=1;
-3050   4              Habilita_Lectura=1;               // Habilita Lectura
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 52  
+3016   3            if (OpenMensual_Apx!=0)
+3017   3            {
+3018   4              OpenMensual_Apx--;
+3019   4            }
+3020   3      //----------------------------------------------------------------------------------------------*
+3021   3            if (iTimeEsperaRtaLPR!=0)
+3022   3            {
+3023   4              iTimeEsperaRtaLPR--;
+3024   4              if (iTimeEsperaRtaLPR==0)
+3025   4              {
+3026   5                  buffer_wie[0]=buffer_wieLPR[0];
+3027   5                  buffer_wie[1]=buffer_wieLPR[1];
+3028   5                  buffer_wie[2]=buffer_wieLPR[2];
+3029   5                  g_cEstadoTxSoft |= LECTURA_WIEG_TX;
+3030   5                  TimeOut_Wiegand=5;
+3031   5                  SalidaW=0;
+3032   5              }
+3033   4            }
+3034   3      //----------------------------------------------------------------------------------------------*
+3035   3            if (SignalAcceso==0)
+3036   3            {
+3037   4              if ((seg==cte_seg/2)||(seg==0))
+3038   4              {
+3039   5                if (toggle==1)
+3040   5                {
+3041   6                  ledv=0;
+3042   6                  toggle=0;
+3043   6                }
+3044   5                else
+3045   5                {
+3046   6                  ledv=1;
+3047   6                  toggle=1;
+3048   6                }
+3049   5              }
+3050   4            }
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 52  
 
-3051   4            }
-3052   3      //----------------------------------------------------------------------------------------------*
-3053   3            seg--;
-3054   3            if (seg==0)
-3055   3            {
-3056   4                if (FueraLinea==1)
-3057   4              {
-3058   5                if (Seg_OFF!=0)
-3059   5                {
-3060   6                  Seg_OFF--;
-3061   6                }
-3062   5                if (Seg_OFF==0)
+3051   3            else
+3052   3            {
+3053   4              ledv=1;
+3054   4              Habilita_Lectura=1;               // Habilita Lectura
+3055   4            }
+3056   3      //----------------------------------------------------------------------------------------------*
+3057   3            seg--;
+3058   3            if (seg==0)
+3059   3            {
+3060   4                if (FueraLinea==1)
+3061   4              {
+3062   5                if (Seg_OFF!=0)
 3063   5                {
-3064   6                  buffer_bus[0]=OFF_LINE;   
-3065   6                  tx_bus(1);
-3066   6                  Seg_OFF=5;
-3067   6                }
-3068   5                }
-3069   4              else
-3070   4              {
-3071   5                Seg_OFF=5;  
-3072   5              }
-3073   4                if (TimeOut_Codigo!=0)
+3064   6                  Seg_OFF--;
+3065   6                }
+3066   5                if (Seg_OFF==0)
+3067   5                {
+3068   6                  buffer_bus[0]=OFF_LINE;   
+3069   6                  tx_bus(1);
+3070   6                  Seg_OFF=5;
+3071   6                }
+3072   5                }
+3073   4              else
 3074   4              {
-3075   5                TimeOut_Codigo--;
-3076   5                if (TimeOut_Codigo==0)
-3077   5                {
-3078   6                  g_cEstadoTxSoft &=~LECTURA_COD_TX;
-3079   6                  Rechazo=0;
-3080   6      
-3081   6                  Tiquete_Placa=0;
-3082   6                  Tiquete_Salida=0;
-3083   6                  Tipo_Vehiculo=' ';
-3084   6                  send_markCashierAut=0;
-3085   6                  if (FueraLinea==1)
-3086   6                  {
-3087   7                    BorraLCD_L1();
-3088   7                    }
-3089   6                }
-3090   5              }
-3091   4                if (TimeOut_Wiegand!=0)
-3092   4              {
-3093   5                TimeOut_Wiegand--;
-3094   5                if (TimeOut_Wiegand==0)
-3095   5                {
-3096   6                  g_cEstadoTxSoft &=~LECTURA_WIEG_TX;
-3097   6                  SalidaW=0;
-3098   6                  Dato_Placa=0;
-3099   6      //            Off_Line_Salida=0;
-3100   6                }
-3101   5              }
-3102   4              if (TimeOutLinea!=0)
-3103   4              {
-3104   5                TimeOutLinea--;
-3105   5                if (TimeOutLinea==0)                      /*fuera de linea*/
-3106   5                {
-3107   6                  TimeOutLinea=TIMEW;
-3108   6                  cont(0x80);
-3109   6                  for (k=0;k<16;k++)
-3110   6                  {
-3111   7                      vdato(' ');
-3112   7                  }
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 53  
+3075   5                Seg_OFF=5;  
+3076   5              }
+3077   4                if (TimeOut_Codigo!=0)
+3078   4              {
+3079   5                TimeOut_Codigo--;
+3080   5                if (TimeOut_Codigo==0)
+3081   5                {
+3082   6                  g_cEstadoTxSoft &=~LECTURA_COD_TX;
+3083   6                  Rechazo=0;
+3084   6      
+3085   6                  Tiquete_Placa=0;
+3086   6                  Tiquete_Salida=0;
+3087   6                  Tipo_Vehiculo=' ';
+3088   6                  send_markCashierAut=0;
+3089   6                  if (FueraLinea==1)
+3090   6                  {
+3091   7                    BorraLCD_L1();
+3092   7                    }
+3093   6                }
+3094   5              }
+3095   4                if (TimeOut_Wiegand!=0)
+3096   4              {
+3097   5                TimeOut_Wiegand--;
+3098   5                if (TimeOut_Wiegand==0)
+3099   5                {
+3100   6                  g_cEstadoTxSoft &=~LECTURA_WIEG_TX;
+3101   6                  SalidaW=0;
+3102   6                  Dato_Placa=0;
+3103   6      //            Off_Line_Salida=0;
+3104   6                }
+3105   5              }
+3106   4              if (TimeOutLinea!=0)
+3107   4              {
+3108   5                TimeOutLinea--;
+3109   5                if (TimeOutLinea==0)                      /*fuera de linea*/
+3110   5                {
+3111   6                  TimeOutLinea=TIMEW;
+3112   6                  cont(0x80);
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 53  
 
-3113   6                  g_cEstadoTxSoft &=~LECTURA_COD_TX;
-3114   6                  g_cEstadoTxSoft &=~LECTURA_WIEG_TX;
-3115   6                  g_cEstadoTxSoft &=~COD_PRINT_TX;
-3116   6                  FueraLinea=1;
-3117   6                  Rechazo=0;
-3118   6                  Dato_Placa=0;
-3119   6                  send_markCashierAut=0;
-3120   6                  Tiquete_Placa=0;
-3121   6                  Tiquete_Salida=0;
+3113   6                  for (k=0;k<16;k++)
+3114   6                  {
+3115   7                      vdato(' ');
+3116   7                  }
+3117   6                  g_cEstadoTxSoft &=~LECTURA_COD_TX;
+3118   6                  g_cEstadoTxSoft &=~LECTURA_WIEG_TX;
+3119   6                  g_cEstadoTxSoft &=~COD_PRINT_TX;
+3120   6                  FueraLinea=1;
+3121   6                  Rechazo=0;
 3122   6                  Dato_Placa=0;
-3123   6                  cont(0xc0);
-3124   6                  for (k=0;linea[k]!='\0';k++)
-3125   6                  {
-3126   7                      vdato(linea[k]);
-3127   7                  }
-3128   6                  buffer_bus[0]=OFF_LINE;   
-3129   6                  tx_bus(1);
-3130   6                }
-3131   5              }
-3132   4               
-3133   4      
-3134   4              Atascado=0;
-3135   4              lock1=0;
-3136   4              lock2=0;
+3123   6                  send_markCashierAut=0;
+3124   6                  Tiquete_Placa=0;
+3125   6                  Tiquete_Salida=0;
+3126   6                  Dato_Placa=0;
+3127   6                  cont(0xc0);
+3128   6                  for (k=0;linea[k]!='\0';k++)
+3129   6                  {
+3130   7                      vdato(linea[k]);
+3131   7                  }
+3132   6                  buffer_bus[0]=OFF_LINE;   
+3133   6                  tx_bus(1);
+3134   6                }
+3135   5              }
+3136   4               
 3137   4      
-3138   4              audio1=0;
-3139   4              msg1=0;
-3140   4              audio2=0;
-3141   4              msg2=0;
-3142   4              audio3=0;
-3143   4              msg3=0;
-3144   4              audio4=0;
-3145   4              msg4=0;
-3146   4      
-3147   4            
-3148   4              seg=cte_seg;
-3149   4              TH0=0X00;               //Inicializa timer                  *           
-3150   4              TL0=0X00;
-3151   4              TF0=0;
-3152   4              msg_error=0;
-3153   4      
-3154   4      
-3155   4            }
-3156   3      
-3157   3          }
-3158   2      //********************************************************************************************************
+3138   4              Atascado=0;
+3139   4              lock1=0;
+3140   4              lock2=0;
+3141   4      
+3142   4              audio1=0;
+3143   4              msg1=0;
+3144   4              audio2=0;
+3145   4              msg2=0;
+3146   4              audio3=0;
+3147   4              msg3=0;
+3148   4              audio4=0;
+3149   4              msg4=0;
+3150   4      
+3151   4            
+3152   4              seg=cte_seg;
+3153   4              TH0=0X00;               //Inicializa timer                  *           
+3154   4              TL0=0X00;
+3155   4              TF0=0;
+3156   4              msg_error=0;
+3157   4      
+3158   4      
+3159   4            }
+3160   3      
+3161   3          }
+3162   2      //********************************************************************************************************
              -***
-3159   2          if ((RetryCmd==1)&&(ready==1))
-3160   2          {
-3161   3              RetryCmd=0;
-3162   3            for (temp=0; temp<NumDatRetry; temp++)
-3163   3            {
-3164   4              buffer_bus[temp]=BufferRetry[temp];
-3165   4            }
-3166   3            tx_bus(NumDatRetry);
-3167   3          }
-3168   2      //********************************************************************************************************
+3163   2          if ((RetryCmd==1)&&(ready==1))
+3164   2          {
+3165   3              RetryCmd=0;
+3166   3            for (temp=0; temp<NumDatRetry; temp++)
+3167   3            {
+3168   4              buffer_bus[temp]=BufferRetry[temp];
+3169   4            }
+3170   3            tx_bus(NumDatRetry);
+3171   3          }
+3172   2      //********************************************************************************************************
              -***
-3169   2          if (txACK==1)
-3170   2          {
-3171   3            tx_chr(ACK);                        
-3172   3            txACK=0;
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/04/2021 16:31:50 PAGE 54  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      06/08/2021 11:29:47 PAGE 54  
 
-3173   3          }
-3174   2      //********************************************************************************************************
+3173   2          if (txACK==1)
+3174   2          {
+3175   3            tx_chr(ACK);                        
+3176   3            txACK=0;
+3177   3          }
+3178   2      //********************************************************************************************************
              -***
-3175   2          if( ((g_cEstadoComSoft==POLL_COM_SOF)||(g_cEstadoComSoft==ANALICE_STR_SOF)))  
-3176   2          {                                        
-3177   3        
-3178   3      
-3179   3            AtencComSoft();
-3180   3          }
-3181   2      //********************************************************************************************************
+3179   2          if( ((g_cEstadoComSoft==POLL_COM_SOF)||(g_cEstadoComSoft==ANALICE_STR_SOF)))  
+3180   2          {                                        
+3181   3        
+3182   3      
+3183   3            AtencComSoft();
+3184   3          }
+3185   2      //********************************************************************************************************
              -***
-3182   2          if ((Tx_Acceso==1)&&(ready==1))
-3183   2          { 
-3184   3            Tx_Acceso=0;
-3185   3            buffer_bus[0]=ACCESO;
-3186   3            tx_bus(1);
-3187   3          
-3188   3          //  lcd_text(0,0,(unsigned char *) "ENVIANDO ACCESO ");
-3189   3      
-3190   3              buffer_bus[0]=0x00;
-3191   3            tx_bus(1);
-3192   3          }           
-3193   2      //***********************************************************************************************
-3194   2          relevos_aux();
-3195   2        }
-3196   1        }
+3186   2          if ((Tx_Acceso==1)&&(ready==1))
+3187   2          { 
+3188   3            Tx_Acceso=0;
+3189   3            buffer_bus[0]=ACCESO;
+3190   3            tx_bus(1);
+3191   3          
+3192   3          //  lcd_text(0,0,(unsigned char *) "ENVIANDO ACCESO ");
+3193   3      
+3194   3              buffer_bus[0]=0x00;
+3195   3            tx_bus(1);
+3196   3          }           
+3197   2      //***********************************************************************************************
+3198   2          relevos_aux();
+3199   2        }
+3200   1        }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =  14686    ----
-   CONSTANT SIZE    =    263    ----
+   CODE SIZE        =  14643    ----
+   CONSTANT SIZE    =    243    ----
    XDATA SIZE       =    515     112
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----

@@ -1199,7 +1199,7 @@ void AtencComSoft(void)
 						{
 				 			buffer_bus[i]=g_scArrDisplay[i];
 						}
-						buffer_bus[i++]=calculo_bcc();
+						
 						backup_clk();
 				
 					
@@ -1643,10 +1643,14 @@ void main (void)
 //------------------------------------------------------------------------------------------*
 		if (ready==0)							//Recibe del procesador Aux	(Interrupcion generada del Aux)
 		{
+			
 			buffer_bus[0]=0xff;
 			buffer_bus[1]=0xff;
 			rx_bus();
-		/*
+		
+			
+			//DebugBufferMF(buffer_bus,num_data);
+			/*
 			lcd_text(0,0,(unsigned char *) " pto P0 "); 		//jp
 			temp=0xff;
 			while(temp){temp--;}//jp
@@ -2378,7 +2382,7 @@ void main (void)
 				
 					else if ((buffer_bus[0]==0x02)&&(buffer_bus[1]==05)&&(buffer_bus[2]==0x03))	 //	bcc hora
 				{
-					Debug_txt_uart((unsigned char *) "recibo trama Hora: ");
+					//Debug_txt_uart((unsigned char *) "recibo trama Hora: ");
 					Retransmitir_trama_hora();
 			  }
 					
