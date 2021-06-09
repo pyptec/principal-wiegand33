@@ -254,6 +254,7 @@ extern	unsigned char facility_code;
 extern	unsigned char	card_number;
 extern	unsigned char card_number1;
 extern	unsigned char card_number2;
+extern  void Retransmitir_trama_hora();
 
 //*******************************************************************************************
 void Pulso_Bus(void)
