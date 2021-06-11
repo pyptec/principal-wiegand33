@@ -1180,6 +1180,7 @@ void AtencComSoft(void)
 		case ANALICE_STR_SOF:															   //ANALIZA DATOS RECIBIDOS
 
 					g_scArrDisplay[g_cContByteRx]=0;
+				
   				if (SerieOK==1)
 				{
 					SerieOK=0;
@@ -1187,6 +1188,7 @@ void AtencComSoft(void)
 					{
 			 			buffer_bus[i]=g_scArrDisplay[i];
 					}
+					
 					tx_bus(g_cContByteRx);
 					txACK=1;
 					g_cEstadoComSoft=ESPERA_RX;
@@ -2383,7 +2385,7 @@ void main (void)
 				
 					else if ((buffer_bus[0]==0x02)&&(buffer_bus[1]==05)&&(buffer_bus[2]==0x03))	 //	bcc hora
 				{
-					//Debug_txt_uart((unsigned char *) "recibo trama Hora: ");
+					
 					Retransmitir_trama_hora();
 			  }
 					

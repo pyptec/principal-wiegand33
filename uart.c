@@ -572,8 +572,8 @@ void Debug_chr_uart(unsigned char Dat)
 	
 	
 }
-*/
-/*
+
+
 void DebugBufferMF(unsigned char *str,unsigned char num_char)
 {
   unsigned char j;
@@ -693,8 +693,10 @@ void cmd_exclusivo()
 		//	Debug_chr_uart(dato);
 			if (dato >= 22)
 			{
-				buffer_bus[0]=0X55;
-				tx_bus(1);
+				buffer_bus[0]=0X02;
+				buffer_bus[1]=0X55;
+				buffer_bus[2]=0X03;
+				tx_bus(3);
 			//	Debug_chr_uart(buffer_bus[0]);
 			}
 			

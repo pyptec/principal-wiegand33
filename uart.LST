@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   UART                                                              06/09/2021 13:03:14 PAGE 1   
+C51 COMPILER V9.59.0.0   UART                                                              06/11/2021 12:39:41 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE UART
@@ -62,7 +62,7 @@ line level    source
   52          extern unsigned char seg,k;
   53          extern  unsigned int TimeOut_Send_Acceso;
   54          extern unsigned int OpenMensual_Apx;
-C51 COMPILER V9.59.0.0   UART                                                              06/09/2021 13:03:14 PAGE 2   
+C51 COMPILER V9.59.0.0   UART                                                              06/11/2021 12:39:41 PAGE 2   
 
   55          
   56          extern unsigned char g_scArrRxComSoft[];
@@ -126,7 +126,7 @@ line level    source
  113          //*******************************************************************************************
  114          //  Transmision de un caracter                                *
  115          //*******************************************************************************************
-C51 COMPILER V9.59.0.0   UART                                                              06/09/2021 13:03:14 PAGE 3   
+C51 COMPILER V9.59.0.0   UART                                                              06/11/2021 12:39:41 PAGE 3   
 
  116           void tx_chr (unsigned char data_com)
  117           {
@@ -190,7 +190,7 @@ line level    source
  175   4                case 'e':                       //Se atiende en el ciclo principal
  176   4                  g_cEstadoComSoft=RECEPCION_ID;
  177   4                  g_cContByteRx=0;
-C51 COMPILER V9.59.0.0   UART                                                              06/09/2021 13:03:14 PAGE 4   
+C51 COMPILER V9.59.0.0   UART                                                              06/11/2021 12:39:41 PAGE 4   
 
  178   4      
  179   4                break;
@@ -254,7 +254,7 @@ line level    source
  237   4      
  238   4                TimeOut_Codigo=0;
  239   4              }
-C51 COMPILER V9.59.0.0   UART                                                              06/09/2021 13:03:14 PAGE 5   
+C51 COMPILER V9.59.0.0   UART                                                              06/11/2021 12:39:41 PAGE 5   
 
  240   3              else if (cDatoRx==ENQ)
  241   3              {
@@ -318,7 +318,7 @@ line level    source
  298   7                    }         
  299   6                    
  300   6                          
-C51 COMPILER V9.59.0.0   UART                                                              06/09/2021 13:03:14 PAGE 6   
+C51 COMPILER V9.59.0.0   UART                                                              06/11/2021 12:39:41 PAGE 6   
 
  301   6                  }
  302   5      
@@ -382,7 +382,7 @@ line level    source
  359   8                        TH0=0X00;           //Inicializa timer                    *           
  360   8                        TL0=0X00;
  361   8                        TF0=0;
-C51 COMPILER V9.59.0.0   UART                                                              06/09/2021 13:03:14 PAGE 7   
+C51 COMPILER V9.59.0.0   UART                                                              06/11/2021 12:39:41 PAGE 7   
 
  362   8                      }
  363   7                    }
@@ -446,7 +446,7 @@ line level    source
  420   5      
  421   5                  if(g_scArrRxComSoft[1]=='A')
  422   5                  {
-C51 COMPILER V9.59.0.0   UART                                                              06/09/2021 13:03:14 PAGE 8   
+C51 COMPILER V9.59.0.0   UART                                                              06/11/2021 12:39:41 PAGE 8   
 
  423   6      
  424   6                    
@@ -510,7 +510,7 @@ line level    source
  481   9      
  482   9      //                    lock2=1;          // Alvaro Manda Abrir mensual y tiquete pero notifico
  483   9      //                    seg=cte_seg+14;
-C51 COMPILER V9.59.0.0   UART                                                              06/09/2021 13:03:14 PAGE 9   
+C51 COMPILER V9.59.0.0   UART                                                              06/11/2021 12:39:41 PAGE 9   
 
  484   9      //                    TH0=0X00;         //Inicializa timer                    *           
  485   9      //                    TL0=0X00;
@@ -574,7 +574,7 @@ line level    source
  543   1      //------------------------------------------------------------------------------------------*
  544   1      // Transmitted data interrupt.                                *
  545   1      //------------------------------------------------------------------------------------------*
-C51 COMPILER V9.59.0.0   UART                                                              06/09/2021 13:03:14 PAGE 10  
+C51 COMPILER V9.59.0.0   UART                                                              06/11/2021 12:39:41 PAGE 10  
 
  546   1          if (TI != 0) 
  547   1        {
@@ -605,8 +605,8 @@ line level    source
  572            
  573            
  574          }
- 575          */
- 576          /*
+ 575          
+ 576          
  577          void DebugBufferMF(unsigned char *str,unsigned char num_char)
  578          {
  579            unsigned char j;
@@ -638,7 +638,7 @@ line level    source
  605                  tx_chr(str[i]);
  606              }
  607              
-C51 COMPILER V9.59.0.0   UART                                                              06/09/2021 13:03:14 PAGE 11  
+C51 COMPILER V9.59.0.0   UART                                                              06/11/2021 12:39:41 PAGE 11  
 
  608            
  609          }
@@ -702,7 +702,7 @@ line level    source
  665   1                {
  666   2                  buffer_bus[i]=buffer_clk[i];
  667   2                  
-C51 COMPILER V9.59.0.0   UART                                                              06/09/2021 13:03:14 PAGE 12  
+C51 COMPILER V9.59.0.0   UART                                                              06/11/2021 12:39:41 PAGE 12  
 
  668   2                }
  669   1        
@@ -732,17 +732,19 @@ line level    source
  693   2          //  Debug_chr_uart(dato);
  694   2            if (dato >= 22)
  695   2            {
- 696   3              buffer_bus[0]=0X55;
- 697   3              tx_bus(1);
- 698   3            //  Debug_chr_uart(buffer_bus[0]);
- 699   3            }
- 700   2            
- 701   2          }
- 702   1      }
+ 696   3              buffer_bus[0]=0X02;
+ 697   3              buffer_bus[1]=0X55;
+ 698   3              buffer_bus[2]=0X03;
+ 699   3              tx_bus(3);
+ 700   3            //  Debug_chr_uart(buffer_bus[0]);
+ 701   3            }
+ 702   2            
+ 703   2          }
+ 704   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1544    ----
+   CODE SIZE        =   1551    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =     31       4
    PDATA SIZE       =   ----    ----
