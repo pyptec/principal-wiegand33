@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   WIEGAND                                                           06/11/2021 12:39:41 PAGE 1   
+C51 COMPILER V9.59.0.0   WIEGAND                                                           10/15/2021 16:33:18 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE WIEGAND
@@ -16,7 +16,7 @@ line level    source
    6          
    7          
    8          
-   9          #define   WGND_SIZE  33   //26//49//33
+   9          #define   WGND_SIZE  26   //26//49//33
   10          #define STX 2
   11          #define ETX 3
   12          
@@ -62,7 +62,7 @@ line level    source
   52          
   53          ------------------------------------------------------------------------------*/
   54          
-C51 COMPILER V9.59.0.0   WIEGAND                                                           06/11/2021 12:39:41 PAGE 2   
+C51 COMPILER V9.59.0.0   WIEGAND                                                           10/15/2021 16:33:18 PAGE 2   
 
   55          void  ex0_isr (void) interrupt 0 
   56          {
@@ -126,7 +126,7 @@ line level    source
  114          Habilito interrupciones int0, int1
  115          ------------------------------------------------------------------------------*/
  116          void on_ini_ex0_ex1(void)
-C51 COMPILER V9.59.0.0   WIEGAND                                                           06/11/2021 12:39:41 PAGE 3   
+C51 COMPILER V9.59.0.0   WIEGAND                                                           10/15/2021 16:33:18 PAGE 3   
 
  117          {
  118   1        EA = 1    ;             /*enable las dos interrupciones*/
@@ -167,234 +167,235 @@ line level    source
  153          
  154          void ajusta_code(void)
  155          {
- 156   1        facility_code=bits_wiegand_hex(1);
+ 156   1        facility_code=bits_wiegand_hex(1) ;
  157   1        card_number=bits_wiegand_hex(9);
- 158   1        card_number1=bits_wiegand_hex(17);
- 159   1        card_number2=bits_wiegand_hex(25);
- 160   1      }
- 161          
+ 158   1        card_number1=bits_wiegand_hex(17) ;
+ 159   1        /*se adiciona para 33*/
+ 160   1        //card_number2=bits_wiegand_hex(25);
+ 161   1      }
  162          
- 163          /*------------------------------------------------------------------------------
- 164          rutina que ajusta la lectura de wiegand para 33 bits
- 165          ------------------------------------------------------------------------------*/
- 166          
- 167          void id_Access()
- 168          {
- 169   1      
- 170   1          
- 171   1          ajusta_code();                      // lectura MF50 de 33bits
- 172   1      //  buffer_wie[0]=facility_code;
- 173   1          buffer_wie[0]=card_number;
- 174   1          buffer_wie[1]=card_number1;
- 175   1          buffer_wie[2]=card_number2;
- 176   1      //  buffer_wie[2]=card_number2;
- 177   1          lcd_wiegand();
- 178   1      
-C51 COMPILER V9.59.0.0   WIEGAND                                                           06/11/2021 12:39:41 PAGE 4   
+ 163          
+ 164          /*------------------------------------------------------------------------------
+ 165          rutina que ajusta la lectura de wiegand para 33 bits
+ 166          ------------------------------------------------------------------------------*/
+ 167          
+ 168          void id_Access()
+ 169          {
+ 170   1      
+ 171   1          
+ 172   1          ajusta_code();                      // lectura MF50 de 33bits
+ 173   1          buffer_wie[0]=facility_code;
+ 174   1          buffer_wie[1]=card_number;
+ 175   1          buffer_wie[2]=card_number1;
+ 176   1        /*solo usado para 33*/
+ 177   1      //  buffer_wie[2]=card_number2;
+ 178   1          lcd_wiegand();
+C51 COMPILER V9.59.0.0   WIEGAND                                                           10/15/2021 16:33:18 PAGE 4   
 
- 179   1      }
- 180          
- 181          /*------------------------------------------------------------------------------
- 182          rutina que convierte los bits de lectura de wiegand a hex
- 183          bits= es un arreglo donde se realiza una or con cada bit para crear el dato hex 
- 184          starting_position= posicion de inicio de analisis del arreglo de bits, para crear el caracter hex
- 185          
- 186          codebits=Lectura de bits del codigo wiegand
- 187          ------------------------------------------------------------------------------*/
- 188          
- 189          unsigned char  bits_wiegand_hex(unsigned char starting_position)
- 190          {
- 191   1        unsigned char apx_err  []= "ERROR DE LECTURA" ;
- 192   1        unsigned char i,j,code_wiegand=0;
- 193   1        unsigned char bits[8]={0x80,0x40,0x20,0x10,0x08,0x04,0x02,0x01};
- 194   1        i=starting_position+8;
- 195   1        
- 196   1        for(j=starting_position ; j < i ; j++)
- 197   1        {
- 198   2            if(codebits[j]=='1')
- 199   2          {
- 200   3              code_wiegand=code_wiegand | bits[j-starting_position];
- 201   3          }
- 202   2            
- 203   2          else if((codebits[j]>'1') || (codebits[j]< '0'))
- 204   2           {
- 205   3               
- 206   3            cont(0x80);
- 207   3            lcd_puts(apx_err);
- 208   3            code_wiegand=  0;
- 209   3            break;  
- 210   3           }
- 211   2      
- 212   2        }
- 213   1        return code_wiegand;
- 214   1      }
- 215          
- 216          /*------------------------------------------------------------------------------
- 217             muestra el numero de la tarjeta leida en el lcd
- 218          ------------------------------------------------------------------------------*/
- 219           void lcd_wiegand()
- 220           {
- 221   1       unsigned int temp;
- 222   1       unsigned char buf[6]={0,0,0,0,0,0};
- 223   1       unsigned char lectura  []= "LECT.1           " ;
- 224   1        Borra_all();                  /*borra el lcd*/
- 225   1        cont(0x80);                   /*inicio de la primer ilera del lcd*/
- 226   1        lcd_puts(lectura);              /*msj de (LECT.1)*/
- 227   1        cont(0x87);                 /*posicion donde se coloca la parte alta del codigo de la tarjeta*/
- 228   1                
- 229   1      
- 230   1        temp=buffer_wie[0];                 
- 231   1        sprintf(buf,"%u",temp);             /*convierto el hex a un string bcd*/
- 232   1        lcd_puts(buf);
- 233   1        vdato('-'); 
- 234   1      
- 235   1        temp=(buffer_wie[1] <<8)| buffer_wie[2] ;  /*uno los dos registros en uno de 16 bits*/
- 236   1        sprintf(buf,"%u",temp);             /*convierto el dato en ascii*/
- 237   1        lcd_puts(buf);
- 238   1      
- 239   1       }
- 240           /*
-C51 COMPILER V9.59.0.0   WIEGAND                                                           06/11/2021 12:39:41 PAGE 5   
+ 179   1      
+ 180   1      }
+ 181          
+ 182          /*------------------------------------------------------------------------------
+ 183          rutina que convierte los bits de lectura de wiegand a hex
+ 184          bits= es un arreglo donde se realiza una or con cada bit para crear el dato hex 
+ 185          starting_position= posicion de inicio de analisis del arreglo de bits, para crear el caracter hex
+ 186          
+ 187          codebits=Lectura de bits del codigo wiegand
+ 188          ------------------------------------------------------------------------------*/
+ 189          
+ 190          unsigned char  bits_wiegand_hex(unsigned char starting_position)
+ 191          {
+ 192   1        unsigned char apx_err  []= "ERROR DE LECTURA" ;
+ 193   1        unsigned char i,j,code_wiegand=0;
+ 194   1        unsigned char bits[8]={0x80,0x40,0x20,0x10,0x08,0x04,0x02,0x01};
+ 195   1        i=starting_position+8;
+ 196   1        
+ 197   1        for(j=starting_position ; j < i ; j++)
+ 198   1        {
+ 199   2            if(codebits[j]=='1')
+ 200   2          {
+ 201   3              code_wiegand=code_wiegand | bits[j-starting_position];
+ 202   3          }
+ 203   2            
+ 204   2          else if((codebits[j]>'1') || (codebits[j]< '0'))
+ 205   2           {
+ 206   3               
+ 207   3            cont(0x80);
+ 208   3            lcd_puts(apx_err);
+ 209   3            code_wiegand=  0;
+ 210   3            break;  
+ 211   3           }
+ 212   2      
+ 213   2        }
+ 214   1        return code_wiegand;
+ 215   1      }
+ 216          
+ 217          /*------------------------------------------------------------------------------
+ 218             muestra el numero de la tarjeta leida en el lcd
+ 219          ------------------------------------------------------------------------------*/
+ 220           void lcd_wiegand()
+ 221           {
+ 222   1       unsigned int temp;
+ 223   1       unsigned char buf[6]={0,0,0,0,0,0};
+ 224   1       unsigned char lectura  []= "LECT.1           " ;
+ 225   1        Borra_all();                  /*borra el lcd*/
+ 226   1        cont(0x80);                   /*inicio de la primer ilera del lcd*/
+ 227   1        lcd_puts(lectura);              /*msj de (LECT.1)*/
+ 228   1        cont(0x87);                 /*posicion donde se coloca la parte alta del codigo de la tarjeta*/
+ 229   1                
+ 230   1      
+ 231   1        temp=buffer_wie[0];                 
+ 232   1        sprintf(buf,"%u",temp);             /*convierto el hex a un string bcd*/
+ 233   1        lcd_puts(buf);
+ 234   1        vdato('-'); 
+ 235   1      
+ 236   1        temp=(buffer_wie[1] <<8)| buffer_wie[2] ;  /*uno los dos registros en uno de 16 bits*/
+ 237   1        sprintf(buf,"%u",temp);             /*convierto el dato en ascii*/
+ 238   1        lcd_puts(buf);
+ 239   1      
+ 240   1       }
+C51 COMPILER V9.59.0.0   WIEGAND                                                           10/15/2021 16:33:18 PAGE 5   
 
- 241           void tr_wiegand_soft()
- 242           {
- 243            g_scArrTxComSoft[0]=STX;
- 244            g_scArrTxComSoft[1]='B';
- 245            g_scArrTxComSoft[2]=((buffer_wie[0]>>4)&0X0f)+0X30;
- 246            g_scArrTxComSoft[3]=(buffer_wie[0]&0X0F)+0X30;
- 247            g_scArrTxComSoft[4]=((buffer_wie[1]>>4)&0X0f)+0X30;
- 248            g_scArrTxComSoft[5]=(buffer_wie[1]&0X0f)+0X30;
- 249            g_scArrTxComSoft[6]=((buffer_wie[2]>>4)&0X0f)+0X30;
- 250            g_scArrTxComSoft[7]=(buffer_wie[2]&0X0f)+0X30;
- 251              
- 252            g_scArrTxComSoft[8]=',';
- 253            g_scArrTxComSoft[9]='0';
- 254            
- 255            if (Dif_Mot_Car==1)
- 256            {
- 257              if (automovil==0)
- 258              {
- 259              g_scArrTxComSoft[10]='0';   //Carro =0;
- 260              }
- 261              else
- 262              {
- 263              g_scArrTxComSoft[10]='1';     //MOTO = 1
- 264              }
- 265            }
- 266            else
- 267            {
- 268              g_scArrTxComSoft[10]='0';     //Carro =0;
- 269            }
- 270              
- 271            g_scArrTxComSoft[11]=ETX;
- 272            EscribirCadenaSoft(12);
- 273          
- 274           }
- 275           */
- 276           /*------------------------------------------------------------------------------
- 277          inhabilito la interrupcion de entrada int0 y int1
- 278          ------------------------------------------------------------------------------*/
- 279          /*
- 280          void off_ini_ex0_ex1(void)
- 281          {
- 282            EA = 0 ;                    // enable interrupcion bit 1 del registro IENO
- 283            
- 284          }
- 285          */
- 286          /*------------------------------------------------------------------------------
- 287          Ajuste codigo de lectura de 26 bits con complemento a uno
- 288          ------------------------------------------------------------------------------*/
- 289          /*
- 290          void ajusta_code_26_complemento(void)
- 291          {
- 292            facility_code=bits_wiegand_hex(1) ^ 0xff;
- 293            card_number=bits_wiegand_hex(9) ^ 0xff;
- 294            card_number1=bits_wiegand_hex(17) ^ 0xff;
- 295          
- 296            
- 297          }
- 298          */
- 299          /*------------------------------------------------------------------------------
- 300          Ajuste codigo de lectura de 26 bits 
- 301          ------------------------------------------------------------------------------*/
- 302          /*
-C51 COMPILER V9.59.0.0   WIEGAND                                                           06/11/2021 12:39:41 PAGE 6   
+ 241           /*
+ 242           void tr_wiegand_soft()
+ 243           {
+ 244            g_scArrTxComSoft[0]=STX;
+ 245            g_scArrTxComSoft[1]='B';
+ 246            g_scArrTxComSoft[2]=((buffer_wie[0]>>4)&0X0f)+0X30;
+ 247            g_scArrTxComSoft[3]=(buffer_wie[0]&0X0F)+0X30;
+ 248            g_scArrTxComSoft[4]=((buffer_wie[1]>>4)&0X0f)+0X30;
+ 249            g_scArrTxComSoft[5]=(buffer_wie[1]&0X0f)+0X30;
+ 250            g_scArrTxComSoft[6]=((buffer_wie[2]>>4)&0X0f)+0X30;
+ 251            g_scArrTxComSoft[7]=(buffer_wie[2]&0X0f)+0X30;
+ 252              
+ 253            g_scArrTxComSoft[8]=',';
+ 254            g_scArrTxComSoft[9]='0';
+ 255            
+ 256            if (Dif_Mot_Car==1)
+ 257            {
+ 258              if (automovil==0)
+ 259              {
+ 260              g_scArrTxComSoft[10]='0';   //Carro =0;
+ 261              }
+ 262              else
+ 263              {
+ 264              g_scArrTxComSoft[10]='1';     //MOTO = 1
+ 265              }
+ 266            }
+ 267            else
+ 268            {
+ 269              g_scArrTxComSoft[10]='0';     //Carro =0;
+ 270            }
+ 271              
+ 272            g_scArrTxComSoft[11]=ETX;
+ 273            EscribirCadenaSoft(12);
+ 274          
+ 275           }
+ 276           */
+ 277           /*------------------------------------------------------------------------------
+ 278          inhabilito la interrupcion de entrada int0 y int1
+ 279          ------------------------------------------------------------------------------*/
+ 280          /*
+ 281          void off_ini_ex0_ex1(void)
+ 282          {
+ 283            EA = 0 ;                    // enable interrupcion bit 1 del registro IENO
+ 284            
+ 285          }
+ 286          */
+ 287          /*------------------------------------------------------------------------------
+ 288          Ajuste codigo de lectura de 26 bits con complemento a uno
+ 289          ------------------------------------------------------------------------------*/
+ 290          /*
+ 291          void ajusta_code_26_complemento(void)
+ 292          {
+ 293            facility_code=bits_wiegand_hex(1) ^ 0xff;
+ 294            card_number=bits_wiegand_hex(9) ^ 0xff;
+ 295            card_number1=bits_wiegand_hex(17) ^ 0xff;
+ 296          
+ 297            
+ 298          }
+ 299          */
+ 300          /*------------------------------------------------------------------------------
+ 301          Ajuste codigo de lectura de 26 bits 
+ 302          ------------------------------------------------------------------------------*/
+C51 COMPILER V9.59.0.0   WIEGAND                                                           10/15/2021 16:33:18 PAGE 6   
 
- 303          void ajusta_code_26_normal(void)
- 304          {
- 305            facility_code=bits_wiegand_hex(1) ;
- 306            card_number=bits_wiegand_hex(9) ;
- 307            card_number1=bits_wiegand_hex(17);
- 308          
- 309            
- 310          }
- 311          */
- 312          
- 313          /*------------------------------------------------------------------------------
- 314          rutina que ajusta la lectura de wiegand para 33 bits
- 315          ------------------------------------------------------------------------------*/
- 316          /*
- 317          void id_Access_33()
- 318          {
- 319            
- 320            ajusta_code_26_normal();                      // lectura MF50 de 33bits
- 321            //buffer_wie[0]=facility_code;
- 322            
- 323            buffer_wie[0]=card_number;
- 324            buffer_wie[1]=card_number1;
- 325            buffer_wie[2]=card_number2;
- 326            lcd_wiegand();
- 327          
- 328            
- 329          }
- 330          */
- 331          /*------------------------------------------------------------------------------
- 332          Rutina que muestra el valor en hex en el lcd
- 333          ------------------------------------------------------------------------------*/
- 334          /*
- 335          void Debug_chr_lcd(unsigned char Dat)
- 336          {
- 337            unsigned char temp;
- 338            
- 339              temp=(Dat&0xf0)>>4;
- 340              (temp>0x09)?(temp=temp+0x37):(temp=temp+0x30);
- 341                
- 342              vdato(temp);
- 343                         
- 344              temp=(Dat&0x0f);
- 345              (temp>0x09)?(temp=temp+0x37):(temp=temp+0x30);
- 346              vdato(temp);
- 347              vdato(' ');
- 348            
+ 303          /*
+ 304          void ajusta_code_26_normal(void)
+ 305          {
+ 306            facility_code=bits_wiegand_hex(1) ;
+ 307            card_number=bits_wiegand_hex(9) ;
+ 308            card_number1=bits_wiegand_hex(17);
+ 309          
+ 310            
+ 311          }
+ 312          */
+ 313          
+ 314          /*------------------------------------------------------------------------------
+ 315          rutina que ajusta la lectura de wiegand para 33 bits
+ 316          ------------------------------------------------------------------------------*/
+ 317          /*
+ 318          void id_Access_33()
+ 319          {
+ 320            
+ 321            ajusta_code_26_normal();                      // lectura MF50 de 33bits
+ 322            //buffer_wie[0]=facility_code;
+ 323            
+ 324            buffer_wie[0]=card_number;
+ 325            buffer_wie[1]=card_number1;
+ 326            buffer_wie[2]=card_number2;
+ 327            lcd_wiegand();
+ 328          
+ 329            
+ 330          }
+ 331          */
+ 332          /*------------------------------------------------------------------------------
+ 333          Rutina que muestra el valor en hex en el lcd
+ 334          ------------------------------------------------------------------------------*/
+ 335          /*
+ 336          void Debug_chr_lcd(unsigned char Dat)
+ 337          {
+ 338            unsigned char temp;
+ 339            
+ 340              temp=(Dat&0xf0)>>4;
+ 341              (temp>0x09)?(temp=temp+0x37):(temp=temp+0x30);
+ 342                
+ 343              vdato(temp);
+ 344                         
+ 345              temp=(Dat&0x0f);
+ 346              (temp>0x09)?(temp=temp+0x37):(temp=temp+0x30);
+ 347              vdato(temp);
+ 348              vdato(' ');
  349            
- 350          }
- 351          */
- 352          /*
- 353          void lcd_debuger()
- 354          {
- 355            ajusta_code_26_normal();
- 356            buffer_wie[0]=facility_code;
- 357            buffer_wie[1]=card_number;
- 358            buffer_wie[2]=card_number1;
- 359            
- 360            Borra_all();                  /*borra el lcd*/
- 361          /* 
- 362          cont(0x80); 
- 363            Debug_chr_lcd(facility_code);
- 364            Debug_chr_lcd(card_number);
-C51 COMPILER V9.59.0.0   WIEGAND                                                           06/11/2021 12:39:41 PAGE 7   
+ 350            
+ 351          }
+ 352          */
+ 353          /*
+ 354          void lcd_debuger()
+ 355          {
+ 356            ajusta_code_26_normal();
+ 357            buffer_wie[0]=facility_code;
+ 358            buffer_wie[1]=card_number;
+ 359            buffer_wie[2]=card_number1;
+ 360            
+ 361            Borra_all();                  /*borra el lcd*/
+ 362          /* 
+ 363          cont(0x80); 
+ 364            Debug_chr_lcd(facility_code);
+C51 COMPILER V9.59.0.0   WIEGAND                                                           10/15/2021 16:33:18 PAGE 7   
 
- 365            Debug_chr_lcd(card_number1);
- 366            Debug_chr_lcd(card_number2);
- 367            
- 368          }
- 369          */
+ 365            Debug_chr_lcd(card_number);
+ 366            Debug_chr_lcd(card_number1);
+ 367            Debug_chr_lcd(card_number2);
+ 368            
+ 369          }
+ 370          */
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    601    ----
+   CODE SIZE        =    593    ----
    CONSTANT SIZE    =     52    ----
-   XDATA SIZE       =     44      53
+   XDATA SIZE       =     37      53
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----

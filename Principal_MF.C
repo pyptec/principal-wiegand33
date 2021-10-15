@@ -22,7 +22,7 @@ sbit msg3  = P0^2;					//Relevo de Salida (AUDIO)								*
 sbit msg4  = P0^3;					//Relevo de Salida (AUDIO)								*
 
 sbit automovil  = P1^7;				//Entrada sensor automovil / Cajon Monedero				*
-sbit SignalAcceso = P3^7;	 		//Sigue la señal de Sensor								*
+sbit SignalAcceso = P3^7;	 		//Sigue la señal de Sensor			sensor 1					*
 sbit busy=P3^5;		  				//														*
 sbit ready=P3^4;					//														*
 sbit bus_clk=P3^6;					//	
@@ -170,6 +170,7 @@ unsigned char xdata buffer_bus[30];
 #define	EXCEDE_HORARIO	0X07
 #define	MENSUAL_NO_PAGO	0X08
 #define UN_MOMENTO			0X09
+#define NO_PAGO					0xe7			
 
 #define SOLICITA_EVN 	0XAA
 
@@ -492,6 +493,8 @@ void SendRtaBus (unsigned char Respuesta)
 {
 	if (ready==1)
 	{
+		/*modifica jaime coloca un delay*/
+		wait_long();
 		buffer_bus[0]=Respuesta;		
 		ErrorTx=tx_bus(1);
 		if (ErrorTx==1)
@@ -513,7 +516,7 @@ void SendRtaBus (unsigned char Respuesta)
 //**************************************************************************************************************
 void AtencComSoft(void)
 {
-
+static unsigned char cont_solocita_evn=0;
 	char i, longTx;
 	switch (g_cEstadoComSoft)
 	{
@@ -528,9 +531,15 @@ void AtencComSoft(void)
 				g_cEstadoComSoft=ESPERA_RX;
 				
 				if (SignalAcceso==1)
-				{
+				{ 
+					/*mora el sensor1 si esta en 0 no envia AA*/
+					if(cont_solocita_evn==3)
+					{
 					buffer_bus[0]=SOLICITA_EVN;
 					tx_bus(1);
+						cont_solocita_evn=0;
+					}
+					cont_solocita_evn++;
 				}		
 				
 			}
@@ -1357,6 +1366,10 @@ void AtencComSoft(void)
 							else if ((g_scArrDisplay[1]=='X')&&(g_scArrDisplay[2]=='X')&&(g_scArrDisplay[3]=='X')&&(g_scArrDisplay[4]=='X')&&(g_scArrDisplay[5]=='M')&&(g_scArrDisplay[6]=='E')&&(g_scArrDisplay[7]=='N')&&(g_scArrDisplay[8]=='S')&&(g_scArrDisplay[9]=='U')&&(g_scArrDisplay[10]=='A')&&(g_scArrDisplay[11]=='L')&&(g_scArrDisplay[12]==' ')&&(g_scArrDisplay[13]=='N')&&(g_scArrDisplay[14]=='O')&&(g_scArrDisplay[15]==' ')&&(g_scArrDisplay[16]=='P')&&(g_scArrDisplay[17]=='A')&&(g_scArrDisplay[18]=='G'))
 						{
 							SendRtaBus(MENSUAL_NO_PAGO);
+						}
+							else if ((g_scArrDisplay[1]=='X')&&(g_scArrDisplay[2]=='X')&&(g_scArrDisplay[3]=='X')&&(g_scArrDisplay[4]=='X')&&(g_scArrDisplay[5]=='N')&&(g_scArrDisplay[6]=='O')&&(g_scArrDisplay[7]==' ')&&(g_scArrDisplay[8]=='P')&&(g_scArrDisplay[9]=='A')&&(g_scArrDisplay[10]=='G')&&(g_scArrDisplay[11]=='O'))
+						{
+							SendRtaBus(NO_PAGO);
 						}
 //-------------------------------------------------------------------------------------------------------------------------
 						cont(0x80);

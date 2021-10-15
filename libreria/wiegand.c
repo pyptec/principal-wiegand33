@@ -6,7 +6,7 @@ sbit automovil  = P1^7;				//Entrada sensor automovil / Cajon Monedero
 
 
 
-#define  	WGND_SIZE  33   //26//49//33
+#define  	WGND_SIZE  26   //26//49//33
 #define STX	2
 #define ETX	3
 
@@ -153,10 +153,11 @@ rutina que ajusta la lectura de wiegand
 
 void ajusta_code(void)
 {
-	facility_code=bits_wiegand_hex(1);
+	facility_code=bits_wiegand_hex(1) ;
 	card_number=bits_wiegand_hex(9);
-	card_number1=bits_wiegand_hex(17);
-	card_number2=bits_wiegand_hex(25);
+	card_number1=bits_wiegand_hex(17) ;
+	/*se adiciona para 33*/
+	//card_number2=bits_wiegand_hex(25);
 }
 
 
@@ -169,10 +170,10 @@ void id_Access()
 
 		
 		ajusta_code();											// lectura MF50 de 33bits
-//	buffer_wie[0]=facility_code;
-		buffer_wie[0]=card_number;
-		buffer_wie[1]=card_number1;
-		buffer_wie[2]=card_number2;
+		buffer_wie[0]=facility_code;
+		buffer_wie[1]=card_number;
+		buffer_wie[2]=card_number1;
+	/*solo usado para 33*/
 //	buffer_wie[2]=card_number2;
 		lcd_wiegand();
 
