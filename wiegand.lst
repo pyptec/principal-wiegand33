@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   WIEGAND                                                           10/15/2021 16:33:18 PAGE 1   
+C51 COMPILER V9.59.0.0   WIEGAND                                                           10/19/2021 10:44:38 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE WIEGAND
@@ -12,8 +12,8 @@ line level    source
    2          #include "wiegand.h"
    3          
    4          sbit automovil  = P1^7;       //Entrada sensor automovil / Cajon Monedero 
-   5          
-   6          
+   5          sbit D0L1=P3^2;       
+   6          sbit D1L1=P3^3;     
    7          
    8          
    9          #define   WGND_SIZE  26   //26//49//33
@@ -29,373 +29,459 @@ line level    source
   19          unsigned char card_number=0;
   20          unsigned char card_number1=0;
   21          unsigned char card_number2=0;
-  22          
-  23          unsigned char codebits[WGND_SIZE +1];//+1
-  24          unsigned char buffer_wie[4];
-  25          extern unsigned char g_scArrTxComSoft[];
-  26          
-  27          /*fuciones prototipo*/
-  28          extern void cont(unsigned char caracter);
-  29          extern void lcd_puts(unsigned char * str);
-  30          extern void vdato (unsigned char caracter)  ;
-  31          extern void Borra_all(void);
-  32          extern void EscribirCadenaSoft(unsigned char tamano_cadena);
-  33          extern int sprintf  (char *, const char *, ...);
-  34          extern void wait_long1 (unsigned int t) ;
-  35          extern bit tx_bus (unsigned char num_chr);
-  36          
-  37          /*configuracion de bit*/
-  38          extern bit Dif_Mot_Car;
-  39          /*------------------------------------------------------------------------------
-  40          Interrupciones int0 
-  41          
-  42          codebits=array de almacenamiento de la trama en bits del wiegand
-  43          nex_bit= es el contador de bits
-  44          WGND_SIZE= es el limite de bits a recibir
-  45          completo= es cuando termina de recibir la trama de wiegand
-  46          bit0=p bit de paridad
-  47          bit1 - bit8 = dato de 8bit llamado A
-  48          bit9 - bit16 = dato de 8bits llamado B
-  49          bit17 - bit 24 = datos de 8 bits  llamado c
-  50          bit25 - bit32 = datos de 8 bits llamado D
-  51          bit33=p bit de paridad
-  52          
-  53          ------------------------------------------------------------------------------*/
-  54          
-C51 COMPILER V9.59.0.0   WIEGAND                                                           10/15/2021 16:33:18 PAGE 2   
+  22          unsigned char timer_wiegand=3;
+  23          
+  24          unsigned char codebits[WGND_SIZE +1];//+1
+  25          unsigned char buffer_wie[4];
+  26          extern unsigned char g_scArrTxComSoft[];
+  27          
+  28          /*fuciones prototipo*/
+  29          extern void cont(unsigned char caracter);
+  30          extern void lcd_puts(unsigned char * str);
+  31          extern void vdato (unsigned char caracter)  ;
+  32          extern void Borra_all(void);
+  33          extern void EscribirCadenaSoft(unsigned char tamano_cadena);
+  34          extern int sprintf  (char *, const char *, ...);
+  35          extern void wait_long1 (unsigned int t) ;
+  36          //void  timer0_int() interrupt 1 using 2;
+  37          extern bit tx_bus (unsigned char num_chr);
+  38          void ini_timer(void);
+  39          void on_Timer0_Interrup(void);
+  40          void off_Timer0_Interrup(void);
+  41          /*configuracion de bit*/
+  42          extern bit Dif_Mot_Car;
+  43          
+  44          /*------------------------------------------------------------------------------
+  45          interrupcion por timer 
+  46          ValTimeOutCom se decrementa cada overflow de la interrupcion
+  47          Timer_wait    Incrementa cada overflow de la interrrupcion
+  48          clock=22.1184mhz
+  49          ciclo de mqn= clock/12 =0.5nseg
+  50          timer= ciclo mqn* reloj = 0.5 x65535 =32
+  51          temporizado=timer* ValTimeOutCom = 32*100=320ms
+  52          ------------------------------------------------------------------------------*/
+  53          void  timer0_int() interrupt 1 using 2
+  54              {
+C51 COMPILER V9.59.0.0   WIEGAND                                                           10/19/2021 10:44:38 PAGE 2   
 
-  55          void  ex0_isr (void) interrupt 0 
-  56          {
-  57   1        
-  58   1        
-  59   1            /*DOL1 - DATA0
-  60   1              lee solo los datos del los bits de (0)*/
-  61   1        
-  62   1            codebits[nex_bit] = '0';
-  63   1          
-  64   1          
-  65   1          
-  66   1            if( ++nex_bit == WGND_SIZE )
-  67   1            {
-  68   2              completo= 1 ;
-  69   2              codebits[nex_bit+1] = 0 ;
-  70   2            }
-  71   1            
-  72   1          
-  73   1      }
-  74          /*------------------------------------------------------------------------------
-  75           interrupciones  int1
-  76          ------------------------------------------------------------------------------*/  
-  77            
-  78          void  ex1_isr (void) interrupt 2 
-  79          {
-  80   1              /*D1L1 - DATA1 
-  81   1              lee solo los datos del los bits de (1)*/
-  82   1      
-  83   1          codebits[nex_bit] = '1';  
-  84   1          
-  85   1          
-  86   1          if( ++nex_bit == WGND_SIZE )
-  87   1          {
-  88   2            completo= 1;
-  89   2            codebits[nex_bit+1] = 0;
-  90   2          }
-  91   1      
-  92   1      }
-  93          /*------------------------------------------------------------------------------
-  94          Habilito interrupciones int0
-  95          ------------------------------------------------------------------------------*/
-  96          void ini_ex0(void)
-  97          {
-  98   1      
-  99   1        IT0 = 1 ;               /*detecta flanco de HIGH a low*/
- 100   1        EX0 = 1 ;              /*enable interrrup*/
- 101   1        
- 102   1      }
- 103          /*------------------------------------------------------------------------------
- 104          Habilito interrupciones  int1
- 105          ------------------------------------------------------------------------------*/
- 106          void ini_ex1(void)
- 107          {
- 108   1      
- 109   1        IT1 = 1 ;               /*detecta flanco de HIGH a low*/
- 110   1        EX1 = 1 ;               /*enable interrrup*/
- 111   1        
- 112   1      }
- 113          /*------------------------------------------------------------------------------
- 114          Habilito interrupciones int0, int1
- 115          ------------------------------------------------------------------------------*/
- 116          void on_ini_ex0_ex1(void)
-C51 COMPILER V9.59.0.0   WIEGAND                                                           10/15/2021 16:33:18 PAGE 3   
+  55   1            
+  56   1          
+  57   1            if (timer_wiegand== 0)
+  58   1            {
+  59   2              timer_wiegand=3;
+  60   2              off_Timer0_Interrup();
+  61   2              completo= 1 ;
+  62   2            }
+  63   1            else
+  64   1            {
+  65   2            timer_wiegand--;
+  66   2            }
+  67   1            TF0=0;
+  68   1            
+  69   1          }
+  70          /*------------------------------------------------------------------------------
+  71          ------------------------------------------------------------------------------*/
+  72          void ini_timer(void)
+  73          {
+  74   1      
+  75   1        TMOD=(TMOD & 0xF0) | 0x01;// configuro el reg TMOD sin precalador a 16 bits
+  76   1          
+  77   1        TH0=0X00;               //registro de la parte alta del timer0 de 16 bits                 *           
+  78   1        TL0=0X00;               // registro de la parte baja del timer0
+  79   1        TR0=1;                  // habilita el timer0 reg TCOM bit 4 para interrup
+  80   1      
+  81   1      }
+  82          /*------------------------------------------------------------------------------
+  83          ------------------------------------------------------------------------------*/
+  84          void on_Timer0_Interrup(void)
+  85          {
+  86   1        TF0=0;                  //registro TCON bit 5 bandera de overflow 
+  87   1        ET0=1;                  // enable interrupcion bit 1 del registro IENO
+  88   1        
+  89   1      }
+  90          /*------------------------------------------------------------------------------
+  91          ------------------------------------------------------------------------------*/
+  92          void off_Timer0_Interrup(void)
+  93          {
+  94   1        ET0=0;                  // enable interrupcion bit 1 del registro IENO
+  95   1        
+  96   1      }
+  97          
+  98          
+  99          /*------------------------------------------------------------------------------
+ 100          Interrupciones int0 
+ 101          
+ 102          codebits=array de almacenamiento de la trama en bits del wiegand
+ 103          nex_bit= es el contador de bits
+ 104          WGND_SIZE= es el limite de bits a recibir
+ 105          completo= es cuando termina de recibir la trama de wiegand
+ 106          bit0=p bit de paridad
+ 107          bit1 - bit8 = dato de 8bit llamado A
+ 108          bit9 - bit16 = dato de 8bits llamado B
+ 109          bit17 - bit 24 = datos de 8 bits  llamado c
+ 110          bit25 - bit32 = datos de 8 bits llamado D
+ 111          bit33=p bit de paridad
+ 112          
+ 113          ------------------------------------------------------------------------------*/
+ 114          
+ 115          void  ex0_isr (void) interrupt 0 
+ 116          {
+C51 COMPILER V9.59.0.0   WIEGAND                                                           10/19/2021 10:44:38 PAGE 3   
 
- 117          {
- 118   1        EA = 1    ;             /*enable las dos interrupciones*/
- 119   1        
- 120   1      }
- 121          /*------------------------------------------------------------------------------
- 122             inicia las interrupciones externas para leer wiegand
- 123          ------------------------------------------------------------------------------*/
- 124          void inicia_wiegand()
- 125          {
- 126   1      
- 127   1        ini_ex0();
- 128   1        ini_ex1();
- 129   1        on_ini_ex0_ex1();                                           /*habilita interrupcion global*/
- 130   1        limpia_data();
- 131   1      }
- 132          /*------------------------------------------------------------------------------
- 133          rutina que limpia el buffer de lectura de wiegand
- 134          ------------------------------------------------------------------------------*/
- 135          void limpia_data(void)
- 136          {
- 137   1      unsigned char i;
- 138   1        for(i=0;i<WGND_SIZE+1;i++)
- 139   1        { 
- 140   2          codebits[i]=0x00;           /*se limpia buffer de bits de wiegand*/
- 141   2          nex_bit=0;                  /*contador de bits*/
- 142   2          completo=0;                 /*indica que hay un dato de wiegand*/
- 143   2        }
- 144   1          facility_code=0;
- 145   1          card_number=0;
- 146   1          card_number1=0;
- 147   1          card_number2=0;
- 148   1        
- 149   1      }
- 150          /*------------------------------------------------------------------------------
- 151          rutina que ajusta la lectura de wiegand
- 152          ------------------------------------------------------------------------------*/
- 153          
- 154          void ajusta_code(void)
- 155          {
- 156   1        facility_code=bits_wiegand_hex(1) ;
- 157   1        card_number=bits_wiegand_hex(9);
- 158   1        card_number1=bits_wiegand_hex(17) ;
- 159   1        /*se adiciona para 33*/
- 160   1        //card_number2=bits_wiegand_hex(25);
- 161   1      }
- 162          
- 163          
- 164          /*------------------------------------------------------------------------------
- 165          rutina que ajusta la lectura de wiegand para 33 bits
- 166          ------------------------------------------------------------------------------*/
- 167          
- 168          void id_Access()
- 169          {
- 170   1      
- 171   1          
- 172   1          ajusta_code();                      // lectura MF50 de 33bits
- 173   1          buffer_wie[0]=facility_code;
- 174   1          buffer_wie[1]=card_number;
- 175   1          buffer_wie[2]=card_number1;
- 176   1        /*solo usado para 33*/
- 177   1      //  buffer_wie[2]=card_number2;
- 178   1          lcd_wiegand();
-C51 COMPILER V9.59.0.0   WIEGAND                                                           10/15/2021 16:33:18 PAGE 4   
+ 117   1        
+ 118   1        
+ 119   1            /*DOL1 - DATA0
+ 120   1              lee solo los datos del los bits de (0)*/
+ 121   1            nex_bit++;
+ 122   1            codebits[nex_bit] = '0';
+ 123   1        
+ 124   1            while(D0L1 == 0);
+ 125   1        
+ 126   1            on_Timer0_Interrup();                     // habilita el timer0 reg TCOM bit 4 para interrup
+ 127   1      
+ 128   1          
+ 129   1            //if( ++nex_bit == WGND_SIZE )
+ 130   1          //  {
+ 131   1          //    completo= 1 ;
+ 132   1          //    codebits[nex_bit+1] = 0 ;
+ 133   1          //  }
+ 134   1            
+ 135   1          
+ 136   1      }
+ 137          /*------------------------------------------------------------------------------
+ 138           interrupciones  int1
+ 139          ------------------------------------------------------------------------------*/  
+ 140            
+ 141          void  ex1_isr (void) interrupt 2 
+ 142          {
+ 143   1              /*D1L1 - DATA1 
+ 144   1              lee solo los datos del los bits de (1)*/
+ 145   1          nex_bit++;
+ 146   1          codebits[nex_bit] = '1';  
+ 147   1          while(D1L1 == 0);
+ 148   1            on_Timer0_Interrup();                     // habilita el timer0 reg TCOM bit 4 para interrup
+ 149   1        //  if( ++nex_bit == WGND_SIZE )
+ 150   1        //  {
+ 151   1        //    completo= 1;
+ 152   1        //    codebits[nex_bit+1] = 0;
+ 153   1        //  }
+ 154   1      
+ 155   1      }
+ 156          /*------------------------------------------------------------------------------
+ 157          Habilito interrupciones int0
+ 158          ------------------------------------------------------------------------------*/
+ 159          void ini_ex0(void)
+ 160          {
+ 161   1      
+ 162   1        IT0 = 1 ;               /*detecta flanco de HIGH a low*/
+ 163   1        EX0 = 1 ;              /*enable interrrup*/
+ 164   1        
+ 165   1      }
+ 166          /*------------------------------------------------------------------------------
+ 167          Habilito interrupciones  int1
+ 168          ------------------------------------------------------------------------------*/
+ 169          void ini_ex1(void)
+ 170          {
+ 171   1      
+ 172   1        IT1 = 1 ;               /*detecta flanco de HIGH a low*/
+ 173   1        EX1 = 1 ;               /*enable interrrup*/
+ 174   1        
+ 175   1      }
+ 176          /*------------------------------------------------------------------------------
+ 177          Habilito interrupciones int0, int1
+ 178          ------------------------------------------------------------------------------*/
+C51 COMPILER V9.59.0.0   WIEGAND                                                           10/19/2021 10:44:38 PAGE 4   
 
- 179   1      
- 180   1      }
- 181          
- 182          /*------------------------------------------------------------------------------
- 183          rutina que convierte los bits de lectura de wiegand a hex
- 184          bits= es un arreglo donde se realiza una or con cada bit para crear el dato hex 
- 185          starting_position= posicion de inicio de analisis del arreglo de bits, para crear el caracter hex
- 186          
- 187          codebits=Lectura de bits del codigo wiegand
- 188          ------------------------------------------------------------------------------*/
- 189          
- 190          unsigned char  bits_wiegand_hex(unsigned char starting_position)
- 191          {
- 192   1        unsigned char apx_err  []= "ERROR DE LECTURA" ;
- 193   1        unsigned char i,j,code_wiegand=0;
- 194   1        unsigned char bits[8]={0x80,0x40,0x20,0x10,0x08,0x04,0x02,0x01};
- 195   1        i=starting_position+8;
- 196   1        
- 197   1        for(j=starting_position ; j < i ; j++)
- 198   1        {
- 199   2            if(codebits[j]=='1')
- 200   2          {
- 201   3              code_wiegand=code_wiegand | bits[j-starting_position];
- 202   3          }
- 203   2            
- 204   2          else if((codebits[j]>'1') || (codebits[j]< '0'))
- 205   2           {
- 206   3               
- 207   3            cont(0x80);
- 208   3            lcd_puts(apx_err);
- 209   3            code_wiegand=  0;
- 210   3            break;  
- 211   3           }
- 212   2      
- 213   2        }
- 214   1        return code_wiegand;
- 215   1      }
- 216          
- 217          /*------------------------------------------------------------------------------
- 218             muestra el numero de la tarjeta leida en el lcd
- 219          ------------------------------------------------------------------------------*/
- 220           void lcd_wiegand()
- 221           {
- 222   1       unsigned int temp;
- 223   1       unsigned char buf[6]={0,0,0,0,0,0};
- 224   1       unsigned char lectura  []= "LECT.1           " ;
- 225   1        Borra_all();                  /*borra el lcd*/
- 226   1        cont(0x80);                   /*inicio de la primer ilera del lcd*/
- 227   1        lcd_puts(lectura);              /*msj de (LECT.1)*/
- 228   1        cont(0x87);                 /*posicion donde se coloca la parte alta del codigo de la tarjeta*/
- 229   1                
- 230   1      
- 231   1        temp=buffer_wie[0];                 
- 232   1        sprintf(buf,"%u",temp);             /*convierto el hex a un string bcd*/
- 233   1        lcd_puts(buf);
- 234   1        vdato('-'); 
- 235   1      
- 236   1        temp=(buffer_wie[1] <<8)| buffer_wie[2] ;  /*uno los dos registros en uno de 16 bits*/
- 237   1        sprintf(buf,"%u",temp);             /*convierto el dato en ascii*/
- 238   1        lcd_puts(buf);
- 239   1      
- 240   1       }
-C51 COMPILER V9.59.0.0   WIEGAND                                                           10/15/2021 16:33:18 PAGE 5   
+ 179          void on_ini_ex0_ex1(void)
+ 180          {
+ 181   1        EA = 1    ;             /*enable las dos interrupciones*/
+ 182   1        
+ 183   1      }
+ 184          /*------------------------------------------------------------------------------
+ 185             inicia las interrupciones externas para leer wiegand
+ 186          ------------------------------------------------------------------------------*/
+ 187          void inicia_wiegand()
+ 188          {
+ 189   1      
+ 190   1        ini_ex0();
+ 191   1        ini_ex1();
+ 192   1        on_ini_ex0_ex1(); 
+ 193   1                                                /*habilita interrupcion global*/
+ 194   1        ini_timer();
+ 195   1        limpia_data();
+ 196   1      }
+ 197          /*------------------------------------------------------------------------------
+ 198          rutina que limpia el buffer de lectura de wiegand
+ 199          ------------------------------------------------------------------------------*/
+ 200          void limpia_data(void)
+ 201          {
+ 202   1      unsigned char i;
+ 203   1        for(i=0;i<WGND_SIZE+1;i++)
+ 204   1        { 
+ 205   2          codebits[i]=0x00;           /*se limpia buffer de bits de wiegand*/
+ 206   2          nex_bit=0;                  /*contador de bits*/
+ 207   2          completo=0;                 /*indica que hay un dato de wiegand*/
+ 208   2        }
+ 209   1          facility_code=0;
+ 210   1          card_number=0;
+ 211   1          card_number1=0;
+ 212   1          card_number2=0;
+ 213   1        
+ 214   1      }
+ 215          /*------------------------------------------------------------------------------
+ 216          rutina que ajusta la lectura de wiegand
+ 217          ------------------------------------------------------------------------------*/
+ 218          
+ 219          void ajusta_code(void)
+ 220          {
+ 221   1        if(nex_bit==34)
+ 222   1        {
+ 223   2          facility_code=bits_wiegand_hex(1);
+ 224   2          card_number=bits_wiegand_hex(9);
+ 225   2          card_number1=bits_wiegand_hex(17);
+ 226   2          card_number2=bits_wiegand_hex(25);
+ 227   2        }
+ 228   1        else
+ 229   1        {
+ 230   2          facility_code=bits_wiegand_hex(1) ;
+ 231   2          card_number=bits_wiegand_hex(9) ;
+ 232   2          card_number1=bits_wiegand_hex(17);
+ 233   2          
+ 234   2        }
+ 235   1        
+ 236   1        
+ 237   1      }
+ 238          
+ 239          
+ 240          /*------------------------------------------------------------------------------
+C51 COMPILER V9.59.0.0   WIEGAND                                                           10/19/2021 10:44:38 PAGE 5   
 
- 241           /*
- 242           void tr_wiegand_soft()
- 243           {
- 244            g_scArrTxComSoft[0]=STX;
- 245            g_scArrTxComSoft[1]='B';
- 246            g_scArrTxComSoft[2]=((buffer_wie[0]>>4)&0X0f)+0X30;
- 247            g_scArrTxComSoft[3]=(buffer_wie[0]&0X0F)+0X30;
- 248            g_scArrTxComSoft[4]=((buffer_wie[1]>>4)&0X0f)+0X30;
- 249            g_scArrTxComSoft[5]=(buffer_wie[1]&0X0f)+0X30;
- 250            g_scArrTxComSoft[6]=((buffer_wie[2]>>4)&0X0f)+0X30;
- 251            g_scArrTxComSoft[7]=(buffer_wie[2]&0X0f)+0X30;
- 252              
- 253            g_scArrTxComSoft[8]=',';
- 254            g_scArrTxComSoft[9]='0';
- 255            
- 256            if (Dif_Mot_Car==1)
- 257            {
- 258              if (automovil==0)
- 259              {
- 260              g_scArrTxComSoft[10]='0';   //Carro =0;
- 261              }
- 262              else
- 263              {
- 264              g_scArrTxComSoft[10]='1';     //MOTO = 1
- 265              }
- 266            }
- 267            else
- 268            {
- 269              g_scArrTxComSoft[10]='0';     //Carro =0;
- 270            }
- 271              
- 272            g_scArrTxComSoft[11]=ETX;
- 273            EscribirCadenaSoft(12);
- 274          
- 275           }
- 276           */
- 277           /*------------------------------------------------------------------------------
- 278          inhabilito la interrupcion de entrada int0 y int1
- 279          ------------------------------------------------------------------------------*/
- 280          /*
- 281          void off_ini_ex0_ex1(void)
- 282          {
- 283            EA = 0 ;                    // enable interrupcion bit 1 del registro IENO
- 284            
- 285          }
- 286          */
- 287          /*------------------------------------------------------------------------------
- 288          Ajuste codigo de lectura de 26 bits con complemento a uno
- 289          ------------------------------------------------------------------------------*/
- 290          /*
- 291          void ajusta_code_26_complemento(void)
- 292          {
- 293            facility_code=bits_wiegand_hex(1) ^ 0xff;
- 294            card_number=bits_wiegand_hex(9) ^ 0xff;
- 295            card_number1=bits_wiegand_hex(17) ^ 0xff;
- 296          
- 297            
- 298          }
- 299          */
- 300          /*------------------------------------------------------------------------------
- 301          Ajuste codigo de lectura de 26 bits 
- 302          ------------------------------------------------------------------------------*/
-C51 COMPILER V9.59.0.0   WIEGAND                                                           10/15/2021 16:33:18 PAGE 6   
+ 241          rutina que ajusta la lectura de wiegand para 33 bits
+ 242          ------------------------------------------------------------------------------*/
+ 243          
+ 244          void id_Access()
+ 245          {
+ 246   1      
+ 247   1          
+ 248   1          ajusta_code();                      // lectura MF50 de 33bits
+ 249   1          if(nex_bit==34)
+ 250   1          {
+ 251   2          buffer_wie[0]=card_number;
+ 252   2          buffer_wie[1]=card_number1;
+ 253   2          buffer_wie[2]=card_number2;
+ 254   2          
+ 255   2          }
+ 256   1          else
+ 257   1          {
+ 258   2          buffer_wie[0]=facility_code;
+ 259   2          buffer_wie[1]=card_number;
+ 260   2          buffer_wie[2]=card_number1;
+ 261   2          }
+ 262   1          lcd_wiegand();
+ 263   1      
+ 264   1      }
+ 265          
+ 266          /*------------------------------------------------------------------------------
+ 267          rutina que convierte los bits de lectura de wiegand a hex
+ 268          bits= es un arreglo donde se realiza una or con cada bit para crear el dato hex 
+ 269          starting_position= posicion de inicio de analisis del arreglo de bits, para crear el caracter hex
+ 270          
+ 271          codebits=Lectura de bits del codigo wiegand
+ 272          ------------------------------------------------------------------------------*/
+ 273          
+ 274          unsigned char  bits_wiegand_hex(unsigned char starting_position)
+ 275          {
+ 276   1        unsigned char apx_err  []= "ERROR DE LECTURA" ;
+ 277   1        unsigned char i,j,code_wiegand=0;
+ 278   1        unsigned char bits[8]={0x80,0x40,0x20,0x10,0x08,0x04,0x02,0x01};
+ 279   1        i=starting_position+8;
+ 280   1        
+ 281   1        for(j=starting_position ; j < i ; j++)
+ 282   1        {
+ 283   2            if(codebits[j]=='1')
+ 284   2          {
+ 285   3              code_wiegand=code_wiegand | bits[j-starting_position];
+ 286   3          }
+ 287   2            
+ 288   2          else if((codebits[j]>'1') || (codebits[j]< '0'))
+ 289   2           {
+ 290   3               
+ 291   3            cont(0x80);
+ 292   3            lcd_puts(apx_err);
+ 293   3            code_wiegand=  0;
+ 294   3            break;  
+ 295   3           }
+ 296   2      
+ 297   2        }
+ 298   1        return code_wiegand;
+ 299   1      }
+ 300          
+ 301          /*------------------------------------------------------------------------------
+ 302             muestra el numero de la tarjeta leida en el lcd
+C51 COMPILER V9.59.0.0   WIEGAND                                                           10/19/2021 10:44:38 PAGE 6   
 
- 303          /*
- 304          void ajusta_code_26_normal(void)
- 305          {
- 306            facility_code=bits_wiegand_hex(1) ;
- 307            card_number=bits_wiegand_hex(9) ;
- 308            card_number1=bits_wiegand_hex(17);
- 309          
- 310            
- 311          }
- 312          */
- 313          
- 314          /*------------------------------------------------------------------------------
- 315          rutina que ajusta la lectura de wiegand para 33 bits
- 316          ------------------------------------------------------------------------------*/
- 317          /*
- 318          void id_Access_33()
- 319          {
- 320            
- 321            ajusta_code_26_normal();                      // lectura MF50 de 33bits
- 322            //buffer_wie[0]=facility_code;
- 323            
- 324            buffer_wie[0]=card_number;
- 325            buffer_wie[1]=card_number1;
- 326            buffer_wie[2]=card_number2;
- 327            lcd_wiegand();
- 328          
- 329            
- 330          }
- 331          */
- 332          /*------------------------------------------------------------------------------
- 333          Rutina que muestra el valor en hex en el lcd
- 334          ------------------------------------------------------------------------------*/
- 335          /*
- 336          void Debug_chr_lcd(unsigned char Dat)
- 337          {
- 338            unsigned char temp;
+ 303          ------------------------------------------------------------------------------*/
+ 304           void lcd_wiegand()
+ 305           {
+ 306   1       unsigned int temp;
+ 307   1       unsigned char buf[6]={0,0,0,0,0,0};
+ 308   1       unsigned char lectura  []= "LECT.1           " ;
+ 309   1        Borra_all();                  /*borra el lcd*/
+ 310   1        cont(0x80);                   /*inicio de la primer ilera del lcd*/
+ 311   1        lcd_puts(lectura);              /*msj de (LECT.1)*/
+ 312   1        cont(0x87);                 /*posicion donde se coloca la parte alta del codigo de la tarjeta*/
+ 313   1                
+ 314   1      
+ 315   1        temp=buffer_wie[0];                 
+ 316   1        sprintf(buf,"%u",temp);             /*convierto el hex a un string bcd*/
+ 317   1        lcd_puts(buf);
+ 318   1        vdato('-'); 
+ 319   1      
+ 320   1        temp=(buffer_wie[1] <<8)| buffer_wie[2] ;  /*uno los dos registros en uno de 16 bits*/
+ 321   1        sprintf(buf,"%u",temp);             /*convierto el dato en ascii*/
+ 322   1        lcd_puts(buf);
+ 323   1      
+ 324   1       }
+ 325           /*
+ 326           void tr_wiegand_soft()
+ 327           {
+ 328            g_scArrTxComSoft[0]=STX;
+ 329            g_scArrTxComSoft[1]='B';
+ 330            g_scArrTxComSoft[2]=((buffer_wie[0]>>4)&0X0f)+0X30;
+ 331            g_scArrTxComSoft[3]=(buffer_wie[0]&0X0F)+0X30;
+ 332            g_scArrTxComSoft[4]=((buffer_wie[1]>>4)&0X0f)+0X30;
+ 333            g_scArrTxComSoft[5]=(buffer_wie[1]&0X0f)+0X30;
+ 334            g_scArrTxComSoft[6]=((buffer_wie[2]>>4)&0X0f)+0X30;
+ 335            g_scArrTxComSoft[7]=(buffer_wie[2]&0X0f)+0X30;
+ 336              
+ 337            g_scArrTxComSoft[8]=',';
+ 338            g_scArrTxComSoft[9]='0';
  339            
- 340              temp=(Dat&0xf0)>>4;
- 341              (temp>0x09)?(temp=temp+0x37):(temp=temp+0x30);
- 342                
- 343              vdato(temp);
- 344                         
- 345              temp=(Dat&0x0f);
- 346              (temp>0x09)?(temp=temp+0x37):(temp=temp+0x30);
- 347              vdato(temp);
- 348              vdato(' ');
- 349            
- 350            
- 351          }
- 352          */
- 353          /*
- 354          void lcd_debuger()
- 355          {
- 356            ajusta_code_26_normal();
- 357            buffer_wie[0]=facility_code;
- 358            buffer_wie[1]=card_number;
- 359            buffer_wie[2]=card_number1;
- 360            
- 361            Borra_all();                  /*borra el lcd*/
- 362          /* 
- 363          cont(0x80); 
- 364            Debug_chr_lcd(facility_code);
-C51 COMPILER V9.59.0.0   WIEGAND                                                           10/15/2021 16:33:18 PAGE 7   
+ 340            if (Dif_Mot_Car==1)
+ 341            {
+ 342              if (automovil==0)
+ 343              {
+ 344              g_scArrTxComSoft[10]='0';   //Carro =0;
+ 345              }
+ 346              else
+ 347              {
+ 348              g_scArrTxComSoft[10]='1';     //MOTO = 1
+ 349              }
+ 350            }
+ 351            else
+ 352            {
+ 353              g_scArrTxComSoft[10]='0';     //Carro =0;
+ 354            }
+ 355              
+ 356            g_scArrTxComSoft[11]=ETX;
+ 357            EscribirCadenaSoft(12);
+ 358          
+ 359           }
+ 360           */
+ 361           /*------------------------------------------------------------------------------
+ 362          inhabilito la interrupcion de entrada int0 y int1
+ 363          ------------------------------------------------------------------------------*/
+ 364          /*
+C51 COMPILER V9.59.0.0   WIEGAND                                                           10/19/2021 10:44:38 PAGE 7   
 
- 365            Debug_chr_lcd(card_number);
- 366            Debug_chr_lcd(card_number1);
- 367            Debug_chr_lcd(card_number2);
+ 365          void off_ini_ex0_ex1(void)
+ 366          {
+ 367            EA = 0 ;                    // enable interrupcion bit 1 del registro IENO
  368            
  369          }
  370          */
+ 371          /*------------------------------------------------------------------------------
+ 372          Ajuste codigo de lectura de 26 bits con complemento a uno
+ 373          ------------------------------------------------------------------------------*/
+ 374          /*
+ 375          void ajusta_code_26_complemento(void)
+ 376          {
+ 377            facility_code=bits_wiegand_hex(1) ^ 0xff;
+ 378            card_number=bits_wiegand_hex(9) ^ 0xff;
+ 379            card_number1=bits_wiegand_hex(17) ^ 0xff;
+ 380          
+ 381            
+ 382          }
+ 383          */
+ 384          /*------------------------------------------------------------------------------
+ 385          Ajuste codigo de lectura de 26 bits 
+ 386          ------------------------------------------------------------------------------*/
+ 387          /*
+ 388          void ajusta_code_26_normal(void)
+ 389          {
+ 390            facility_code=bits_wiegand_hex(1) ;
+ 391            card_number=bits_wiegand_hex(9) ;
+ 392            card_number1=bits_wiegand_hex(17);
+ 393          
+ 394            
+ 395          }
+ 396          */
+ 397          
+ 398          /*------------------------------------------------------------------------------
+ 399          rutina que ajusta la lectura de wiegand para 33 bits
+ 400          ------------------------------------------------------------------------------*/
+ 401          /*
+ 402          void id_Access_33()
+ 403          {
+ 404            
+ 405            ajusta_code_26_normal();                      // lectura MF50 de 33bits
+ 406            //buffer_wie[0]=facility_code;
+ 407            
+ 408            buffer_wie[0]=card_number;
+ 409            buffer_wie[1]=card_number1;
+ 410            buffer_wie[2]=card_number2;
+ 411            lcd_wiegand();
+ 412          
+ 413            
+ 414          }
+ 415          */
+ 416          /*------------------------------------------------------------------------------
+ 417          Rutina que muestra el valor en hex en el lcd
+ 418          ------------------------------------------------------------------------------*/
+ 419          /*
+ 420          void Debug_chr_lcd(unsigned char Dat)
+ 421          {
+ 422            unsigned char temp;
+ 423            
+ 424              temp=(Dat&0xf0)>>4;
+ 425              (temp>0x09)?(temp=temp+0x37):(temp=temp+0x30);
+ 426                
+C51 COMPILER V9.59.0.0   WIEGAND                                                           10/19/2021 10:44:38 PAGE 8   
+
+ 427              vdato(temp);
+ 428                         
+ 429              temp=(Dat&0x0f);
+ 430              (temp>0x09)?(temp=temp+0x37):(temp=temp+0x30);
+ 431              vdato(temp);
+ 432              vdato(' ');
+ 433            
+ 434            
+ 435          }
+ 436          */
+ 437          /*
+ 438          void lcd_debuger()
+ 439          {
+ 440            ajusta_code_26_normal();
+ 441            buffer_wie[0]=facility_code;
+ 442            buffer_wie[1]=card_number;
+ 443            buffer_wie[2]=card_number1;
+ 444            
+ 445            Borra_all();                  /*borra el lcd*/
+ 446          /* 
+ 447          cont(0x80); 
+ 448            Debug_chr_lcd(facility_code);
+ 449            Debug_chr_lcd(card_number);
+ 450            Debug_chr_lcd(card_number1);
+ 451            Debug_chr_lcd(card_number2);
+ 452            
+ 453          }
+ 454          */
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    593    ----
+   CODE SIZE        =    701    ----
    CONSTANT SIZE    =     52    ----
-   XDATA SIZE       =     37      53
+   XDATA SIZE       =     38      53
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----

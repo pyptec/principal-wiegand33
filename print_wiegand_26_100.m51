@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    10/15/2021  16:33:18  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    10/19/2021  10:44:38  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
@@ -42,8 +42,9 @@ LINK MAP OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
             * * * * * * *   D A T A   M E M O R Y   * * * * * * *
             REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
             REG     0008H     0008H     ABSOLUTE     "REG BANK 1"
-            DATA    0010H     0005H     UNIT         _DATA_GROUP_
-                    0015H     000BH                  *** GAP ***
+            REG     0010H     0008H     ABSOLUTE     "REG BANK 2"
+            DATA    0018H     0005H     UNIT         _DATA_GROUP_
+                    001DH     0003H                  *** GAP ***
             BIT     0020H.0   0004H.6   UNIT         ?BI?PRINCIPAL_MF
             BIT     0024H.6   0001H.1   UNIT         _BIT_GROUP_
                     0025H.7   0000H.1                *** GAP ***
@@ -52,75 +53,79 @@ LINK MAP OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
             * * * * * * *  X D A T A   M E M O R Y  * * * * * * *
             XDATA   0000H     0204H     UNIT         ?XD?PRINCIPAL_MF
             XDATA   0204H     009BH     UNIT         _XDATA_GROUP_
-            XDATA   029FH     0025H     UNIT         ?XD?WIEGAND
-            XDATA   02C4H     001FH     UNIT         ?XD?UART
+            XDATA   029FH     0026H     UNIT         ?XD?WIEGAND
+            XDATA   02C5H     001FH     UNIT         ?XD?UART
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
             CODE    0003H     0003H     ABSOLUTE     
-            CODE    0006H     000CH     UNIT         ?PR?INICIA_WIEGAND?WIEGAND
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 2
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 2
 
 
-            CODE    0012H     0001H     UNIT         ?PR?WAIT?DISPLAY
+            CODE    0006H     0005H     UNIT         ?PR?ON_TIMER0_INTERRUP?WIEGAND
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     0005H     UNIT         ?PR?INI_EX0?WIEGAND
             CODE    0013H     0003H     ABSOLUTE     
             CODE    0016H     000CH     UNIT         ?PR?_LCD_TEXT?DISPLAY
-                    0022H     0001H                  *** GAP ***
+            CODE    0022H     0001H     UNIT         ?PR?WAIT?DISPLAY
             CODE    0023H     0003H     ABSOLUTE     
             CODE    0026H     221BH     UNIT         ?PR?MAIN?PRINCIPAL_MF
             CODE    2241H     13DDH     UNIT         ?PR?ATENCCOMSOFT?PRINCIPAL_MF
             CODE    361EH     049CH     UNIT         ?PR?COM_ISR?UART
             CODE    3ABAH     0365H     UNIT         ?PR?PRINTF?PRINTF
             CODE    3E1FH     021FH     UNIT         ?C?LIB_CODE
-            CODE    403EH     01B4H     UNIT         ?C_INITSEG
-            CODE    41F2H     011AH     UNIT         ?PR?RX_BUS?PRINCIPAL_MF
-            CODE    430CH     00F3H     UNIT         ?CO?PRINCIPAL_MF
-            CODE    43FFH     00D6H     UNIT         ?PR?_SENDMSG?PRINCIPAL_MF
-            CODE    44D5H     00B0H     UNIT         ?PR?_BITS_WIEGAND_HEX?WIEGAND
-            CODE    4585H     00A7H     UNIT         ?PR?_TX_BUS?PRINCIPAL_MF
-            CODE    462CH     009EH     UNIT         ?PR?LCD_WIEGAND?WIEGAND
-            CODE    46CAH     008CH     UNIT         ?C_C51STARTUP
-            CODE    4756H     008AH     UNIT         ?PR?CMD_EXCLUSIVO?UART
-            CODE    47E0H     0073H     UNIT         ?PR?_SEND_DATACLK?PRINCIPAL_MF
-            CODE    4853H     0068H     UNIT         ?PR?_STRNCPY?STRNCPY
-            CODE    48BBH     0064H     UNIT         ?PR?BACKUP_CLK?UART
-            CODE    491FH     0047H     UNIT         ?PR?PRG_DISP?DISPLAY
-            CODE    4966H     003DH     UNIT         ?PR?EX0_ISR?WIEGAND
-            CODE    49A3H     003DH     UNIT         ?PR?EX1_ISR?WIEGAND
-            CODE    49E0H     0034H     UNIT         ?CO?WIEGAND
-            CODE    4A14H     0033H     UNIT         ?PR?LIMPIA_DATA?WIEGAND
-            CODE    4A47H     002EH     UNIT         ?PR?_SENDRTABUS?PRINCIPAL_MF
-            CODE    4A75H     002EH     UNIT         ?PR?RELAYIO?DISPLAY
-            CODE    4AA3H     002BH     UNIT         ?PR?_VDATA_CLK?PRINCIPAL_MF
-            CODE    4ACEH     002AH     UNIT         ?PR?RETRANSMITIR_TRAMA_HORA?UART
-            CODE    4AF8H     002AH     UNIT         ?PR?_LCD_PUTS?DISPLAY
-            CODE    4B22H     002AH     UNIT         ?PR?VE_DIR?DISPLAY
-            CODE    4B4CH     0027H     UNIT         ?PR?_LCD_GOTOXY?DISPLAY
-            CODE    4B73H     0027H     UNIT         ?PR?PUTCHAR?PUTCHAR
-            CODE    4B9AH     0024H     UNIT         ?PR?RELEVOS_AUX?PRINCIPAL_MF
-            CODE    4BBEH     001FH     UNIT         ?PR?AJUSTA_CODE?WIEGAND
-            CODE    4BDDH     001EH     UNIT         ?PR?ID_ACCESS?WIEGAND
-            CODE    4BFBH     001EH     UNIT         ?PR?CALCULO_BCC?UART
-            CODE    4C19H     001CH     UNIT         ?PR?_ESCRIBIRCADENASOFT?UART
-            CODE    4C35H     001AH     UNIT         ?PR?BORRALCD_L1?DISPLAY
-            CODE    4C4FH     001AH     UNIT         ?PR?BORRALCD_L2?DISPLAY
-            CODE    4C69H     0019H     UNIT         ?PR?COM_INITIALIZE?UART
-            CODE    4C82H     0019H     UNIT         ?PR?_VDATO?DISPLAY
-            CODE    4C9BH     0017H     UNIT         ?PR?BORRA?DISPLAY
-            CODE    4CB2H     0016H     UNIT         ?PR?PULSO?DISPLAY
-            CODE    4CC8H     0016H     UNIT         ?PR?_CONT?DISPLAY
-            CODE    4CDEH     0015H     UNIT         ?PR?_WAIT_LONG1?DISPLAY
-            CODE    4CF3H     0015H     UNIT         ?PR?WAIT_LONG?DISPLAY
-            CODE    4D08H     0013H     UNIT         ?PR?PULSO_BUS?PRINCIPAL_MF
-            CODE    4D1BH     0012H     UNIT         ?PR?WAIT_ANCHO?DISPLAY
-            CODE    4D2DH     0008H     UNIT         ?PR?_TX_CHR?UART
-            CODE    4D35H     0006H     UNIT         ?PR?BORRA_ALL?DISPLAY
-            CODE    4D3BH     0005H     UNIT         ?PR?INI_EX0?WIEGAND
-            CODE    4D40H     0005H     UNIT         ?PR?INI_EX1?WIEGAND
-            CODE    4D45H     0003H     UNIT         ?PR?ON_INI_EX0_EX1?WIEGAND
+            CODE    403EH     01B8H     UNIT         ?C_INITSEG
+            CODE    41F6H     011AH     UNIT         ?PR?RX_BUS?PRINCIPAL_MF
+            CODE    4310H     00F3H     UNIT         ?CO?PRINCIPAL_MF
+            CODE    4403H     00D6H     UNIT         ?PR?_SENDMSG?PRINCIPAL_MF
+            CODE    44D9H     00B7H     UNIT         ?PR?_BITS_WIEGAND_HEX?WIEGAND
+            CODE    4590H     00A7H     UNIT         ?PR?_TX_BUS?PRINCIPAL_MF
+            CODE    4637H     009EH     UNIT         ?PR?LCD_WIEGAND?WIEGAND
+            CODE    46D5H     008CH     UNIT         ?C_C51STARTUP
+            CODE    4761H     008AH     UNIT         ?PR?CMD_EXCLUSIVO?UART
+            CODE    47EBH     0073H     UNIT         ?PR?_SEND_DATACLK?PRINCIPAL_MF
+            CODE    485EH     0068H     UNIT         ?PR?_STRNCPY?STRNCPY
+            CODE    48C6H     0064H     UNIT         ?PR?BACKUP_CLK?UART
+            CODE    492AH     0047H     UNIT         ?PR?PRG_DISP?DISPLAY
+            CODE    4971H     0040H     UNIT         ?PR?AJUSTA_CODE?WIEGAND
+            CODE    49B1H     0039H     UNIT         ?PR?ID_ACCESS?WIEGAND
+            CODE    49EAH     0034H     UNIT         ?PR?TIMER0_INT?WIEGAND
+            CODE    4A1EH     0034H     UNIT         ?CO?WIEGAND
+            CODE    4A52H     0033H     UNIT         ?PR?LIMPIA_DATA?WIEGAND
+            CODE    4A85H     002EH     UNIT         ?PR?_SENDRTABUS?PRINCIPAL_MF
+            CODE    4AB3H     002EH     UNIT         ?PR?RELAYIO?DISPLAY
+            CODE    4AE1H     002BH     UNIT         ?PR?_VDATA_CLK?PRINCIPAL_MF
+            CODE    4B0CH     002AH     UNIT         ?PR?EX0_ISR?WIEGAND
+            CODE    4B36H     002AH     UNIT         ?PR?EX1_ISR?WIEGAND
+            CODE    4B60H     002AH     UNIT         ?PR?RETRANSMITIR_TRAMA_HORA?UART
+            CODE    4B8AH     002AH     UNIT         ?PR?_LCD_PUTS?DISPLAY
+            CODE    4BB4H     002AH     UNIT         ?PR?VE_DIR?DISPLAY
+            CODE    4BDEH     0027H     UNIT         ?PR?_LCD_GOTOXY?DISPLAY
+            CODE    4C05H     0027H     UNIT         ?PR?PUTCHAR?PUTCHAR
+            CODE    4C2CH     0024H     UNIT         ?PR?RELEVOS_AUX?PRINCIPAL_MF
+            CODE    4C50H     001EH     UNIT         ?PR?CALCULO_BCC?UART
+            CODE    4C6EH     001CH     UNIT         ?PR?_ESCRIBIRCADENASOFT?UART
+            CODE    4C8AH     001AH     UNIT         ?PR?BORRALCD_L1?DISPLAY
+            CODE    4CA4H     001AH     UNIT         ?PR?BORRALCD_L2?DISPLAY
+            CODE    4CBEH     0019H     UNIT         ?PR?COM_INITIALIZE?UART
+            CODE    4CD7H     0019H     UNIT         ?PR?_VDATO?DISPLAY
+            CODE    4CF0H     0017H     UNIT         ?PR?BORRA?DISPLAY
+            CODE    4D07H     0016H     UNIT         ?PR?PULSO?DISPLAY
+            CODE    4D1DH     0016H     UNIT         ?PR?_CONT?DISPLAY
+            CODE    4D33H     0015H     UNIT         ?PR?_WAIT_LONG1?DISPLAY
+            CODE    4D48H     0015H     UNIT         ?PR?WAIT_LONG?DISPLAY
+            CODE    4D5DH     0013H     UNIT         ?PR?PULSO_BUS?PRINCIPAL_MF
+            CODE    4D70H     0012H     UNIT         ?PR?WAIT_ANCHO?DISPLAY
+            CODE    4D82H     0010H     UNIT         ?PR?INI_TIMER?WIEGAND
+            CODE    4D92H     000FH     UNIT         ?PR?INICIA_WIEGAND?WIEGAND
+            CODE    4DA1H     0008H     UNIT         ?PR?_TX_CHR?UART
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 3
 
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 3
 
+            CODE    4DA9H     0006H     UNIT         ?PR?BORRA_ALL?DISPLAY
+            CODE    4DAFH     0005H     UNIT         ?PR?INI_EX1?WIEGAND
+            CODE    4DB4H     0003H     UNIT         ?PR?OFF_TIMER0_INTERRUP?WIEGAND
+            CODE    4DB7H     0003H     UNIT         ?PR?ON_INI_EX0_EX1?WIEGAND
 
 
 
@@ -130,6 +135,21 @@ OVERLAY MAP OF MODULE:   .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
 SEGMENT                                     BIT_GROUP          DATA_GROUP          XDATA_GROUP
   +--> CALLED SEGMENT                    START    LENGTH     START    LENGTH     START    LENGTH
 ------------------------------------------------------------------------------------------------
+?PR?TIMER0_INT?WIEGAND                   -----    -----      -----    -----      -----    -----
+  +--> ?PR?OFF_TIMER0_INTERRUP?WIEGAND
+
+*** NEW ROOT ***************************************************
+
+?PR?EX0_ISR?WIEGAND                      -----    -----      -----    -----      -----    -----
+  +--> ?PR?ON_TIMER0_INTERRUP?WIEGAND
+
+*** NEW ROOT ***************************************************
+
+?PR?EX1_ISR?WIEGAND                      -----    -----      -----    -----      -----    -----
+  +--> ?PR?ON_TIMER0_INTERRUP?WIEGAND
+
+*** NEW ROOT ***************************************************
+
 ?PR?COM_ISR?UART                         -----    -----      -----    -----      -----    -----
   +--> ?PR?_TX_CHR?UART
 
@@ -159,6 +179,9 @@ SEGMENT                                     BIT_GROUP          DATA_GROUP       
   +--> ?PR?_VDATA_CLK?PRINCIPAL_MF
   +--> ?PR?RETRANSMITIR_TRAMA_HORA?UART
   +--> ?PR?LCD_WIEGAND?WIEGAND
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 4
+
+
   +--> ?PR?BORRALCD_L1?DISPLAY
   +--> ?PR?BORRALCD_L2?DISPLAY
   +--> ?PR?_TX_CHR?UART
@@ -168,6 +191,7 @@ SEGMENT                                     BIT_GROUP          DATA_GROUP       
   +--> ?PR?INI_EX0?WIEGAND
   +--> ?PR?INI_EX1?WIEGAND
   +--> ?PR?ON_INI_EX0_EX1?WIEGAND
+  +--> ?PR?INI_TIMER?WIEGAND
   +--> ?PR?LIMPIA_DATA?WIEGAND
 
 ?PR?PRG_DISP?DISPLAY                     -----    -----      -----    -----      -----    -----
@@ -179,9 +203,6 @@ SEGMENT                                     BIT_GROUP          DATA_GROUP       
   +--> ?PR?RELAYIO?DISPLAY
 
 ?PR?WAIT_LONG?DISPLAY                    -----    -----      -----    -----      -----    -----
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 4
-
-
   +--> ?PR?PULSO?DISPLAY
   +--> ?PR?WAIT?DISPLAY
 
@@ -218,6 +239,9 @@ SEGMENT                                     BIT_GROUP          DATA_GROUP       
   +--> ?PR?AJUSTA_CODE?WIEGAND
   +--> ?PR?LCD_WIEGAND?WIEGAND
 
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 5
+
+
 ?PR?AJUSTA_CODE?WIEGAND                  -----    -----      -----    -----      -----    -----
   +--> ?PR?_BITS_WIEGAND_HEX?WIEGAND
 
@@ -239,9 +263,6 @@ SEGMENT                                     BIT_GROUP          DATA_GROUP       
   +--> ?PR?BORRALCD_L2?DISPLAY
 
 ?PR?BORRALCD_L1?DISPLAY                  -----    -----      -----    -----      -----    -----
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 5
-
-
   +--> ?PR?_CONT?DISPLAY
   +--> ?PR?_VDATO?DISPLAY
 
@@ -249,7 +270,7 @@ SEGMENT                                     BIT_GROUP          DATA_GROUP       
   +--> ?PR?_CONT?DISPLAY
   +--> ?PR?_VDATO?DISPLAY
 
-?PR?PRINTF?PRINTF                        0024H.6  0001H.1    0010H    0005H      0277H    0028H
+?PR?PRINTF?PRINTF                        0024H.6  0001H.1    0018H    0005H      0277H    0028H
   +--> ?PR?PUTCHAR?PUTCHAR
 
 ?PR?_TX_BUS?PRINCIPAL_MF                 0024H.6  0000H.1    -----    -----      0265H    0006H
@@ -278,6 +299,9 @@ SEGMENT                                     BIT_GROUP          DATA_GROUP       
 
 ?PR?_ESCRIBIRCADENASOFT?UART             -----    -----      -----    -----      -----    -----
   +--> ?PR?_TX_CHR?UART
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 6
+
+
 
 ?PR?BACKUP_CLK?UART                      -----    -----      -----    -----      -----    -----
   +--> ?PR?CALCULO_BCC?UART
@@ -298,9 +322,6 @@ SEGMENT                                     BIT_GROUP          DATA_GROUP       
   +--> ?PR?_TX_BUS?PRINCIPAL_MF
 
 ?PR?RX_BUS?PRINCIPAL_MF                  -----    -----      -----    -----      025FH    0006H
-
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 6
-
 
 ?PR?_WAIT_LONG1?DISPLAY                  -----    -----      -----    -----      -----    -----
   +--> ?PR?WAIT?DISPLAY
@@ -328,7 +349,7 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   X:0012H         PUBLIC        err_in
   D:00B0H         PUBLIC        P3
   X:0023H         PUBLIC        Cod_Dcto
-  C:47F7H         PUBLIC        _send_dataCLK
+  C:4802H         PUBLIC        _send_dataCLK
   X:0024H         PUBLIC        TimeOut_Codigo
   X:0026H         PUBLIC        err_out
   B:0020H.1       PUBLIC        toggle
@@ -338,30 +359,30 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   X:0048H         PUBLIC        linea
   X:0059H         PUBLIC        Ini_Dcto
   B:0020H.4       PUBLIC        Send_Tipo_Veh
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 7
+
+
   X:005AH         PUBLIC        g_cRelevos
   B:0020H.5       PUBLIC        Dato_OffLine
   X:005BH         PUBLIC        buffer_wieLPR
   B:0020H.6       PUBLIC        SerieOK
   X:005FH         PUBLIC        err_gracia
-  C:41F2H         PUBLIC        rx_bus
+  C:41F6H         PUBLIC        rx_bus
   B:0020H.7       PUBLIC        Tiquete_Salida
   B:00B0H.4       PUBLIC        ready
-  C:458DH         PUBLIC        _tx_bus
+  C:4598H         PUBLIC        _tx_bus
   X:0070H         PUBLIC        serie
   X:0081H         PUBLIC        err_Caja
   B:0021H.0       PUBLIC        Dif_Mot_Car
   X:0092H         PUBLIC        len_buffer
   X:0093H         PUBLIC        g_scArrDisplay
   X:00B3H         PUBLIC        err_sinpago
-  C:4D08H         PUBLIC        Pulso_Bus
+  C:4D5DH         PUBLIC        Pulso_Bus
   B:0021H.1       PUBLIC        Central_ID_OFFLINE
   X:00C4H         PUBLIC        err_mifare
   X:00D5H         PUBLIC        g_cContByteRx
   B:0021H.2       PUBLIC        Atascado
   C:0026H         PUBLIC        main
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 7
-
-
   B:0021H.3       PUBLIC        SalidaW
   B:0021H.4       PUBLIC        Tiquete_Placa
   X:00D6H         PUBLIC        NumDatosPlate
@@ -371,12 +392,12 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   B:0021H.7       PUBLIC        sendactive
   B:0090H.4       PUBLIC        ledv
   C:2241H         PUBLIC        AtencComSoft
-  C:4AA3H         PUBLIC        _vdata_clk
+  C:4AE1H         PUBLIC        _vdata_clk
   B:0022H.0       PUBLIC        RetryCmd
   B:0022H.1       PUBLIC        Send_Wiegand
   B:00B0H.7       PUBLIC        SignalAcceso
-  C:43FFH         PUBLIC        _SendMsg
-  C:4B9AH         PUBLIC        relevos_aux
+  C:4403H         PUBLIC        _SendMsg
+  C:4C2CH         PUBLIC        relevos_aux
   D:0089H         PUBLIC        TMOD
   X:00F5H         PUBLIC        g_cDirBoard
   X:00F6H         PUBLIC        temp
@@ -391,16 +412,19 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   X:00FAH         PUBLIC        seg
   X:00FBH         PUBLIC        TimeRetryCmd
   X:00FCH         PUBLIC        MonthIn
-  C:43AAH         SYMBOL        _?ix1000
+  C:43AEH         SYMBOL        _?ix1000
   B:0022H.7       PUBLIC        inicio_wiegand
   X:00FDH         PUBLIC        Tipo_Vehiculo
   X:00FEH         PUBLIC        MonthOut
-  C:43BBH         SYMBOL        _?ix1001
-  C:43CCH         SYMBOL        _?ix1002
+  C:43BFH         SYMBOL        _?ix1001
+  C:43D0H         SYMBOL        _?ix1002
   B:00B0H.5       PUBLIC        busy
-  C:43DDH         SYMBOL        _?ix1003
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 8
+
+
+  C:43E1H         SYMBOL        _?ix1003
   B:0023H.0       PUBLIC        audio1
-  C:43EEH         SYMBOL        _?ix1004
+  C:43F2H         SYMBOL        _?ix1004
   B:0023H.1       PUBLIC        audio2
   X:00FFH         PUBLIC        err_data
   B:0023H.2       PUBLIC        audio3
@@ -419,9 +443,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   X:0127H         PUBLIC        Rechazo
   D:008AH         PUBLIC        TL0
   X:0128H         PUBLIC        g_scArrRxComSoft
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 8
-
-
   X:0164H         PUBLIC        g_scArrTxComSoft
   B:0023H.6       PUBLIC        msg_error
   B:0088H.4       PUBLIC        TR0
@@ -437,7 +458,7 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   X:01ACH         PUBLIC        Seg_OFF
   B:0090H.6       PUBLIC        lock1
   B:0090H.5       PUBLIC        lock2
-  C:4A47H         PUBLIC        _SendRtaBus
+  C:4A85H         PUBLIC        _SendRtaBus
   X:01ADH         PUBLIC        Num_Char_LPR
   B:0024H.2       PUBLIC        FueraLinea
   X:01AEH         PUBLIC        buffer_placa
@@ -458,6 +479,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   X:01EAH         PUBLIC        BufferRetry
   X:01FEH         PUBLIC        iTimeEsperaRtaLPR
   X:0200H         PUBLIC        OpenMensual_Apx
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 9
+
+
   B:0080H.0       PUBLIC        msg1
   X:0202H         PUBLIC        nbitsW
   B:0080H.1       PUBLIC        msg2
@@ -465,23 +489,20 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   B:0080H.2       PUBLIC        msg3
   B:0080H.3       PUBLIC        msg4
   -------         PROC          PULSO_BUS
-  C:4D08H         LINE#         261
-  C:4D08H         LINE#         262
-  C:4D08H         LINE#         263
-  C:4D0AH         LINE#         264
-  C:4D0DH         LINE#         265
-  C:4D10H         LINE#         266
-  C:4D13H         LINE#         267
-  C:4D15H         LINE#         268
-  C:4D18H         LINE#         269
+  C:4D5DH         LINE#         261
+  C:4D5DH         LINE#         262
+  C:4D5DH         LINE#         263
+  C:4D5FH         LINE#         264
+  C:4D62H         LINE#         265
+  C:4D65H         LINE#         266
+  C:4D68H         LINE#         267
+  C:4D6AH         LINE#         268
+  C:4D6DH         LINE#         269
   -------         ENDPROC       PULSO_BUS
-  C:4587H         SYMBOL        L?0773
+  C:4592H         SYMBOL        L?0773
   -------         PROC          L?0772
   -------         ENDPROC       L?0772
-  C:4587H         SYMBOL        L?0773
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 9
-
-
+  C:4592H         SYMBOL        L?0773
   -------         PROC          _TX_BUS
   X:0265H         SYMBOL        num_chr
   -------         DO            
@@ -489,47 +510,50 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   X:0267H         SYMBOL        cont
   B:0024H.6       SYMBOL        timeOut
   -------         ENDDO         
-  C:458DH         LINE#         273
-  C:4592H         LINE#         274
-  C:4592H         LINE#         279
-  C:4594H         LINE#         280
-  C:4596H         LINE#         281
-  C:4598H         LINE#         282
-  C:45A2H         LINE#         284
-  C:45A8H         LINE#         285
-  C:45A8H         LINE#         286
-  C:45CCH         LINE#         287
-  C:45E0H         LINE#         288
-  C:45E0H         LINE#         289
-  C:45E2H         LINE#         290
-  C:45E4H         LINE#         291
-  C:45E6H         LINE#         292
-  C:45E8H         LINE#         293
-  C:45E8H         LINE#         294
-  C:45EAH         LINE#         296
-  C:45EDH         LINE#         297
-  C:45EDH         LINE#         298
-  C:45FEH         LINE#         299
-  C:45FEH         LINE#         300
-  C:460BH         LINE#         301
-  C:460EH         LINE#         302
-  C:4616H         LINE#         304
-  C:4616H         LINE#         306
-  C:4618H         LINE#         308
-  C:461AH         LINE#         310
-  C:461DH         LINE#         311
-  C:461DH         LINE#         312
-  C:4620H         LINE#         313
-  C:4623H         LINE#         314
-  C:4626H         LINE#         315
-  C:4629H         LINE#         317
-  C:4629H         LINE#         318
-  C:462BH         LINE#         319
+  C:4598H         LINE#         273
+  C:459DH         LINE#         274
+  C:459DH         LINE#         279
+  C:459FH         LINE#         280
+  C:45A1H         LINE#         281
+  C:45A3H         LINE#         282
+  C:45ADH         LINE#         284
+  C:45B3H         LINE#         285
+  C:45B3H         LINE#         286
+  C:45D7H         LINE#         287
+  C:45EBH         LINE#         288
+  C:45EBH         LINE#         289
+  C:45EDH         LINE#         290
+  C:45EFH         LINE#         291
+  C:45F1H         LINE#         292
+  C:45F3H         LINE#         293
+  C:45F3H         LINE#         294
+  C:45F5H         LINE#         296
+  C:45F8H         LINE#         297
+  C:45F8H         LINE#         298
+  C:4609H         LINE#         299
+  C:4609H         LINE#         300
+  C:4616H         LINE#         301
+  C:4619H         LINE#         302
+  C:4621H         LINE#         304
+  C:4621H         LINE#         306
+  C:4623H         LINE#         308
+  C:4625H         LINE#         310
+  C:4628H         LINE#         311
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 10
+
+
+  C:4628H         LINE#         312
+  C:462BH         LINE#         313
+  C:462EH         LINE#         314
+  C:4631H         LINE#         315
+  C:4634H         LINE#         317
+  C:4634H         LINE#         318
+  C:4636H         LINE#         319
   -------         ENDPROC       _TX_BUS
-  C:47EAH         SYMBOL        L?0771
+  C:47F5H         SYMBOL        L?0771
   -------         PROC          L?0770
   -------         ENDPROC       L?0770
-  C:47EAH         SYMBOL        L?0771
+  C:47F5H         SYMBOL        L?0771
   -------         PROC          _SEND_DATACLK
   D:0007H         SYMBOL        fc
   X:0261H         SYMBOL        dir
@@ -539,38 +563,35 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   D:0005H         SYMBOL        decena
   D:0004H         SYMBOL        unidad
   -------         ENDDO         
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 10
-
-
-  C:47F7H         LINE#         325
-  C:47FFH         LINE#         326
-  C:47FFH         LINE#         329
-  C:4804H         LINE#         331
-  C:4805H         LINE#         332
-  C:4806H         LINE#         333
-  C:4807H         LINE#         335
-  C:4811H         LINE#         336
-  C:4811H         LINE#         337
-  C:4815H         LINE#         338
-  C:4816H         LINE#         339
-  C:4818H         LINE#         340
-  C:4822H         LINE#         341
-  C:4822H         LINE#         342
-  C:4826H         LINE#         343
-  C:4827H         LINE#         344
-  C:4829H         LINE#         345
-  C:482BH         LINE#         348
-  C:4842H         LINE#         349
-  C:4852H         LINE#         350
+  C:4802H         LINE#         325
+  C:480AH         LINE#         326
+  C:480AH         LINE#         329
+  C:480FH         LINE#         331
+  C:4810H         LINE#         332
+  C:4811H         LINE#         333
+  C:4812H         LINE#         335
+  C:481CH         LINE#         336
+  C:481CH         LINE#         337
+  C:4820H         LINE#         338
+  C:4821H         LINE#         339
+  C:4823H         LINE#         340
+  C:482DH         LINE#         341
+  C:482DH         LINE#         342
+  C:4831H         LINE#         343
+  C:4832H         LINE#         344
+  C:4834H         LINE#         345
+  C:4836H         LINE#         348
+  C:484DH         LINE#         349
+  C:485DH         LINE#         350
   -------         ENDPROC       _SEND_DATACLK
   -------         PROC          RELEVOS_AUX
-  C:4B9AH         LINE#         353
-  C:4B9AH         LINE#         354
-  C:4B9AH         LINE#         355
-  C:4BA3H         LINE#         356
-  C:4BACH         LINE#         357
-  C:4BB5H         LINE#         358
-  C:4BBDH         LINE#         359
+  C:4C2CH         LINE#         353
+  C:4C2CH         LINE#         354
+  C:4C2CH         LINE#         355
+  C:4C35H         LINE#         356
+  C:4C3EH         LINE#         357
+  C:4C47H         LINE#         358
+  C:4C4FH         LINE#         359
   -------         ENDPROC       RELEVOS_AUX
   -------         PROC          RX_BUS
   -------         DO            
@@ -578,138 +599,141 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   X:0263H         SYMBOL        timeOut
   X:0264H         SYMBOL        j
   -------         ENDDO         
-  C:41F2H         LINE#         362
-  C:41F2H         LINE#         363
-  C:41F2H         LINE#         365
-  C:41F7H         LINE#         369
-  C:41F9H         LINE#         370
-  C:41FDH         LINE#         371
-  C:4203H         LINE#         372
-  C:4203H         LINE#         373
-  C:4207H         LINE#         374
-  C:4209H         LINE#         375
-  C:421BH         LINE#         376
-  C:421BH         LINE#         377
-  C:4225H         LINE#         378
-  C:4231H         LINE#         379
-  C:4231H         LINE#         380
-  C:4255H         LINE#         381
-  C:4269H         LINE#         382
-  C:4269H         LINE#         383
-  C:426CH         LINE#         384
-  C:4270H         LINE#         385
-  C:4270H         LINE#         386
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 11
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 11
 
 
-  C:4272H         LINE#         387
-  C:4281H         LINE#         388
-  C:4281H         LINE#         389
-  C:428FH         LINE#         390
-  C:4295H         LINE#         391
-  C:429FH         LINE#         392
-  C:42A8H         LINE#         393
-  C:42A8H         LINE#         394
-  C:42B6H         LINE#         395
-  C:42DAH         LINE#         396
-  C:42EEH         LINE#         397
-  C:42EEH         LINE#         398
-  C:42F1H         LINE#         399
-  C:42F5H         LINE#         400
-  C:42F5H         LINE#         401
-  C:42F7H         LINE#         402
-  C:42F7H         LINE#         403
-  C:42FAH         LINE#         404
-  C:42FAH         LINE#         405
-  C:4300H         LINE#         406
-  C:4300H         LINE#         407
-  C:4309H         LINE#         408
-  C:4309H         LINE#         409
-  C:430BH         LINE#         411
+  C:41F6H         LINE#         362
+  C:41F6H         LINE#         363
+  C:41F6H         LINE#         365
+  C:41FBH         LINE#         369
+  C:41FDH         LINE#         370
+  C:4201H         LINE#         371
+  C:4207H         LINE#         372
+  C:4207H         LINE#         373
+  C:420BH         LINE#         374
+  C:420DH         LINE#         375
+  C:421FH         LINE#         376
+  C:421FH         LINE#         377
+  C:4229H         LINE#         378
+  C:4235H         LINE#         379
+  C:4235H         LINE#         380
+  C:4259H         LINE#         381
+  C:426DH         LINE#         382
+  C:426DH         LINE#         383
+  C:4270H         LINE#         384
+  C:4274H         LINE#         385
+  C:4274H         LINE#         386
+  C:4276H         LINE#         387
+  C:4285H         LINE#         388
+  C:4285H         LINE#         389
+  C:4293H         LINE#         390
+  C:4299H         LINE#         391
+  C:42A3H         LINE#         392
+  C:42ACH         LINE#         393
+  C:42ACH         LINE#         394
+  C:42BAH         LINE#         395
+  C:42DEH         LINE#         396
+  C:42F2H         LINE#         397
+  C:42F2H         LINE#         398
+  C:42F5H         LINE#         399
+  C:42F9H         LINE#         400
+  C:42F9H         LINE#         401
+  C:42FBH         LINE#         402
+  C:42FBH         LINE#         403
+  C:42FEH         LINE#         404
+  C:42FEH         LINE#         405
+  C:4304H         LINE#         406
+  C:4304H         LINE#         407
+  C:430DH         LINE#         408
+  C:430DH         LINE#         409
+  C:430FH         LINE#         411
   -------         ENDPROC       RX_BUS
   -------         PROC          _VDATA_CLK
   X:025FH         SYMBOL        data_clk
   -------         DO            
   D:0006H         SYMBOL        temp
   -------         ENDDO         
-  C:4AA3H         LINE#         417
-  C:4AA8H         LINE#         418
-  C:4AA8H         LINE#         422
-  C:4AAAH         LINE#         423
-  C:4AADH         LINE#         424
-  C:4ABAH         LINE#         425
-  C:4ABDH         LINE#         426
-  C:4AC0H         LINE#         428
-  C:4AC6H         LINE#         429
-  C:4AC8H         LINE#         430
-  C:4ACBH         LINE#         431
+  C:4AE1H         LINE#         417
+  C:4AE6H         LINE#         418
+  C:4AE6H         LINE#         422
+  C:4AE8H         LINE#         423
+  C:4AEBH         LINE#         424
+  C:4AF8H         LINE#         425
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 12
+
+
+  C:4AFBH         LINE#         426
+  C:4AFEH         LINE#         428
+  C:4B04H         LINE#         429
+  C:4B06H         LINE#         430
+  C:4B09H         LINE#         431
   -------         ENDPROC       _VDATA_CLK
   -------         PROC          _SENDMSG
   D:0007H         SYMBOL        tipo
   -------         DO            
   X:0261H         SYMBOL        i
   -------         ENDDO         
-  C:43FFH         LINE#         436
-  C:43FFH         LINE#         437
-  C:43FFH         LINE#         441
-  C:4405H         LINE#         442
-  C:440DH         LINE#         443
-  C:440DH         LINE#         444
-  C:440DH         LINE#         445
-  C:4413H         LINE#         447
-  C:4415H         LINE#         450
-  C:4415H         LINE#         451
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 12
-
-
-  C:441BH         LINE#         453
-  C:441BH         LINE#         454
-  C:441BH         LINE#         456
-  C:442EH         LINE#         457
-  C:442EH         LINE#         458
-  C:4447H         LINE#         459
-  C:444FH         LINE#         460
-  C:4455H         LINE#         464
-  C:4458H         LINE#         465
-  C:4458H         LINE#         466
-  C:445FH         LINE#         467
-  C:4462H         LINE#         468
-  C:4462H         LINE#         469
-  C:4474H         LINE#         470
-  C:4474H         LINE#         471
-  C:448DH         LINE#         472
-  C:4495H         LINE#         478
-  C:4495H         LINE#         479
-  C:44A7H         LINE#         480
-  C:44A7H         LINE#         481
-  C:44C0H         LINE#         482
-  C:44C8H         LINE#         483
-  C:44CEH         LINE#         484
-  C:44D4H         LINE#         486
-  C:44D4H         LINE#         490
+  C:4403H         LINE#         436
+  C:4403H         LINE#         437
+  C:4403H         LINE#         441
+  C:4409H         LINE#         442
+  C:4411H         LINE#         443
+  C:4411H         LINE#         444
+  C:4411H         LINE#         445
+  C:4417H         LINE#         447
+  C:4419H         LINE#         450
+  C:4419H         LINE#         451
+  C:441FH         LINE#         453
+  C:441FH         LINE#         454
+  C:441FH         LINE#         456
+  C:4432H         LINE#         457
+  C:4432H         LINE#         458
+  C:444BH         LINE#         459
+  C:4453H         LINE#         460
+  C:4459H         LINE#         464
+  C:445CH         LINE#         465
+  C:445CH         LINE#         466
+  C:4463H         LINE#         467
+  C:4466H         LINE#         468
+  C:4466H         LINE#         469
+  C:4478H         LINE#         470
+  C:4478H         LINE#         471
+  C:4491H         LINE#         472
+  C:4499H         LINE#         478
+  C:4499H         LINE#         479
+  C:44ABH         LINE#         480
+  C:44ABH         LINE#         481
+  C:44C4H         LINE#         482
+  C:44CCH         LINE#         483
+  C:44D2H         LINE#         484
+  C:44D8H         LINE#         486
+  C:44D8H         LINE#         490
   -------         ENDPROC       _SENDMSG
   -------         PROC          _SENDRTABUS
   X:0261H         SYMBOL        Respuesta
-  C:4A47H         LINE#         492
-  C:4A4CH         LINE#         493
-  C:4A4CH         LINE#         494
-  C:4A4FH         LINE#         495
-  C:4A4FH         LINE#         497
-  C:4A52H         LINE#         498
-  C:4A56H         LINE#         499
-  C:4A5BH         LINE#         500
-  C:4A5EH         LINE#         501
-  C:4A5EH         LINE#         502
-  C:4A5EH         LINE#         503
-  C:4A5EH         LINE#         504
-  C:4A5EH         LINE#         505
-  C:4A5EH         LINE#         506
-  C:4A60H         LINE#         508
-  C:4A60H         LINE#         509
-  C:4A66H         LINE#         510
-  C:4A6EH         LINE#         511
-  C:4A74H         LINE#         512
-  C:4A74H         LINE#         513
+  C:4A85H         LINE#         492
+  C:4A8AH         LINE#         493
+  C:4A8AH         LINE#         494
+  C:4A8DH         LINE#         495
+  C:4A8DH         LINE#         497
+  C:4A90H         LINE#         498
+  C:4A94H         LINE#         499
+  C:4A99H         LINE#         500
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 13
+
+
+  C:4A9CH         LINE#         501
+  C:4A9CH         LINE#         502
+  C:4A9CH         LINE#         503
+  C:4A9CH         LINE#         504
+  C:4A9CH         LINE#         505
+  C:4A9CH         LINE#         506
+  C:4A9EH         LINE#         508
+  C:4A9EH         LINE#         509
+  C:4AA4H         LINE#         510
+  C:4AACH         LINE#         511
+  C:4AB2H         LINE#         512
+  C:4AB2H         LINE#         513
   -------         ENDPROC       _SENDRTABUS
   -------         PROC          ATENCCOMSOFT
   -------         DO            
@@ -719,9 +743,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   -------         ENDDO         
   C:2241H         LINE#         517
   C:2241H         LINE#         518
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 13
-
-
   C:2241H         LINE#         521
   C:2253H         LINE#         522
   C:2253H         LINE#         524
@@ -758,6 +779,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:236BH         LINE#         564
   C:236DH         LINE#         566
   C:236DH         LINE#         567
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 14
+
+
   C:2386H         LINE#         568
   C:2386H         LINE#         571
   C:238CH         LINE#         572
@@ -779,9 +803,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:23FFH         LINE#         588
   C:2402H         LINE#         590
   C:2402H         LINE#         592
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 14
-
-
   C:2405H         LINE#         593
   C:2405H         LINE#         594
   C:2408H         LINE#         595
@@ -818,6 +839,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:24C1H         LINE#         633
   C:24C1H         LINE#         634
   C:24C1H         LINE#         637
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 15
+
+
   C:24DAH         LINE#         639
   C:24E0H         LINE#         640
   C:24E0H         LINE#         641
@@ -839,9 +863,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:2543H         LINE#         660
   C:254AH         LINE#         661
   C:2550H         LINE#         662
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 15
-
-
   C:2557H         LINE#         663
   C:255DH         LINE#         664
   C:2564H         LINE#         665
@@ -878,6 +899,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:273BH         LINE#         703
   C:273FH         LINE#         704
   C:273FH         LINE#         707
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 16
+
+
   C:2742H         LINE#         709
   C:2742H         LINE#         710
   C:2748H         LINE#         712
@@ -899,9 +923,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:27D9H         LINE#         732
   C:27DBH         LINE#         734
   C:27DBH         LINE#         735
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 16
-
-
   C:27F1H         LINE#         736
   C:27F1H         LINE#         738
   C:27F4H         LINE#         739
@@ -938,6 +959,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:2836H         LINE#         773
   C:2838H         LINE#         775
   C:2838H         LINE#         776
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 17
+
+
   C:283DH         LINE#         777
   C:283DH         LINE#         779
   C:283DH         LINE#         780
@@ -959,9 +983,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:2891H         LINE#         799
   C:2891H         LINE#         801
   C:2899H         LINE#         802
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 17
-
-
   C:2899H         LINE#         803
   C:28AAH         LINE#         805
   C:28B1H         LINE#         806
@@ -998,6 +1019,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:2944H         LINE#         857
   C:294AH         LINE#         858
   C:294EH         LINE#         859
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 18
+
+
   C:295CH         LINE#         860
   C:2963H         LINE#         861
   C:2971H         LINE#         862
@@ -1019,9 +1043,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:29B8H         LINE#         881
   C:29B8H         LINE#         882
   C:29BEH         LINE#         883
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 18
-
-
   C:29C0H         LINE#         884
   C:29C4H         LINE#         885
   C:29C4H         LINE#         886
@@ -1058,6 +1079,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:29F8H         LINE#         924
   C:29FBH         LINE#         925
   C:29FBH         LINE#         926
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 19
+
+
   C:29FDH         LINE#         928
   C:29FDH         LINE#         929
   C:2A03H         LINE#         930
@@ -1079,9 +1103,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:2AB2H         LINE#         952
   C:2AB5H         LINE#         953
   C:2AB5H         LINE#         956
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 19
-
-
   C:2AD6H         LINE#         957
   C:2AD6H         LINE#         958
   C:2AFBH         LINE#         959
@@ -1118,6 +1139,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:2B7DH         LINE#         1001
   C:2B83H         LINE#         1002
   C:2B83H         LINE#         1004
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 20
+
+
   C:2B89H         LINE#         1005
   C:2B8BH         LINE#         1007
   C:2B8BH         LINE#         1011
@@ -1139,9 +1163,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:2BEAH         LINE#         1032
   C:2BF0H         LINE#         1033
   C:2BF2H         LINE#         1034
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 20
-
-
   C:2BF6H         LINE#         1035
   C:2BF6H         LINE#         1036
   C:2BFCH         LINE#         1037
@@ -1178,6 +1199,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:2C37H         LINE#         1074
   C:2C3AH         LINE#         1075
   C:2C3AH         LINE#         1076
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 21
+
+
   C:2C40H         LINE#         1077
   C:2C40H         LINE#         1078
   C:2C40H         LINE#         1079
@@ -1199,9 +1223,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:2C9FH         LINE#         1101
   C:2C9FH         LINE#         1103
   C:2CA5H         LINE#         1104
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 21
-
-
   C:2CB3H         LINE#         1105
   C:2CC1H         LINE#         1106
   C:2CCFH         LINE#         1107
@@ -1238,6 +1259,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:2E14H         LINE#         1149
   C:2E14H         LINE#         1150
   C:2E16H         LINE#         1151
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 22
+
+
   C:2E3DH         LINE#         1152
   C:2E3DH         LINE#         1153
   C:2E62H         LINE#         1154
@@ -1259,9 +1283,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:2EEEH         LINE#         1181
   C:2EEEH         LINE#         1182
   C:2EF2H         LINE#         1183
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 22
-
-
   C:2EF2H         LINE#         1184
   C:2EF2H         LINE#         1186
   C:2EF5H         LINE#         1189
@@ -1298,6 +1319,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:2FF0H         LINE#         1230
   C:2FF9H         LINE#         1231
   C:2FF9H         LINE#         1232
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 23
+
+
   C:3000H         LINE#         1233
   C:3000H         LINE#         1235
   C:3003H         LINE#         1241
@@ -1319,9 +1343,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:301BH         LINE#         1265
   C:301BH         LINE#         1266
   C:301EH         LINE#         1267
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 23
-
-
   C:301EH         LINE#         1268
   C:3021H         LINE#         1269
   C:3021H         LINE#         1270
@@ -1358,6 +1379,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:3093H         LINE#         1305
   C:3098H         LINE#         1307
   C:309FH         LINE#         1308
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 24
+
+
   C:30A2H         LINE#         1309
   C:30A4H         LINE#         1311
   C:30A6H         LINE#         1312
@@ -1379,9 +1403,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:3164H         LINE#         1330
   C:31D4H         LINE#         1331
   C:31D4H         LINE#         1332
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 24
-
-
   C:31D6H         LINE#         1333
   C:31D9H         LINE#         1335
   C:3249H         LINE#         1336
@@ -1418,6 +1439,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:3532H         LINE#         1370
   C:3572H         LINE#         1371
   C:3572H         LINE#         1372
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 25
+
+
   C:3577H         LINE#         1373
   C:3577H         LINE#         1375
   C:357CH         LINE#         1376
@@ -1439,9 +1463,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:3617H         LINE#         1397
   C:3618H         LINE#         1399
   C:3618H         LINE#         1400
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 25
-
-
   C:361DH         LINE#         1401
   C:361DH         LINE#         1403
   C:361DH         LINE#         1404
@@ -1478,6 +1499,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:00A1H         LINE#         1437
   C:00A3H         LINE#         1438
   C:00A5H         LINE#         1439
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 26
+
+
   C:00A7H         LINE#         1445
   C:00A9H         LINE#         1446
   C:00AFH         LINE#         1447
@@ -1499,9 +1523,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:00DEH         LINE#         1468
   C:00E0H         LINE#         1469
   C:00E4H         LINE#         1470
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 26
-
-
   C:00EAH         LINE#         1471
   C:00ECH         LINE#         1472
   C:00F2H         LINE#         1473
@@ -1538,6 +1559,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:0155H         LINE#         1522
   C:015FH         LINE#         1523
   C:015FH         LINE#         1524
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 27
+
+
   C:0165H         LINE#         1525
   C:0169H         LINE#         1526
   C:0172H         LINE#         1527
@@ -1559,9 +1583,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:01B2H         LINE#         1548
   C:01B8H         LINE#         1549
   C:01BCH         LINE#         1550
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 27
-
-
   C:01C4H         LINE#         1551
   C:01CCH         LINE#         1552
   C:01D4H         LINE#         1553
@@ -1598,6 +1619,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:02BEH         LINE#         1588
   C:02BEH         LINE#         1589
   C:02BEH         LINE#         1590
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 28
+
+
   C:02C1H         LINE#         1591
   C:0314H         LINE#         1592
   C:0314H         LINE#         1593
@@ -1619,9 +1643,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:0370H         LINE#         1609
   C:03AFH         LINE#         1610
   C:03AFH         LINE#         1611
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 28
-
-
   C:03AFH         LINE#         1612
   C:03AFH         LINE#         1613
   C:03AFH         LINE#         1614
@@ -1658,6 +1679,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:0439H         LINE#         1651
   C:0440H         LINE#         1652
   C:0440H         LINE#         1655
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 29
+
+
   C:0440H         LINE#         1660
   C:0446H         LINE#         1661
   C:0446H         LINE#         1663
@@ -1679,9 +1703,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:04C4H         LINE#         1694
   C:04C4H         LINE#         1695
   C:04C7H         LINE#         1696
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 29
-
-
   C:04CFH         LINE#         1697
   C:04D4H         LINE#         1698
   C:04E0H         LINE#         1699
@@ -1718,6 +1739,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:0595H         LINE#         1735
   C:059AH         LINE#         1736
   C:05A3H         LINE#         1739
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 30
+
+
   C:05AAH         LINE#         1743
   C:05ADH         LINE#         1744
   C:05B5H         LINE#         1745
@@ -1739,9 +1763,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:0617H         LINE#         1762
   C:0617H         LINE#         1763
   C:061CH         LINE#         1764
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 30
-
-
   C:0635H         LINE#         1765
   C:0635H         LINE#         1766
   C:0638H         LINE#         1767
@@ -1778,6 +1799,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:06F9H         LINE#         1798
   C:06FCH         LINE#         1799
   C:0704H         LINE#         1800
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 31
+
+
   C:0704H         LINE#         1802
   C:070CH         LINE#         1803
   C:070CH         LINE#         1804
@@ -1799,9 +1823,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:075CH         LINE#         1820
   C:0761H         LINE#         1823
   C:0763H         LINE#         1824
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 31
-
-
   C:0769H         LINE#         1825
   C:076BH         LINE#         1826
   C:0773H         LINE#         1827
@@ -1838,6 +1859,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:0806H         LINE#         1859
   C:0806H         LINE#         1860
   C:0808H         LINE#         1861
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 32
+
+
   C:080AH         LINE#         1862
   C:0810H         LINE#         1863
   C:0813H         LINE#         1864
@@ -1859,9 +1883,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:0867H         LINE#         1881
   C:086CH         LINE#         1882
   C:086EH         LINE#         1883
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 32
-
-
   C:086EH         LINE#         1885
   C:0871H         LINE#         1886
   C:0881H         LINE#         1887
@@ -1898,6 +1919,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:090DH         LINE#         1923
   C:091CH         LINE#         1924
   C:091CH         LINE#         1925
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 33
+
+
   C:091EH         LINE#         1926
   C:0923H         LINE#         1927
   C:093CH         LINE#         1928
@@ -1919,9 +1943,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:0999H         LINE#         1945
   C:099EH         LINE#         1946
   C:09A3H         LINE#         1947
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 33
-
-
   C:09A8H         LINE#         1948
   C:09ADH         LINE#         1949
   C:09B2H         LINE#         1950
@@ -1958,6 +1979,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:0A49H         LINE#         1986
   C:0A59H         LINE#         1987
   C:0A59H         LINE#         1988
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 34
+
+
   C:0A5EH         LINE#         1990
   C:0A63H         LINE#         1991
   C:0A68H         LINE#         1992
@@ -1979,9 +2003,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:0AB3H         LINE#         2010
   C:0AC3H         LINE#         2011
   C:0AC3H         LINE#         2012
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 34
-
-
   C:0AC8H         LINE#         2014
   C:0ACDH         LINE#         2015
   C:0AD2H         LINE#         2016
@@ -2018,6 +2039,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:0B6EH         LINE#         2050
   C:0B73H         LINE#         2051
   C:0B78H         LINE#         2052
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 35
+
+
   C:0B7AH         LINE#         2055
   C:0B7DH         LINE#         2056
   C:0B8DH         LINE#         2057
@@ -2039,9 +2063,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:0BD8H         LINE#         2074
   C:0BDDH         LINE#         2075
   C:0BDFH         LINE#         2078
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 35
-
-
   C:0BE2H         LINE#         2079
   C:0BF8H         LINE#         2080
   C:0BF8H         LINE#         2081
@@ -2078,6 +2099,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:0C93H         LINE#         2115
   C:0C98H         LINE#         2116
   C:0C9DH         LINE#         2117
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 36
+
+
   C:0C9FH         LINE#         2119
   C:0CA2H         LINE#         2120
   C:0CB8H         LINE#         2121
@@ -2099,9 +2123,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:0D03H         LINE#         2138
   C:0D08H         LINE#         2139
   C:0D0DH         LINE#         2141
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 36
-
-
   C:0D12H         LINE#         2143
   C:0D17H         LINE#         2144
   C:0D1CH         LINE#         2145
@@ -2138,6 +2159,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:0DB8H         LINE#         2178
   C:0DBDH         LINE#         2179
   C:0DC2H         LINE#         2180
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 37
+
+
   C:0DC4H         LINE#         2182
   C:0DC7H         LINE#         2183
   C:0DD7H         LINE#         2184
@@ -2159,9 +2183,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:0E22H         LINE#         2201
   C:0E27H         LINE#         2202
   C:0E29H         LINE#         2204
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 37
-
-
   C:0E2CH         LINE#         2205
   C:0E3CH         LINE#         2206
   C:0E3CH         LINE#         2207
@@ -2198,6 +2219,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:0ED8H         LINE#         2241
   C:0EDDH         LINE#         2242
   C:0EE2H         LINE#         2243
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 38
+
+
   C:0EE7H         LINE#         2244
   C:0EECH         LINE#         2245
   C:0EF1H         LINE#         2246
@@ -2219,9 +2243,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:0F41H         LINE#         2264
   C:0F46H         LINE#         2265
   C:0F4BH         LINE#         2266
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 38
-
-
   C:0F50H         LINE#         2267
   C:0F55H         LINE#         2268
   C:0F57H         LINE#         2270
@@ -2258,6 +2279,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:1000H         LINE#         2318
   C:1005H         LINE#         2319
   C:100AH         LINE#         2320
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 39
+
+
   C:100CH         LINE#         2322
   C:100EH         LINE#         2323
   C:1016H         LINE#         2324
@@ -2279,9 +2303,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:104EH         LINE#         2340
   C:1050H         LINE#         2341
   C:105BH         LINE#         2342
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 39
-
-
   C:105BH         LINE#         2343
   C:1060H         LINE#         2344
   C:1065H         LINE#         2345
@@ -2318,6 +2339,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:113FH         LINE#         2377
   C:1142H         LINE#         2378
   C:1147H         LINE#         2379
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 40
+
+
   C:1150H         LINE#         2380
   C:1156H         LINE#         2381
   C:1156H         LINE#         2382
@@ -2339,9 +2363,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:11C7H         LINE#         2399
   C:11DBH         LINE#         2400
   C:11DBH         LINE#         2402
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 40
-
-
   C:11DEH         LINE#         2403
   C:11E1H         LINE#         2406
   C:1213H         LINE#         2407
@@ -2378,6 +2399,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:12CEH         LINE#         2451
   C:12D1H         LINE#         2452
   C:12DFH         LINE#         2453
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 41
+
+
   C:12DFH         LINE#         2455
   C:12E5H         LINE#         2456
   C:12E8H         LINE#         2463
@@ -2399,9 +2423,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:1367H         LINE#         2485
   C:136FH         LINE#         2487
   C:1377H         LINE#         2488
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 41
-
-
   C:137FH         LINE#         2489
   C:1387H         LINE#         2490
   C:138FH         LINE#         2491
@@ -2438,6 +2459,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:1476H         LINE#         2532
   C:1476H         LINE#         2533
   C:1478H         LINE#         2534
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 42
+
+
   C:1478H         LINE#         2536
   C:1480H         LINE#         2537
   C:1480H         LINE#         2539
@@ -2459,9 +2483,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:14E6H         LINE#         2562
   C:14FDH         LINE#         2563
   C:14FDH         LINE#         2564
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 42
-
-
   C:155AH         LINE#         2565
   C:155AH         LINE#         2566
   C:155CH         LINE#         2567
@@ -2498,6 +2519,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:163FH         LINE#         2612
   C:1645H         LINE#         2615
   C:1647H         LINE#         2616
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 43
+
+
   C:1649H         LINE#         2617
   C:164DH         LINE#         2619
   C:1661H         LINE#         2620
@@ -2519,9 +2543,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:1715H         LINE#         2642
   C:172BH         LINE#         2645
   C:1730H         LINE#         2646
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 43
-
-
   C:174BH         LINE#         2647
   C:174BH         LINE#         2648
   C:176AH         LINE#         2649
@@ -2558,6 +2579,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:1856H         LINE#         2699
   C:1856H         LINE#         2700
   C:185CH         LINE#         2701
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 44
+
+
   C:185CH         LINE#         2702
   C:185EH         LINE#         2703
   C:1864H         LINE#         2705
@@ -2579,9 +2603,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:18CCH         LINE#         2723
   C:18CFH         LINE#         2724
   C:18D7H         LINE#         2725
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 44
-
-
   C:18DCH         LINE#         2726
   C:18E8H         LINE#         2728
   C:18EDH         LINE#         2729
@@ -2618,6 +2639,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:19ABH         LINE#         2767
   C:19ADH         LINE#         2768
   C:19B1H         LINE#         2770
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 45
+
+
   C:19B8H         LINE#         2771
   C:19B8H         LINE#         2772
   C:19BAH         LINE#         2773
@@ -2639,9 +2663,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:1A33H         LINE#         2795
   C:1A39H         LINE#         2796
   C:1A41H         LINE#         2799
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 45
-
-
   C:1A48H         LINE#         2802
   C:1A5BH         LINE#         2803
   C:1A71H         LINE#         2804
@@ -2678,6 +2699,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:1BBDH         LINE#         2845
   C:1BC2H         LINE#         2846
   C:1BC7H         LINE#         2847
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 46
+
+
   C:1BCCH         LINE#         2848
   C:1BD1H         LINE#         2849
   C:1BD6H         LINE#         2851
@@ -2699,9 +2723,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:1C4BH         LINE#         2871
   C:1C50H         LINE#         2872
   C:1C50H         LINE#         2873
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 46
-
-
   C:1C58H         LINE#         2874
   C:1C5EH         LINE#         2875
   C:1C5EH         LINE#         2876
@@ -2738,6 +2759,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:1D7CH         LINE#         2917
   C:1D7CH         LINE#         2918
   C:1D83H         LINE#         2919
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 47
+
+
   C:1D83H         LINE#         2920
   C:1DA1H         LINE#         2921
   C:1DA1H         LINE#         2922
@@ -2759,9 +2783,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:1E30H         LINE#         2942
   C:1E4CH         LINE#         2943
   C:1E4CH         LINE#         2944
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 47
-
-
   C:1E4EH         LINE#         2946
   C:1E53H         LINE#         2947
   C:1E58H         LINE#         2948
@@ -2798,6 +2819,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:1FA8H         LINE#         2989
   C:1FA8H         LINE#         2990
   C:1FBBH         LINE#         2991
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 48
+
+
   C:1FBBH         LINE#         2992
   C:1FD3H         LINE#         2993
   C:1FDBH         LINE#         2994
@@ -2819,9 +2843,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:1FFCH         LINE#         3021
   C:1FFEH         LINE#         3022
   C:2001H         LINE#         3023
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 48
-
-
   C:2001H         LINE#         3024
   C:2003H         LINE#         3025
   C:2003H         LINE#         3026
@@ -2858,6 +2879,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:2094H         LINE#         3061
   C:2094H         LINE#         3062
   C:2096H         LINE#         3063
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 49
+
+
   C:2098H         LINE#         3064
   C:2098H         LINE#         3065
   C:2098H         LINE#         3066
@@ -2879,9 +2903,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:20BBH         LINE#         3084
   C:20BBH         LINE#         3085
   C:20BEH         LINE#         3086
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 49
-
-
   C:20BEH         LINE#         3087
   C:20BEH         LINE#         3088
   C:20C0H         LINE#         3090
@@ -2918,6 +2939,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:2133H         LINE#         3123
   C:2133H         LINE#         3124
   C:2135H         LINE#         3125
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 50
+
+
   C:2138H         LINE#         3126
   C:2138H         LINE#         3127
   C:213BH         LINE#         3128
@@ -2939,9 +2963,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:2182H         LINE#         3144
   C:2198H         LINE#         3145
   C:2198H         LINE#         3146
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 50
-
-
   C:219BH         LINE#         3147
   C:21A3H         LINE#         3148
   C:21A3H         LINE#         3149
@@ -2978,6 +2999,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:220CH         LINE#         3190
   C:220CH         LINE#         3191
   C:2211H         LINE#         3192
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 51
+
+
   C:2213H         LINE#         3193
   C:2213H         LINE#         3195
   C:2221H         LINE#         3196
@@ -2999,157 +3023,226 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   -------         MODULE        WIEGAND
   C:0000H         SYMBOL        _ICE_DUMMY_
   D:0090H         PUBLIC        P1
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 51
-
-
-  C:4BDDH         PUBLIC        id_Access
+  C:49EAH         PUBLIC        timer0_int
+  D:00B0H         PUBLIC        P3
+  C:49B1H         PUBLIC        id_Access
   B:00A8H.7       PUBLIC        EA
   X:029FH         PUBLIC        card_number
-  C:4BBEH         PUBLIC        ajusta_code
-  C:44D5H         PUBLIC        _bits_wiegand_hex
+  C:4971H         PUBLIC        ajusta_code
+  C:4DB4H         PUBLIC        off_Timer0_Interrup
+  C:44E0H         PUBLIC        _bits_wiegand_hex
   X:02A0H         PUBLIC        buffer_wie
-  C:4D3BH         PUBLIC        ini_ex0
-  C:4D40H         PUBLIC        ini_ex1
-  C:0006H         PUBLIC        inicia_wiegand
+  C:000EH         PUBLIC        ini_ex0
+  C:4DAFH         PUBLIC        ini_ex1
+  C:0006H         PUBLIC        on_Timer0_Interrup
+  C:4D92H         PUBLIC        inicia_wiegand
+  D:0089H         PUBLIC        TMOD
   X:02A4H         PUBLIC        card_number1
   X:02A5H         PUBLIC        card_number2
-  C:4966H         PUBLIC        ex0_isr
-  C:49A3H         PUBLIC        ex1_isr
-  C:49E3H         SYMBOL        _?ix1000
-  C:49F4H         SYMBOL        _?ix1001
-  C:49FCH         SYMBOL        _?ix1002
-  C:4A02H         SYMBOL        _?ix1003
+  C:4B0CH         PUBLIC        ex0_isr
+  C:4B36H         PUBLIC        ex1_isr
+  C:4A21H         SYMBOL        _?ix1000
+  C:4A32H         SYMBOL        _?ix1001
+  C:4A3AH         SYMBOL        _?ix1002
+  C:4A40H         SYMBOL        _?ix1003
+  C:4D82H         PUBLIC        ini_timer
+  B:00A8H.1       PUBLIC        ET0
+  B:0088H.5       PUBLIC        TF0
+  D:008CH         PUBLIC        TH0
   B:00A8H.0       PUBLIC        EX0
   B:0088H.0       PUBLIC        IT0
   B:00A8H.2       PUBLIC        EX1
   B:0088H.2       PUBLIC        IT1
+  D:008AH         PUBLIC        TL0
   X:02A6H         PUBLIC        codebits
+  B:0088H.4       PUBLIC        TR0
   X:02C1H         PUBLIC        facility_code
-  C:4D45H         PUBLIC        on_ini_ex0_ex1
-  X:02C2H         PUBLIC        completo
-  X:02C3H         PUBLIC        nex_bit
-  C:462CH         PUBLIC        lcd_wiegand
-  C:4A14H         PUBLIC        limpia_data
+  C:4DB7H         PUBLIC        on_ini_ex0_ex1
+  X:02C2H         PUBLIC        timer_wiegand
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 52
+
+
+  X:02C3H         PUBLIC        completo
+  X:02C4H         PUBLIC        nex_bit
+  B:00B0H.2       PUBLIC        D0L1
+  B:00B0H.3       PUBLIC        D1L1
+  C:4637H         PUBLIC        lcd_wiegand
+  C:4A52H         PUBLIC        limpia_data
+  -------         PROC          TIMER0_INT
+  C:49EAH         LINE#         53
+  C:49F7H         LINE#         57
+  C:49FDH         LINE#         58
+  C:49FDH         LINE#         59
+  C:4A00H         LINE#         60
+  C:4A03H         LINE#         61
+  C:4A09H         LINE#         62
+  C:4A0BH         LINE#         64
+  C:4A0BH         LINE#         65
+  C:4A11H         LINE#         66
+  C:4A11H         LINE#         67
+  C:4A13H         LINE#         69
+  -------         ENDPROC       TIMER0_INT
+  -------         PROC          INI_TIMER
+  C:4D82H         LINE#         72
+  C:4D82H         LINE#         73
+  C:4D82H         LINE#         75
+  C:4D8AH         LINE#         77
+  C:4D8DH         LINE#         78
+  C:4D8FH         LINE#         79
+  C:4D91H         LINE#         81
+  -------         ENDPROC       INI_TIMER
+  -------         PROC          ON_TIMER0_INTERRUP
+  C:0006H         LINE#         84
+  C:0006H         LINE#         85
+  C:0006H         LINE#         86
+  C:0008H         LINE#         87
+  C:000AH         LINE#         89
+  -------         ENDPROC       ON_TIMER0_INTERRUP
+  -------         PROC          OFF_TIMER0_INTERRUP
+  C:4DB4H         LINE#         92
+  C:4DB4H         LINE#         93
+  C:4DB4H         LINE#         94
+  C:4DB6H         LINE#         96
+  -------         ENDPROC       OFF_TIMER0_INTERRUP
   -------         PROC          EX0_ISR
-  C:4966H         LINE#         55
-  C:496EH         LINE#         62
-  C:497EH         LINE#         66
-  C:4988H         LINE#         67
-  C:4988H         LINE#         68
-  C:498DH         LINE#         69
-  C:499AH         LINE#         70
-  C:499AH         LINE#         73
+  C:4B0CH         LINE#         115
+  C:4B14H         LINE#         121
+  C:4B1AH         LINE#         122
+  C:4B27H         LINE#         124
+  C:4B2AH         LINE#         126
+  C:4B2DH         LINE#         136
   -------         ENDPROC       EX0_ISR
   -------         PROC          EX1_ISR
-  C:49A3H         LINE#         78
-  C:49ABH         LINE#         83
-  C:49BBH         LINE#         86
-  C:49C5H         LINE#         87
-  C:49C5H         LINE#         88
-  C:49CAH         LINE#         89
-  C:49D7H         LINE#         90
-  C:49D7H         LINE#         92
+  C:4B36H         LINE#         141
+  C:4B3EH         LINE#         145
+  C:4B44H         LINE#         146
+  C:4B51H         LINE#         147
+  C:4B54H         LINE#         148
+  C:4B57H         LINE#         155
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 53
+
+
   -------         ENDPROC       EX1_ISR
   -------         PROC          INI_EX0
-  C:4D3BH         LINE#         96
-  C:4D3BH         LINE#         97
-  C:4D3BH         LINE#         99
-  C:4D3DH         LINE#         100
-  C:4D3FH         LINE#         102
+  C:000EH         LINE#         159
+  C:000EH         LINE#         160
+  C:000EH         LINE#         162
+  C:0010H         LINE#         163
+  C:0012H         LINE#         165
   -------         ENDPROC       INI_EX0
   -------         PROC          INI_EX1
-  C:4D40H         LINE#         106
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 52
-
-
-  C:4D40H         LINE#         107
-  C:4D40H         LINE#         109
-  C:4D42H         LINE#         110
-  C:4D44H         LINE#         112
+  C:4DAFH         LINE#         169
+  C:4DAFH         LINE#         170
+  C:4DAFH         LINE#         172
+  C:4DB1H         LINE#         173
+  C:4DB3H         LINE#         175
   -------         ENDPROC       INI_EX1
   -------         PROC          ON_INI_EX0_EX1
-  C:4D45H         LINE#         116
-  C:4D45H         LINE#         117
-  C:4D45H         LINE#         118
-  C:4D47H         LINE#         120
+  C:4DB7H         LINE#         179
+  C:4DB7H         LINE#         180
+  C:4DB7H         LINE#         181
+  C:4DB9H         LINE#         183
   -------         ENDPROC       ON_INI_EX0_EX1
   -------         PROC          INICIA_WIEGAND
-  C:0006H         LINE#         124
-  C:0006H         LINE#         125
-  C:0006H         LINE#         127
-  C:0009H         LINE#         128
-  C:000CH         LINE#         129
-  C:000FH         LINE#         130
+  C:4D92H         LINE#         187
+  C:4D92H         LINE#         188
+  C:4D92H         LINE#         190
+  C:4D95H         LINE#         191
+  C:4D98H         LINE#         192
+  C:4D9BH         LINE#         194
+  C:4D9EH         LINE#         195
   -------         ENDPROC       INICIA_WIEGAND
   -------         PROC          LIMPIA_DATA
   -------         DO            
   D:0007H         SYMBOL        i
   -------         ENDDO         
-  C:4A14H         LINE#         135
-  C:4A14H         LINE#         136
-  C:4A14H         LINE#         138
-  C:4A20H         LINE#         139
-  C:4A20H         LINE#         140
-  C:4A2CH         LINE#         141
-  C:4A30H         LINE#         142
-  C:4A34H         LINE#         143
-  C:4A37H         LINE#         144
-  C:4A3CH         LINE#         145
-  C:4A40H         LINE#         146
-  C:4A44H         LINE#         147
-  C:4A46H         LINE#         149
+  C:4A52H         LINE#         200
+  C:4A52H         LINE#         201
+  C:4A52H         LINE#         203
+  C:4A5EH         LINE#         204
+  C:4A5EH         LINE#         205
+  C:4A6AH         LINE#         206
+  C:4A6EH         LINE#         207
+  C:4A72H         LINE#         208
+  C:4A75H         LINE#         209
+  C:4A7AH         LINE#         210
+  C:4A7EH         LINE#         211
+  C:4A82H         LINE#         212
+  C:4A84H         LINE#         214
   -------         ENDPROC       LIMPIA_DATA
   -------         PROC          AJUSTA_CODE
-  C:4BBEH         LINE#         154
-  C:4BBEH         LINE#         155
-  C:4BBEH         LINE#         156
-  C:4BC8H         LINE#         157
-  C:4BD2H         LINE#         158
-  C:4BDCH         LINE#         161
+  C:4971H         LINE#         219
+  C:4971H         LINE#         220
+  C:4971H         LINE#         221
+  C:497BH         LINE#         222
+  C:497BH         LINE#         223
+  C:497EH         LINE#         224
+  C:4986H         LINE#         225
+  C:4990H         LINE#         226
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 54
+
+
+  C:499AH         LINE#         227
+  C:499BH         LINE#         229
+  C:499BH         LINE#         230
+  C:499EH         LINE#         231
+  C:49A6H         LINE#         232
+  C:49B0H         LINE#         234
+  C:49B0H         LINE#         237
   -------         ENDPROC       AJUSTA_CODE
   -------         PROC          ID_ACCESS
-  C:4BDDH         LINE#         168
-  C:4BDDH         LINE#         169
-  C:4BDDH         LINE#         172
-  C:4BE0H         LINE#         173
-  C:4BE8H         LINE#         174
-  C:4BF0H         LINE#         175
-  C:4BF8H         LINE#         178
+  C:49B1H         LINE#         244
+  C:49B1H         LINE#         245
+  C:49B1H         LINE#         248
+  C:49B4H         LINE#         249
+  C:49BCH         LINE#         250
+  C:49BCH         LINE#         251
+  C:49C2H         LINE#         252
+  C:49CAH         LINE#         253
+  C:49CDH         LINE#         255
+  C:49CFH         LINE#         257
+  C:49CFH         LINE#         258
+  C:49D7H         LINE#         259
+  C:49DFH         LINE#         260
+  C:49E7H         LINE#         261
+  C:49E7H         LINE#         262
   -------         ENDPROC       ID_ACCESS
+  -------         PROC          L?0037
+  -------         ENDPROC       L?0037
   -------         PROC          _BITS_WIEGAND_HEX
   X:025FH         SYMBOL        starting_position
   -------         DO            
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 53
-
-
   X:0260H         SYMBOL        apx_err
   X:0271H         SYMBOL        i
   X:0272H         SYMBOL        j
   X:0273H         SYMBOL        code_wiegand
   X:0274H         SYMBOL        bits
   -------         ENDDO         
-  C:44D5H         LINE#         190
-  C:44DAH         LINE#         191
-  C:44DAH         LINE#         192
-  C:44EDH         LINE#         193
-  C:44F2H         LINE#         194
-  C:4504H         LINE#         195
-  C:450FH         LINE#         197
-  C:451EH         LINE#         198
-  C:451EH         LINE#         199
-  C:452DH         LINE#         200
-  C:452DH         LINE#         201
-  C:4554H         LINE#         202
-  C:4556H         LINE#         204
-  C:4562H         LINE#         205
-  C:4562H         LINE#         207
-  C:4567H         LINE#         208
-  C:4570H         LINE#         209
-  C:4575H         LINE#         210
-  C:4577H         LINE#         211
-  C:4577H         LINE#         213
-  C:457FH         LINE#         214
-  C:4584H         LINE#         215
+  C:44E0H         LINE#         274
+  C:44E5H         LINE#         275
+  C:44E5H         LINE#         276
+  C:44F8H         LINE#         277
+  C:44FDH         LINE#         278
+  C:450FH         LINE#         279
+  C:451AH         LINE#         281
+  C:4529H         LINE#         282
+  C:4529H         LINE#         283
+  C:4538H         LINE#         284
+  C:4538H         LINE#         285
+  C:455FH         LINE#         286
+  C:4561H         LINE#         288
+  C:456DH         LINE#         289
+  C:456DH         LINE#         291
+  C:4572H         LINE#         292
+  C:457BH         LINE#         293
+  C:4580H         LINE#         294
+  C:4582H         LINE#         295
+  C:4582H         LINE#         297
+  C:458AH         LINE#         298
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 55
+
+
+  C:458FH         LINE#         299
   -------         ENDPROC       _BITS_WIEGAND_HEX
   -------         PROC          LCD_WIEGAND
   -------         DO            
@@ -3157,38 +3250,35 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   X:025FH         SYMBOL        buf
   X:0265H         SYMBOL        lectura
   -------         ENDDO         
-  C:462CH         LINE#         220
-  C:462CH         LINE#         221
-  C:462CH         LINE#         223
-  C:463FH         LINE#         224
-  C:4652H         LINE#         225
-  C:4655H         LINE#         226
-  C:465AH         LINE#         227
-  C:4663H         LINE#         228
-  C:4668H         LINE#         231
-  C:466FH         LINE#         232
-  C:468CH         LINE#         233
-  C:4695H         LINE#         234
-  C:469AH         LINE#         236
-  C:46A4H         LINE#         237
-  C:46C1H         LINE#         238
+  C:4637H         LINE#         304
+  C:4637H         LINE#         305
+  C:4637H         LINE#         307
+  C:464AH         LINE#         308
+  C:465DH         LINE#         309
+  C:4660H         LINE#         310
+  C:4665H         LINE#         311
+  C:466EH         LINE#         312
+  C:4673H         LINE#         315
+  C:467AH         LINE#         316
+  C:4697H         LINE#         317
+  C:46A0H         LINE#         318
+  C:46A5H         LINE#         320
+  C:46AFH         LINE#         321
+  C:46CCH         LINE#         322
   -------         ENDPROC       LCD_WIEGAND
   -------         ENDMOD        WIEGAND
 
   -------         MODULE        UART
   C:0000H         SYMBOL        _ICE_DUMMY_
-  C:4756H         PUBLIC        cmd_exclusivo
+  C:4761H         PUBLIC        cmd_exclusivo
   D:0090H         PUBLIC        P1
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 54
-
-
-  C:4D2DH         PUBLIC        _tx_chr
-  C:4ACEH         PUBLIC        Retransmitir_trama_hora
-  X:02C4H         SYMBOL        copia_g_cContByteRx
-  C:48BBH         PUBLIC        backup_clk
-  C:4C19H         PUBLIC        _EscribirCadenaSoft
+  C:4DA1H         PUBLIC        _tx_chr
+  C:4B60H         PUBLIC        Retransmitir_trama_hora
+  X:02C5H         SYMBOL        copia_g_cContByteRx
+  C:48C6H         PUBLIC        backup_clk
+  C:4C6EH         PUBLIC        _EscribirCadenaSoft
   B:00A8H.4       PUBLIC        ES
-  X:02C5H         SYMBOL        buffer_clk
+  X:02C6H         SYMBOL        buffer_clk
   B:0098H.0       PUBLIC        RI
   B:0098H.1       PUBLIC        TI
   D:0099H         PUBLIC        SBUF
@@ -3202,35 +3292,38 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   D:008AH         PUBLIC        TL0
   D:008BH         PUBLIC        TL1
   B:0088H.6       PUBLIC        TR1
-  C:4C69H         PUBLIC        com_initialize
+  C:4CBEH         PUBLIC        com_initialize
   B:0090H.6       PUBLIC        lock1
   B:0090H.5       PUBLIC        lock2
   C:361EH         SYMBOL        com_isr
-  C:4BFBH         SYMBOL        calculo_bcc
+  C:4C50H         SYMBOL        calculo_bcc
   -------         PROC          COM_INITIALIZE
-  C:4C69H         LINE#         93
-  C:4C69H         LINE#         94
-  C:4C69H         LINE#         95
-  C:4C6BH         LINE#         96
-  C:4C6EH         LINE#         97
-  C:4C71H         LINE#         98
-  C:4C74H         LINE#         99
-  C:4C77H         LINE#         104
-  C:4C7AH         LINE#         105
-  C:4C7DH         LINE#         109
-  C:4C7FH         LINE#         110
-  C:4C81H         LINE#         111
+  C:4CBEH         LINE#         93
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 56
+
+
+  C:4CBEH         LINE#         94
+  C:4CBEH         LINE#         95
+  C:4CC0H         LINE#         96
+  C:4CC3H         LINE#         97
+  C:4CC6H         LINE#         98
+  C:4CC9H         LINE#         99
+  C:4CCCH         LINE#         104
+  C:4CCFH         LINE#         105
+  C:4CD2H         LINE#         109
+  C:4CD4H         LINE#         110
+  C:4CD6H         LINE#         111
   -------         ENDPROC       COM_INITIALIZE
   -------         PROC          _TX_CHR
   D:0007H         SYMBOL        data_com
-  C:4D2DH         LINE#         116
-  C:4D2DH         LINE#         117
-  C:4D2DH         LINE#         118
-  C:4D30H         LINE#         119
-  C:4D30H         LINE#         120
-  C:4D30H         LINE#         121
-  C:4D32H         LINE#         122
-  C:4D34H         LINE#         123
+  C:4DA1H         LINE#         116
+  C:4DA1H         LINE#         117
+  C:4DA1H         LINE#         118
+  C:4DA4H         LINE#         119
+  C:4DA4H         LINE#         120
+  C:4DA4H         LINE#         121
+  C:4DA6H         LINE#         122
+  C:4DA8H         LINE#         123
   -------         ENDPROC       _TX_CHR
   -------         PROC          COM_ISR
   -------         DO            
@@ -3239,9 +3332,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:361EH         LINE#         130
   C:3629H         LINE#         136
   C:362FH         LINE#         137
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 55
-
-
   C:362FH         LINE#         138
   C:3631H         LINE#         139
   C:3633H         LINE#         141
@@ -3269,6 +3359,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:36ACH         LINE#         169
   C:36ACH         LINE#         170
   C:36ACH         LINE#         171
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 57
+
+
   C:36B1H         LINE#         172
   C:36B1H         LINE#         173
   C:36B3H         LINE#         175
@@ -3299,9 +3392,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:36DAH         LINE#         206
   C:36E8H         LINE#         207
   C:36E8H         LINE#         208
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 56
-
-
   C:36ECH         LINE#         209
   C:36FCH         LINE#         210
   C:3702H         LINE#         211
@@ -3329,6 +3419,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:375DH         LINE#         236
   C:375FH         LINE#         238
   C:3765H         LINE#         239
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 58
+
+
   C:3768H         LINE#         240
   C:3771H         LINE#         241
   C:3771H         LINE#         242
@@ -3359,9 +3452,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:3805H         LINE#         274
   C:3805H         LINE#         277
   C:3805H         LINE#         278
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 57
-
-
   C:380AH         LINE#         279
   C:380AH         LINE#         281
   C:3814H         LINE#         282
@@ -3389,6 +3479,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:385DH         LINE#         309
   C:3860H         LINE#         310
   C:3860H         LINE#         311
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 59
+
+
   C:3862H         LINE#         312
   C:3865H         LINE#         313
   C:3865H         LINE#         314
@@ -3419,9 +3512,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:38ABH         LINE#         351
   C:38AEH         LINE#         352
   C:38AEH         LINE#         353
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 58
-
-
   C:38B0H         LINE#         354
   C:38B7H         LINE#         355
   C:38B7H         LINE#         357
@@ -3449,6 +3539,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:38E5H         LINE#         385
   C:38E8H         LINE#         386
   C:38EEH         LINE#         387
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 60
+
+
   C:38EEH         LINE#         388
   C:38F9H         LINE#         389
   C:38F9H         LINE#         390
@@ -3479,9 +3572,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:39B5H         LINE#         436
   C:39B5H         LINE#         437
   C:39B7H         LINE#         438
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 59
-
-
   C:39BDH         LINE#         439
   C:39C0H         LINE#         440
   C:39C3H         LINE#         441
@@ -3509,6 +3599,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:3A09H         LINE#         469
   C:3A0BH         LINE#         471
   C:3A0BH         LINE#         472
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 61
+
+
   C:3A15H         LINE#         473
   C:3A15H         LINE#         474
   C:3A17H         LINE#         475
@@ -3539,9 +3632,6 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:3A38H         LINE#         509
   C:3A3FH         LINE#         510
   C:3A41H         LINE#         511
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 60
-
-
   C:3A47H         LINE#         512
   C:3A4AH         LINE#         513
   C:3A4DH         LINE#         514
@@ -3569,6 +3659,9 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   C:3AAAH         LINE#         542
   C:3AAAH         LINE#         546
   C:3AADH         LINE#         547
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 62
+
+
   C:3AADH         LINE#         548
   C:3AAFH         LINE#         549
   C:3AB1H         LINE#         550
@@ -3579,156 +3672,153 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   -------         DO            
   D:0005H         SYMBOL        i
   -------         ENDDO         
-  C:4C19H         LINE#         614
-  C:4C1BH         LINE#         615
-  C:4C1BH         LINE#         618
-  C:4C22H         LINE#         619
-  C:4C22H         LINE#         620
-  C:4C31H         LINE#         621
-  C:4C34H         LINE#         623
+  C:4C6EH         LINE#         614
+  C:4C70H         LINE#         615
+  C:4C70H         LINE#         618
+  C:4C77H         LINE#         619
+  C:4C77H         LINE#         620
+  C:4C86H         LINE#         621
+  C:4C89H         LINE#         623
   -------         ENDPROC       _ESCRIBIRCADENASOFT
   -------         PROC          CALCULO_BCC
   -------         DO            
   D:0007H         SYMBOL        bcc
   D:0006H         SYMBOL        j
   -------         ENDDO         
-  C:4BFBH         LINE#         624
-  C:4BFBH         LINE#         625
-  C:4BFBH         LINE#         626
-  C:4BFDH         LINE#         629
-  C:4C08H         LINE#         630
-  C:4C08H         LINE#         631
-  C:4C15H         LINE#         632
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 61
-
-
-  C:4C18H         LINE#         634
-  C:4C18H         LINE#         635
+  C:4C50H         LINE#         624
+  C:4C50H         LINE#         625
+  C:4C50H         LINE#         626
+  C:4C52H         LINE#         629
+  C:4C5DH         LINE#         630
+  C:4C5DH         LINE#         631
+  C:4C6AH         LINE#         632
+  C:4C6DH         LINE#         634
+  C:4C6DH         LINE#         635
   -------         ENDPROC       CALCULO_BCC
   -------         PROC          BACKUP_CLK
   -------         DO            
   D:0007H         SYMBOL        i
   -------         ENDDO         
-  C:48BBH         LINE#         636
-  C:48BBH         LINE#         637
-  C:48BBH         LINE#         640
-  C:48D1H         LINE#         641
-  C:48DDH         LINE#         642
-  C:48DDH         LINE#         643
-  C:48F5H         LINE#         645
-  C:48F8H         LINE#         646
-  C:4908H         LINE#         647
-  C:4914H         LINE#         657
-  C:4919H         LINE#         658
-  C:491CH         LINE#         659
+  C:48C6H         LINE#         636
+  C:48C6H         LINE#         637
+  C:48C6H         LINE#         640
+  C:48DCH         LINE#         641
+  C:48E8H         LINE#         642
+  C:48E8H         LINE#         643
+  C:4900H         LINE#         645
+  C:4903H         LINE#         646
+  C:4913H         LINE#         647
+  C:491FH         LINE#         657
+  C:4924H         LINE#         658
+  C:4927H         LINE#         659
   -------         ENDPROC       BACKUP_CLK
   -------         PROC          RETRANSMITIR_TRAMA_HORA
   -------         DO            
   D:0006H         SYMBOL        i
   -------         ENDDO         
-  C:4ACEH         LINE#         661
-  C:4ACEH         LINE#         662
-  C:4ACEH         LINE#         664
-  C:4ADAH         LINE#         665
-  C:4ADAH         LINE#         666
-  C:4AF2H         LINE#         668
-  C:4AF5H         LINE#         670
+  C:4B60H         LINE#         661
+  C:4B60H         LINE#         662
+  C:4B60H         LINE#         664
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 63
+
+
+  C:4B6CH         LINE#         665
+  C:4B6CH         LINE#         666
+  C:4B84H         LINE#         668
+  C:4B87H         LINE#         670
   -------         ENDPROC       RETRANSMITIR_TRAMA_HORA
   -------         PROC          CMD_EXCLUSIVO
   -------         DO            
   X:0261H         SYMBOL        reelectura
   D:0007H         SYMBOL        dato
   -------         ENDDO         
-  C:4756H         LINE#         673
-  C:4756H         LINE#         674
-  C:4756H         LINE#         678
-  C:4774H         LINE#         679
-  C:4779H         LINE#         683
-  C:4789H         LINE#         685
-  C:4792H         LINE#         686
-  C:4792H         LINE#         687
-  C:47B0H         LINE#         688
-  C:47B5H         LINE#         692
-  C:47C4H         LINE#         694
-  C:47CDH         LINE#         695
-  C:47CDH         LINE#         696
-  C:47D3H         LINE#         697
-  C:47D7H         LINE#         698
-  C:47DBH         LINE#         699
-  C:47DFH         LINE#         701
-  C:47DFH         LINE#         703
-  C:47DFH         LINE#         704
+  C:4761H         LINE#         673
+  C:4761H         LINE#         674
+  C:4761H         LINE#         678
+  C:477FH         LINE#         679
+  C:4784H         LINE#         683
+  C:4794H         LINE#         685
+  C:479DH         LINE#         686
+  C:479DH         LINE#         687
+  C:47BBH         LINE#         688
+  C:47C0H         LINE#         692
+  C:47CFH         LINE#         694
+  C:47D8H         LINE#         695
+  C:47D8H         LINE#         696
+  C:47DEH         LINE#         697
+  C:47E2H         LINE#         698
+  C:47E6H         LINE#         699
+  C:47EAH         LINE#         701
+  C:47EAH         LINE#         703
+  C:47EAH         LINE#         704
   -------         ENDPROC       CMD_EXCLUSIVO
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 62
-
-
   -------         ENDMOD        UART
 
   -------         MODULE        DISPLAY
   C:0000H         SYMBOL        _ICE_DUMMY_
   D:0080H         PUBLIC        P0
   D:0090H         PUBLIC        P1
-  C:4D35H         PUBLIC        Borra_all
-  C:4C9BH         PUBLIC        borra
-  C:4C82H         PUBLIC        _vdato
-  C:4D1BH         PUBLIC        wait_ancho
+  C:4DA9H         PUBLIC        Borra_all
+  C:4CF0H         PUBLIC        borra
+  C:4CD7H         PUBLIC        _vdato
+  C:4D70H         PUBLIC        wait_ancho
   B:0090H.0       PUBLIC        RS
-  C:4C35H         PUBLIC        BorraLCD_L1
-  C:4C4FH         PUBLIC        BorraLCD_L2
-  C:4CC8H         PUBLIC        _cont
-  C:4CC0H         PUBLIC        pulso
-  C:0012H         PUBLIC        wait
-  C:4A75H         PUBLIC        relayIO
-  C:4B4CH         PUBLIC        _lcd_gotoxy
+  C:4C8AH         PUBLIC        BorraLCD_L1
+  C:4CA4H         PUBLIC        BorraLCD_L2
+  C:4D1DH         PUBLIC        _cont
+  C:4D15H         PUBLIC        pulso
+  C:0022H         PUBLIC        wait
+  C:4AB3H         PUBLIC        relayIO
+  C:4BDEH         PUBLIC        _lcd_gotoxy
   B:0090H.1       PUBLIC        E
-  C:4CF6H         PUBLIC        wait_long
+  C:4D4BH         PUBLIC        wait_long
   C:0016H         PUBLIC        _lcd_text
-  C:491FH         PUBLIC        prg_disp
-  C:4AF8H         PUBLIC        _lcd_puts
+  C:492AH         PUBLIC        prg_disp
+  C:4B8AH         PUBLIC        _lcd_puts
   B:0090H.2       PUBLIC        sw_1
-  C:4CDEH         PUBLIC        _wait_long1
+  C:4D33H         PUBLIC        _wait_long1
   B:0090H.3       PUBLIC        sw_2
-  C:4B22H         PUBLIC        ve_dir
+  C:4BB4H         PUBLIC        ve_dir
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 64
+
+
   -------         PROC          WAIT
-  C:0012H         LINE#         25
-  C:0012H         LINE#         27
+  C:0022H         LINE#         25
+  C:0022H         LINE#         27
   -------         ENDPROC       WAIT
   -------         PROC          RELAYIO
-  C:4A75H         LINE#         30
-  C:4A75H         LINE#         31
-  C:4A75H         LINE#         32
-  C:4A7AH         LINE#         34
-  C:4A7DH         LINE#         35
-  C:4A7DH         LINE#         36
-  C:4A81H         LINE#         37
-  C:4A82H         LINE#         38
-  C:4A85H         LINE#         39
-  C:4A85H         LINE#         40
-  C:4A8CH         LINE#         41
-  C:4A8DH         LINE#         43
-  C:4A90H         LINE#         44
-  C:4A90H         LINE#         45
-  C:4A97H         LINE#         46
-  C:4A98H         LINE#         47
-  C:4A9BH         LINE#         48
-  C:4A9BH         LINE#         49
-  C:4AA2H         LINE#         50
-  C:4AA2H         LINE#         51
+  C:4AB3H         LINE#         30
+  C:4AB3H         LINE#         31
+  C:4AB3H         LINE#         32
+  C:4AB8H         LINE#         34
+  C:4ABBH         LINE#         35
+  C:4ABBH         LINE#         36
+  C:4ABFH         LINE#         37
+  C:4AC0H         LINE#         38
+  C:4AC3H         LINE#         39
+  C:4AC3H         LINE#         40
+  C:4ACAH         LINE#         41
+  C:4ACBH         LINE#         43
+  C:4ACEH         LINE#         44
+  C:4ACEH         LINE#         45
+  C:4AD5H         LINE#         46
+  C:4AD6H         LINE#         47
+  C:4AD9H         LINE#         48
+  C:4AD9H         LINE#         49
+  C:4AE0H         LINE#         50
+  C:4AE0H         LINE#         51
   -------         ENDPROC       RELAYIO
   -------         PROC          _WAIT_LONG1
   D:0006H         SYMBOL        t
   -------         DO            
   D:0004H         SYMBOL        j
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 63
-
-
   -------         ENDDO         
-  C:4CDEH         LINE#         52
-  C:4CDEH         LINE#         54
-  C:4CE8H         LINE#         55
-  C:4CE8H         LINE#         56
-  C:4CEBH         LINE#         57
-  C:4CF2H         LINE#         58
+  C:4D33H         LINE#         52
+  C:4D33H         LINE#         54
+  C:4D3DH         LINE#         55
+  C:4D3DH         LINE#         56
+  C:4D40H         LINE#         57
+  C:4D47H         LINE#         58
   -------         ENDPROC       _WAIT_LONG1
   -------         PROC          L?0061
   -------         ENDPROC       L?0061
@@ -3736,132 +3826,132 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   -------         DO            
   D:0006H         SYMBOL        j
   -------         ENDDO         
-  C:4CF6H         LINE#         60
-  C:4CF6H         LINE#         62
-  C:4CF9H         LINE#         63
-  C:4CF9H         LINE#         64
-  C:4CFCH         LINE#         65
-  C:4D07H         LINE#         66
+  C:4D4BH         LINE#         60
+  C:4D4BH         LINE#         62
+  C:4D4EH         LINE#         63
+  C:4D4EH         LINE#         64
+  C:4D51H         LINE#         65
+  C:4D5CH         LINE#         66
   -------         ENDPROC       WAIT_LONG
   -------         PROC          WAIT_ANCHO
   -------         DO            
   D:0006H         SYMBOL        j
   -------         ENDDO         
-  C:4D1BH         LINE#         68
-  C:4D1BH         LINE#         70
-  C:4D1EH         LINE#         71
-  C:4D1EH         LINE#         72
-  C:4D21H         LINE#         73
-  C:4D2CH         LINE#         74
+  C:4D70H         LINE#         68
+  C:4D70H         LINE#         70
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 65
+
+
+  C:4D73H         LINE#         71
+  C:4D73H         LINE#         72
+  C:4D76H         LINE#         73
+  C:4D81H         LINE#         74
   -------         ENDPROC       WAIT_ANCHO
   -------         PROC          L?0060
   -------         ENDPROC       L?0060
   -------         PROC          PULSO
-  C:4CC0H         LINE#         76
-  C:4CC0H         LINE#         77
-  C:4CC0H         LINE#         80
-  C:4CC2H         LINE#         81
-  C:4CC5H         LINE#         82
-  C:4CC7H         LINE#         84
+  C:4D15H         LINE#         76
+  C:4D15H         LINE#         77
+  C:4D15H         LINE#         80
+  C:4D17H         LINE#         81
+  C:4D1AH         LINE#         82
+  C:4D1CH         LINE#         84
   -------         ENDPROC       PULSO
   -------         PROC          _CONT
   D:0005H         SYMBOL        caracter
-  C:4CC8H         LINE#         86
-  C:4CCAH         LINE#         87
-  C:4CCAH         LINE#         88
-  C:4CCCH         LINE#         89
-  C:4CCCH         LINE#         90
-  C:4CCCH         LINE#         91
-  C:4CCFH         LINE#         92
-  C:4CD4H         LINE#         93
-  C:4CDBH         LINE#         94
+  C:4D1DH         LINE#         86
+  C:4D1FH         LINE#         87
+  C:4D1FH         LINE#         88
+  C:4D21H         LINE#         89
+  C:4D21H         LINE#         90
+  C:4D21H         LINE#         91
+  C:4D24H         LINE#         92
+  C:4D29H         LINE#         93
+  C:4D30H         LINE#         94
   -------         ENDPROC       _CONT
   -------         PROC          BORRA
   -------         DO            
   D:0006H         SYMBOL        i
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 64
-
-
   -------         ENDDO         
-  C:4C9BH         LINE#         97
-  C:4C9BH         LINE#         98
-  C:4C9BH         LINE#         100
-  C:4CA0H         LINE#         101
-  C:4CA3H         LINE#         102
-  C:4CA3H         LINE#         103
-  C:4CA6H         LINE#         104
-  C:4CB1H         LINE#         105
+  C:4CF0H         LINE#         97
+  C:4CF0H         LINE#         98
+  C:4CF0H         LINE#         100
+  C:4CF5H         LINE#         101
+  C:4CF8H         LINE#         102
+  C:4CF8H         LINE#         103
+  C:4CFBH         LINE#         104
+  C:4D06H         LINE#         105
   -------         ENDPROC       BORRA
   -------         PROC          PRG_DISP
-  C:491FH         LINE#         109
-  C:491FH         LINE#         110
-  C:491FH         LINE#         111
-  C:4921H         LINE#         112
-  C:4924H         LINE#         113
-  C:4926H         LINE#         114
-  C:4929H         LINE#         116
-  C:492CH         LINE#         117
-  C:492CH         LINE#         118
-  C:492FH         LINE#         119
-  C:492FH         LINE#         120
-  C:4932H         LINE#         121
-  C:4935H         LINE#         122
-  C:4938H         LINE#         124
-  C:493BH         LINE#         125
-  C:493EH         LINE#         126
-  C:4941H         LINE#         127
-  C:4946H         LINE#         129
-  C:4949H         LINE#         130
-  C:494CH         LINE#         131
-  C:4951H         LINE#         132
-  C:4954H         LINE#         133
-  C:4959H         LINE#         134
-  C:495CH         LINE#         137
-  C:495FH         LINE#         138
-  C:4965H         LINE#         139
+  C:492AH         LINE#         109
+  C:492AH         LINE#         110
+  C:492AH         LINE#         111
+  C:492CH         LINE#         112
+  C:492FH         LINE#         113
+  C:4931H         LINE#         114
+  C:4934H         LINE#         116
+  C:4937H         LINE#         117
+  C:4937H         LINE#         118
+  C:493AH         LINE#         119
+  C:493AH         LINE#         120
+  C:493DH         LINE#         121
+  C:4940H         LINE#         122
+  C:4943H         LINE#         124
+  C:4946H         LINE#         125
+  C:4949H         LINE#         126
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 66
+
+
+  C:494CH         LINE#         127
+  C:4951H         LINE#         129
+  C:4954H         LINE#         130
+  C:4957H         LINE#         131
+  C:495CH         LINE#         132
+  C:495FH         LINE#         133
+  C:4964H         LINE#         134
+  C:4967H         LINE#         137
+  C:496AH         LINE#         138
+  C:4970H         LINE#         139
   -------         ENDPROC       PRG_DISP
   -------         PROC          _VDATO
   D:0005H         SYMBOL        caracter
-  C:4C82H         LINE#         141
-  C:4C84H         LINE#         142
-  C:4C84H         LINE#         143
-  C:4C86H         LINE#         144
-  C:4C89H         LINE#         145
-  C:4C89H         LINE#         147
-  C:4C89H         LINE#         148
-  C:4C8CH         LINE#         149
-  C:4C91H         LINE#         150
-  C:4C98H         LINE#         151
+  C:4CD7H         LINE#         141
+  C:4CD9H         LINE#         142
+  C:4CD9H         LINE#         143
+  C:4CDBH         LINE#         144
+  C:4CDEH         LINE#         145
+  C:4CDEH         LINE#         147
+  C:4CDEH         LINE#         148
+  C:4CE1H         LINE#         149
+  C:4CE6H         LINE#         150
+  C:4CEDH         LINE#         151
   -------         ENDPROC       _VDATO
   -------         PROC          _LCD_GOTOXY
   D:0006H         SYMBOL        x
   D:0005H         SYMBOL        y
-  C:4B4CH         LINE#         155
-  C:4B4EH         LINE#         156
-  C:4B4EH         LINE#         157
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 65
-
-
-  C:4B5CH         LINE#         158
-  C:4B5CH         LINE#         159
-  C:4B61H         LINE#         160
-  C:4B66H         LINE#         161
-  C:4B6BH         LINE#         162
-  C:4B72H         LINE#         163
-  C:4B72H         LINE#         164
+  C:4BDEH         LINE#         155
+  C:4BE0H         LINE#         156
+  C:4BE0H         LINE#         157
+  C:4BEEH         LINE#         158
+  C:4BEEH         LINE#         159
+  C:4BF3H         LINE#         160
+  C:4BF8H         LINE#         161
+  C:4BFDH         LINE#         162
+  C:4C04H         LINE#         163
+  C:4C04H         LINE#         164
   -------         ENDPROC       _LCD_GOTOXY
   -------         PROC          _LCD_PUTS
   X:027CH         SYMBOL        str
   -------         DO            
   D:0004H         SYMBOL        i
   -------         ENDDO         
-  C:4AF8H         LINE#         168
-  C:4B03H         LINE#         169
-  C:4B03H         LINE#         171
-  C:4B1BH         LINE#         172
-  C:4B1BH         LINE#         174
-  C:4B1EH         LINE#         176
-  C:4B21H         LINE#         178
+  C:4B8AH         LINE#         168
+  C:4B95H         LINE#         169
+  C:4B95H         LINE#         171
+  C:4BADH         LINE#         172
+  C:4BADH         LINE#         174
+  C:4BB0H         LINE#         176
+  C:4BB3H         LINE#         178
   -------         ENDPROC       _LCD_PUTS
   -------         PROC          _LCD_TEXT
   D:0006H         SYMBOL        row
@@ -3869,66 +3959,69 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   D:0001H         SYMBOL        lcd
   C:0016H         LINE#         179
   C:0018H         LINE#         180
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 67
+
+
   C:0018H         LINE#         181
   C:001FH         LINE#         182
   -------         ENDPROC       _LCD_TEXT
   -------         PROC          VE_DIR
-  C:4B22H         LINE#         185
-  C:4B22H         LINE#         186
-  C:4B22H         LINE#         187
-  C:4B24H         LINE#         188
-  C:4B26H         LINE#         190
-  C:4B29H         LINE#         191
-  C:4B2FH         LINE#         193
-  C:4B32H         LINE#         194
-  C:4B32H         LINE#         195
-  C:4B35H         LINE#         196
-  C:4B35H         LINE#         197
-  C:4B38H         LINE#         198
-  C:4B38H         LINE#         199
-  C:4B3FH         LINE#         200
-  C:4B3FH         LINE#         201
-  C:4B44H         LINE#         202
+  C:4BB4H         LINE#         185
+  C:4BB4H         LINE#         186
+  C:4BB4H         LINE#         187
+  C:4BB6H         LINE#         188
+  C:4BB8H         LINE#         190
+  C:4BBBH         LINE#         191
+  C:4BC1H         LINE#         193
+  C:4BC4H         LINE#         194
+  C:4BC4H         LINE#         195
+  C:4BC7H         LINE#         196
+  C:4BC7H         LINE#         197
+  C:4BCAH         LINE#         198
+  C:4BCAH         LINE#         199
+  C:4BD1H         LINE#         200
+  C:4BD1H         LINE#         201
+  C:4BD6H         LINE#         202
   -------         ENDPROC       VE_DIR
   -------         PROC          BORRALCD_L1
   -------         DO            
   D:0004H         SYMBOL        k
   -------         ENDDO         
-  C:4C35H         LINE#         206
-  C:4C35H         LINE#         207
-  C:4C35H         LINE#         210
-  C:4C3AH         LINE#         211
-  C:4C46H         LINE#         212
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 66
-
-
-  C:4C46H         LINE#         213
-  C:4C4BH         LINE#         214
-  C:4C4EH         LINE#         215
+  C:4C8AH         LINE#         206
+  C:4C8AH         LINE#         207
+  C:4C8AH         LINE#         210
+  C:4C8FH         LINE#         211
+  C:4C9BH         LINE#         212
+  C:4C9BH         LINE#         213
+  C:4CA0H         LINE#         214
+  C:4CA3H         LINE#         215
   -------         ENDPROC       BORRALCD_L1
   -------         PROC          BORRALCD_L2
   -------         DO            
   D:0004H         SYMBOL        k
   -------         ENDDO         
-  C:4C4FH         LINE#         217
-  C:4C4FH         LINE#         218
-  C:4C4FH         LINE#         221
-  C:4C54H         LINE#         222
-  C:4C60H         LINE#         223
-  C:4C60H         LINE#         224
-  C:4C65H         LINE#         225
-  C:4C68H         LINE#         226
+  C:4CA4H         LINE#         217
+  C:4CA4H         LINE#         218
+  C:4CA4H         LINE#         221
+  C:4CA9H         LINE#         222
+  C:4CB5H         LINE#         223
+  C:4CB5H         LINE#         224
+  C:4CBAH         LINE#         225
+  C:4CBDH         LINE#         226
   -------         ENDPROC       BORRALCD_L2
   -------         PROC          BORRA_ALL
-  C:4D35H         LINE#         227
-  C:4D35H         LINE#         228
-  C:4D35H         LINE#         229
-  C:4D38H         LINE#         230
+  C:4DA9H         LINE#         227
+  C:4DA9H         LINE#         228
+  C:4DA9H         LINE#         229
+  C:4DACH         LINE#         230
   -------         ENDPROC       BORRA_ALL
   -------         ENDMOD        DISPLAY
 
   -------         MODULE        ?C?COPY
   C:3EEFH         PUBLIC        ?C?COPY
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 68
+
+
   -------         ENDMOD        ?C?COPY
 
   -------         MODULE        ?C?CLDOPTR
@@ -3956,11 +4049,8 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
 
   -------         MODULE        STRNCPY
   X:0265H         PUBLIC        ?_strncpy?BYTE
-  C:4853H         PUBLIC        _strncpy
+  C:485EH         PUBLIC        _strncpy
   -------         ENDMOD        STRNCPY
-
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/15/2021  16:33:18  PAGE 67
-
 
   -------         MODULE        ?C?CLDPTR
   C:3F7FH         PUBLIC        ?C?CLDPTR
@@ -3989,14 +4079,17 @@ SYMBOL TABLE OF MODULE:  .\hex\print_wiegand_26_100 (PRINCIPAL_MF)
   -------         MODULE        ?C?PSTXDATA
   C:400FH         PUBLIC        ?C?PSTXDATA
   -------         ENDMOD        ?C?PSTXDATA
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/19/2021  10:44:38  PAGE 69
+
+
 
   -------         MODULE        ?C?CCASE
   C:4018H         PUBLIC        ?C?CCASE
   -------         ENDMOD        ?C?CCASE
 
   -------         MODULE        PUTCHAR
-  C:4B73H         PUBLIC        _PUTCHAR
+  C:4C05H         PUBLIC        _PUTCHAR
   -------         ENDMOD        PUTCHAR
 
-Program Size: data=27.7 xdata=739 code=19783
+Program Size: data=35.7 xdata=740 code=19898
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

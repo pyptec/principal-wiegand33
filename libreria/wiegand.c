@@ -2,8 +2,8 @@
 #include "wiegand.h"
 
 sbit automovil  = P1^7;				//Entrada sensor automovil / Cajon Monedero	
-
-
+sbit D0L1=P3^2;				
+sbit D1L1=P3^3;			
 
 
 #define  	WGND_SIZE  26   //26//49//33
@@ -19,6 +19,7 @@ unsigned char facility_code=0;
 unsigned char card_number=0;
 unsigned char card_number1=0;
 unsigned char card_number2=0;
+unsigned char timer_wiegand=3;
 
 unsigned char codebits[WGND_SIZE +1];//+1
 unsigned char buffer_wie[4];
@@ -32,10 +33,69 @@ extern void Borra_all(void);
 extern void EscribirCadenaSoft(unsigned char tamano_cadena);
 extern int sprintf  (char *, const char *, ...);
 extern void wait_long1 (unsigned int t) ;
+//void  timer0_int() interrupt 1 using 2;
 extern bit tx_bus (unsigned char num_chr);
-
+void ini_timer(void);
+void on_Timer0_Interrup(void);
+void off_Timer0_Interrup(void);
 /*configuracion de bit*/
 extern bit Dif_Mot_Car;
+
+/*------------------------------------------------------------------------------
+interrupcion por timer 
+ValTimeOutCom se decrementa cada overflow de la interrupcion
+Timer_wait		Incrementa cada overflow de la interrrupcion
+clock=22.1184mhz
+ciclo de mqn= clock/12 =0.5nseg
+timer= ciclo mqn* reloj = 0.5 x65535 =32
+temporizado=timer* ValTimeOutCom = 32*100=320ms
+------------------------------------------------------------------------------*/
+void  timer0_int() interrupt 1 using 2
+    {
+			
+		
+			if (timer_wiegand== 0)
+			{
+				timer_wiegand=3;
+				off_Timer0_Interrup();
+				completo= 1 ;
+			}
+			else
+			{
+			timer_wiegand--;
+			}
+			TF0=0;
+			
+		}
+/*------------------------------------------------------------------------------
+------------------------------------------------------------------------------*/
+void ini_timer(void)
+{
+
+	TMOD=(TMOD & 0xF0) | 0x01;// configuro el reg TMOD sin precalador a 16 bits
+		
+ 	TH0=0X00;								//registro de la parte alta del timer0 de 16 bits									*						
+	TL0=0X00;								// registro de la parte baja del timer0
+	TR0=1;									// habilita el timer0 reg TCOM bit 4 para interrup
+
+}
+/*------------------------------------------------------------------------------
+------------------------------------------------------------------------------*/
+void on_Timer0_Interrup(void)
+{
+	TF0=0;									//registro TCON bit 5 bandera de overflow 
+	ET0=1;									// enable interrupcion bit 1 del registro IENO
+	
+}
+/*------------------------------------------------------------------------------
+------------------------------------------------------------------------------*/
+void off_Timer0_Interrup(void)
+{
+	ET0=0;									// enable interrupcion bit 1 del registro IENO
+	
+}
+
+
 /*------------------------------------------------------------------------------
 Interrupciones int0 
 
@@ -58,16 +118,19 @@ void  ex0_isr (void) interrupt 0
 	
 			/*DOL1 - DATA0
 	      lee solo los datos del los bits de (0)*/
-	
+			nex_bit++;
 			codebits[nex_bit] = '0';
+	
+			while(D0L1 == 0);
+	
+			on_Timer0_Interrup();											// habilita el timer0 reg TCOM bit 4 para interrup
+
 		
-		
-		
-			if(	++nex_bit == WGND_SIZE )
-			{
-				completo= 1 ;
-				codebits[nex_bit+1] = 0 ;
-			}
+			//if(	++nex_bit == WGND_SIZE )
+		//	{
+		//		completo= 1 ;
+		//		codebits[nex_bit+1] = 0 ;
+		//	}
 			
 	  
 }
@@ -79,15 +142,15 @@ void  ex1_isr (void) interrupt 2
 {
 				/*D1L1 - DATA1 
 				lee solo los datos del los bits de (1)*/
-
+		nex_bit++;
 		codebits[nex_bit] = '1';	
-		
-		
-		if(	++nex_bit == WGND_SIZE )
-		{
-			completo= 1;
-			codebits[nex_bit+1] = 0;
-		}
+		while(D1L1 == 0);
+			on_Timer0_Interrup();											// habilita el timer0 reg TCOM bit 4 para interrup
+	//	if(	++nex_bit == WGND_SIZE )
+	//	{
+	//		completo= 1;
+	//		codebits[nex_bit+1] = 0;
+	//	}
 
 }
 /*------------------------------------------------------------------------------
@@ -126,7 +189,9 @@ void inicia_wiegand()
 
 	ini_ex0();
 	ini_ex1();
-	on_ini_ex0_ex1();																						/*habilita interrupcion global*/
+	on_ini_ex0_ex1();	
+																					/*habilita interrupcion global*/
+	ini_timer();
 	limpia_data();
 }
 /*------------------------------------------------------------------------------
@@ -153,11 +218,22 @@ rutina que ajusta la lectura de wiegand
 
 void ajusta_code(void)
 {
-	facility_code=bits_wiegand_hex(1) ;
-	card_number=bits_wiegand_hex(9);
-	card_number1=bits_wiegand_hex(17) ;
-	/*se adiciona para 33*/
-	//card_number2=bits_wiegand_hex(25);
+	if(nex_bit==34)
+	{
+		facility_code=bits_wiegand_hex(1);
+		card_number=bits_wiegand_hex(9);
+		card_number1=bits_wiegand_hex(17);
+		card_number2=bits_wiegand_hex(25);
+	}
+	else
+	{
+		facility_code=bits_wiegand_hex(1) ;
+		card_number=bits_wiegand_hex(9) ;
+		card_number1=bits_wiegand_hex(17);
+		
+	}
+	
+	
 }
 
 
@@ -170,11 +246,19 @@ void id_Access()
 
 		
 		ajusta_code();											// lectura MF50 de 33bits
+		if(nex_bit==34)
+		{
+		buffer_wie[0]=card_number;
+		buffer_wie[1]=card_number1;
+		buffer_wie[2]=card_number2;
+		
+		}
+		else
+		{
 		buffer_wie[0]=facility_code;
 		buffer_wie[1]=card_number;
 		buffer_wie[2]=card_number1;
-	/*solo usado para 33*/
-//	buffer_wie[2]=card_number2;
+		}
 		lcd_wiegand();
 
 }

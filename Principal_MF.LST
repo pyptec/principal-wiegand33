@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 1   
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE PRINCIPAL_MF
@@ -62,7 +62,7 @@ line level    source
   52          #define    cte_seg  0x1c
   53          #define    cte_retry  0x2a
   54          
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 2   
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 2   
 
   55          
   56           unsigned char seg,k;
@@ -126,7 +126,7 @@ line level    source
  114          #define LPR_TX      0x08   //reconocimiento placa
  115          
  116          unsigned char g_cEstadoComSoft=ESPERA_RX;
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 3   
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 3   
 
  117          unsigned char g_cEstadoTxSoft=SIN_LECTURA_TX;
  118          
@@ -190,7 +190,7 @@ line level    source
  176          
  177          #define NO_MENSUAL  0XB1
  178          #define NO_IN_PARK  0XB2
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 4   
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 4   
 
  179          #define IN_PARK   0Xb3
  180          #define EXPIRO    0Xb4
@@ -254,7 +254,7 @@ line level    source
  238          
  239           bit Dato_Placa=0;
  240           bit Tiquete_Placa=0;
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 5   
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 5   
 
  241           bit Tiquete_Salida=0;
  242          
@@ -318,7 +318,7 @@ line level    source
  299   2          {
  300   3              P2=buffer_bus[j];
  301   3            Pulso_Bus();
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 6   
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 6   
 
  302   3          }
  303   2      
@@ -382,7 +382,7 @@ line level    source
  358   1        (audio4==1)?(msg4=1):(msg4=0);
  359   1      }
  360          //********************************************************************************************************
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 7   
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 7   
 
              -******
  361          //********************************************************************************************
@@ -446,7 +446,7 @@ line level    source
  418           {
  419   1       
  420   1       unsigned int temp;
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 8   
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 8   
 
  421   1      
  422   1       temp=data_clk;
@@ -510,7 +510,7 @@ line level    source
  480   2            {
  481   3              BufferRetry[i]=buffer_bus[i];
  482   3            }
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 9   
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 9   
 
  483   2            NumDatRetry=19;
  484   2            TimeRetryCmd=cte_seg;
@@ -574,7 +574,7 @@ line level    source
  536   4                if(cont_solocita_evn==3)
  537   4                {
  538   5                buffer_bus[0]=SOLICITA_EVN;
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 10  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 10  
 
  539   5                tx_bus(1);
  540   5                  cont_solocita_evn=0;
@@ -638,7 +638,7 @@ line level    source
  597   8                        {
  598   9                        g_scArrTxComSoft[longTx++]='0';       // Carro=0  
  599   9                        }else { g_scArrTxComSoft[longTx++]='1';}    // Moto=1
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 11  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 11  
 
  600   8                      }    
  601   7                      else
@@ -702,7 +702,7 @@ line level    source
  659   6                    send_dataCLK((MonthOut-0x30),longTx);
  660   6                    longTx=longTx+2;
  661   6                    send_dataCLK((DayOut-0x30),longTx);
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 12  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 12  
 
  662   6                    longTx=longTx+2;
  663   6                    send_dataCLK((HourOut-0x30),longTx);
@@ -766,7 +766,7 @@ line level    source
  721   4                
  722   4                longTx=len_buffer;
  723   4                for (i=0; i<len_buffer; i++)
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 13  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 13  
 
  724   4                  {
  725   5                  g_scArrTxComSoft[i+2]=buffer_ticket[i];
@@ -830,7 +830,7 @@ line level    source
  783   4                {
  784   5                  if (Dif_Mot_Car==1)
  785   5                  {
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 14  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 14  
 
  786   6                    if (automovil==0)
  787   6                    {
@@ -894,7 +894,7 @@ line level    source
  844   3                  Send_Wiegand=1;
  845   3                seg=cte_seg;
  846   3                TH0=0X00;                                           
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 15  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 15  
 
  847   3                TL0=0X00;
  848   3                TF0=0;
@@ -958,7 +958,7 @@ line level    source
  906   7                      else
  907   7                      {
  908   8                        xTipo_Vehiculo=0;       //Carro =0;
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 16  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 16  
 
  909   8                      }
  910   7                      
@@ -1022,7 +1022,7 @@ line level    source
  968   5      
  969   5      
  970   5      
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 17  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 17  
 
  971   5      
  972   5      //---------------------
@@ -1086,7 +1086,7 @@ line level    source
 1030   5                    if (Tipo_Vehiculo=='H')         // Heavy
 1031   5                    {
 1032   6                      xTipo_Vehiculo=4;
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 18  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 18  
 
 1033   6                    }
 1034   5                    else if (Tipo_Vehiculo=='T')      // Truck
@@ -1150,7 +1150,7 @@ line level    source
 1092   4                  
 1093   4      
 1094   4                  send_dataCLK((YearIn-0x30),12);
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 19  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 19  
 
 1095   4                  send_dataCLK((MonthIn-0x30),14);
 1096   4                  send_dataCLK((DayIn-0x30),16);
@@ -1214,7 +1214,7 @@ line level    source
 1154   7                      }
 1155   6                      g_scArrTxComSoft[temp++]=',';
 1156   6                      g_scArrTxComSoft[temp++]=ETX;
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 20  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 20  
 
 1157   6                      EscribirCadenaSoft(temp);
 1158   6                    }
@@ -1278,7 +1278,7 @@ line level    source
 1209   3                  prg_disp();
 1210   3                  for (i=0; i<g_cContByteRx; i++)
 1211   3                  {
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 21  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 21  
 
 1212   4                    buffer_bus[i]=g_scArrDisplay[i];
 1213   4                  }
@@ -1342,7 +1342,7 @@ line level    source
 1271   7                        {
 1272   8                          lock2=1;            // Alvaro Manda Abrir mensual y tiquete pero notifico
 1273   8                          seg=cte_seg+14;
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 22  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 22  
 
 1274   8                          TH0=0X00;           //Inicializa timer                    *           
 1275   8                          TL0=0X00;
@@ -1406,7 +1406,7 @@ line level    source
              -splay[4]=='X')&&(g_scArrDisplay[5]=='B')&&(g_scArrDisplay[6]=='I')&&(g_scArrDisplay[7]=='E')&&(g_scArrDisplay[8]=='N')&&
              -(g_scArrDisplay[9]=='V')&&(g_scArrDisplay[10]=='E')&&(g_scArrDisplay[11]=='N')&&(g_scArrDisplay[12]=='I')&&(g_scArrDispl
              -ay[13]=='D')&&(g_scArrDisplay[14]=='O'))
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 23  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 23  
 
 1327   4                  {
 1328   5                    SendMsg(BIENVENIDO);
@@ -1470,7 +1470,7 @@ line level    source
 1361   4                  //
 1362   4                    else if ((g_scArrDisplay[1]=='X')&&(g_scArrDisplay[2]=='X')&&(g_scArrDisplay[3]=='X')&&(g_scArrDisp
              -lay[4]=='X')&&(g_scArrDisplay[5]=='M')&&(g_scArrDisplay[6]=='E')&&(g_scArrDisplay[7]=='N')&&(g_scArrDisplay[8]=='S')&&(g
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 24  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 24  
 
              -_scArrDisplay[9]=='U')&&(g_scArrDisplay[10]=='A')&&(g_scArrDisplay[11]=='L')&&(g_scArrDisplay[12]==' ')&&(g_scArrDisplay
              -[13]=='E')&&(g_scArrDisplay[14]=='X')&&(g_scArrDisplay[15]=='C')&&(g_scArrDisplay[16]=='E')&&(g_scArrDisplay[17]=='D')&&
@@ -1534,7 +1534,7 @@ line level    source
 1410          //*******************************************************************************************
 1411          void main (void) 
 1412          {
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 25  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 25  
 
 1413   1      
 1414   1       unsigned char MSGnotify    []= "COMPARACION:    " ;
@@ -1598,7 +1598,7 @@ line level    source
 1471   1        Tx_Acceso=0;
 1472   1        iTimeEsperaRtaLPR=0;
 1473   1        RetryCmd=0;
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 26  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 26  
 
 1474   1      //*******************************************************************************************
 1475   1      //  PROGRAMACIONES
@@ -1662,7 +1662,7 @@ line level    source
 1533   6                buffer_wieLPR[2]=buffer_wie[2];
 1534   6        
 1535   6                g_cContByteRx=6;
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 27  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 27  
 
 1536   6                tx_bus(g_cContByteRx);                  /*transmito al pto paralelo*/
 1537   6                g_cEstadoTxSoft &=~LECTURA_WIEG_TX;     // Si usa LPR no envia al software. LPR agrega el registro y da
@@ -1726,7 +1726,7 @@ line level    source
 1589   5                  TF0=0;
 1590   5                }
 1591   4                else if (((buffer_wie[0]==0x95)&&(buffer_wie[1]==0x01)&&(buffer_wie[2]==0x10))||((buffer_wie[0]==0x7f
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 28  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 28  
 
              -)&&(buffer_wie[1]==0x75)&&(buffer_wie[2]==0x44))||((buffer_wie[0]==0x95)&&(buffer_wie[1]==0x01)&&(buffer_wie[2]==0x11))|
              -|((buffer_wie[0]==0x17)&&(buffer_wie[1]==0xee)&&(buffer_wie[2]==0x24)))
@@ -1790,7 +1790,7 @@ line level    source
 1643   3                
 1644   3              if (completo==1)
 1645   3              {
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 29  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 29  
 
 1646   4                id_Access();                                        /*se muestra el nuemro de la tarjeta pero no hay presencia*/
 1647   4            
@@ -1854,7 +1854,7 @@ line level    source
 1705   6                  {
 1706   7                      vdato(sin_sensor[k]);
 1707   7                  }
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 30  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 30  
 
 1708   6      
 1709   6                }
@@ -1918,7 +1918,7 @@ line level    source
 1767   7                  }         
 1768   6                }
 1769   5                else if(buffer_bus[0]==0xeB)
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 31  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 31  
 
 1770   5                {
 1771   6                  cont(0xc0);
@@ -1982,7 +1982,7 @@ line level    source
 1829   6                  cont(0xc0);
 1830   6                  lcd_puts((unsigned char *) "TAR. SIN FORMATO");
 1831   6                  
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 32  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 32  
 
 1832   6                }
 1833   5                msg_error=1;
@@ -2046,7 +2046,7 @@ line level    source
 1891   5                for (k=0;MSGnotify[k]!='\0';k++)
 1892   5                {
 1893   6                  vdato(MSGnotify[k]);
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 33  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 33  
 
 1894   6                }
 1895   5                cont(0x8D);
@@ -2110,7 +2110,7 @@ line level    source
 1953   5                vdato('O');
 1954   5                vdato('.');
 1955   5                vdato('.');
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 34  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 34  
 
 1956   5                vdato('.');
 1957   5                vdato(' ');
@@ -2174,7 +2174,7 @@ line level    source
 2015   5                vdato('A');
 2016   5                vdato('L');
 2017   5                vdato('I');
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 35  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 35  
 
 2018   5                vdato('D');
 2019   5                vdato('A');
@@ -2238,7 +2238,7 @@ line level    source
 2077   5      
 2078   5              }
 2079   4              else if ((num_data==1)&&(buffer_bus[0]==IN_HORARIO))
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 36  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 36  
 
 2080   4              {
 2081   5                cont(0x80);
@@ -2302,7 +2302,7 @@ line level    source
 2139   5                vdato(' ');
 2140   5      
 2141   5                cont(0xc0);
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 37  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 37  
 
 2142   5      
 2143   5                vdato('I');
@@ -2366,7 +2366,7 @@ line level    source
 2201   5                vdato('.');
 2202   5                vdato('.');
 2203   5        
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 38  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 38  
 
 2204   5              }
 2205   4              else if ((num_data==1)&&(buffer_bus[0]==0XFD))
@@ -2430,7 +2430,7 @@ line level    source
 2263   5                vdato(' ');
 2264   5                vdato(' ');
 2265   5                vdato(' ');
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 39  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 39  
 
 2266   5                vdato(' ');
 2267   5                vdato(' ');
@@ -2494,7 +2494,7 @@ line level    source
 2324   5                  {
 2325   6                    vdato('M');
 2326   6                    vdato('i');
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 40  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 40  
 
 2327   6                    vdato('e');
 2328   6                  }
@@ -2558,7 +2558,7 @@ line level    source
 2386   6                  }
 2387   5                cont(0xc0);
 2388   5                k++;
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 41  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 41  
 
 2389   5                  lcd_puts((unsigned char *) "COD_PARK:");
 2390   5                    for(i=2;;k++)
@@ -2622,7 +2622,7 @@ line level    source
 2447   5                g_cEstadoTxSoft |= LECTURA_WIEG_TX;
 2448   5                TimeOut_Wiegand=5;
 2449   5      
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 42  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 42  
 
 2450   5                
 2451   5              }
@@ -2686,7 +2686,7 @@ line level    source
 2508   5                {
 2509   6      
 2510   6                  YearOut=buffer_bus[11];
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 43  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 43  
 
 2511   6                  MonthOut=buffer_bus[12];
 2512   6                  DayOut=buffer_bus[13];
@@ -2750,7 +2750,7 @@ line level    source
 2568   6                  else
 2569   6                  {
 2570   7                    datos_validos=0;
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 44  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 44  
 
 2571   7                    k=len_buffer+1;
 2572   7                  }
@@ -2814,7 +2814,7 @@ line level    source
 2625   7                    }
 2626   6                  }
 2627   5                  
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 45  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 45  
 
 2628   5                
 2629   5      
@@ -2878,7 +2878,7 @@ line level    source
 2685   6                  {
 2686   7                    vdato(MSGnotify[k]);
 2687   7                  }
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 46  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 46  
 
 2688   6                  cont(0x8D);
 2689   6                  (notifyEVP==1)?(vdato('N')):(vdato('S'));
@@ -2942,7 +2942,7 @@ line level    source
 2747   5                else if (buffer_bus[1]=='R')            // Rechaza de LPR
 2748   5                {
 2749   6                      iTimeEsperaRtaLPR=0;
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 47  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 47  
 
 2750   6                    cont(0x80);
 2751   6                    for (k=0;MSGnegado[k]!='\0';k++)
@@ -3006,7 +3006,7 @@ line level    source
 2807   5      
 2808   5                  Ini_Fecha++;
 2809   5      
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 48  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 48  
 
 2810   5                  YearOut=buffer_bus[Ini_Fecha++];
 2811   5                  MonthOut=buffer_bus[Ini_Fecha++];
@@ -3070,7 +3070,7 @@ line level    source
 2866   5                for (k=0; k<len_buffer; k++)            // Busca Separador de Datos para Tipo Vehiculo
 2867   5                {
 2868   6                  if (buffer_bus[k]=='.')
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 49  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 49  
 
 2869   6                  {
 2870   7                    Tipo_Vehiculo=buffer_bus[k+1];        // Almacena Tipo Vehiculo de la tarjeta
@@ -3134,7 +3134,7 @@ line level    source
 2922   9                        for (k=0; k<len_buffer; k++)
 2923   9                        {
 2924  10                          buffer_ticket[k]=buffer_bus[k];
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 50  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 50  
 
 2925  10                    
 2926  10                        }
@@ -3198,7 +3198,7 @@ line level    source
 2984   8      
 2985   8                      len_buffer=PosComa[0];                                
 2986   8                    }
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 51  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 51  
 
 2987   7                  }
 2988   6                  else                            // Dato sin nada fuera de lo normal.
@@ -3262,7 +3262,7 @@ line level    source
 3046   5                  TimeOut_Wiegand=5;
 3047   5                  SalidaW=0;
 3048   5              }
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 52  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 52  
 
 3049   4            }
 3050   3      //----------------------------------------------------------------------------------------------*
@@ -3326,7 +3326,7 @@ line level    source
 3108   7                    }
 3109   6                }
 3110   5              }
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 53  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 53  
 
 3111   4                if (TimeOut_Wiegand!=0)
 3112   4              {
@@ -3390,7 +3390,7 @@ line level    source
 3170   4              TL0=0X00;
 3171   4              TF0=0;
 3172   4              msg_error=0;
-C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/15/2021 16:33:17 PAGE 54  
+C51 COMPILER V9.59.0.0   PRINCIPAL_MF                                                      10/19/2021 10:44:37 PAGE 54  
 
 3173   4      
 3174   4      
