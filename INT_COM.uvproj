@@ -46,7 +46,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\hex\</OutputDirectory>
-          <OutputName>print_wiegand_33</OutputName>
+          <OutputName>print_wiegand_26_33_v100</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>

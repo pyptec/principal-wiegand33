@@ -27,4 +27,6 @@ void Debug_chr_lcd(unsigned char Dat);
 void ajusta_code_26_complemento(void);
 void ajusta_code_26_normal(void);
 void id_Access_33();
+void on_Timer0_Interrup(void);
+void off_Timer0_Interrup(void);
 #endif	/* _WIEGAND_H_ */

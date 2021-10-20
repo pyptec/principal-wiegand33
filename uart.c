@@ -1,7 +1,6 @@
 #include <reg51.h>
-#include <string.h>
 #include "uart.h"
-
+#include <string.h>
 sbit lock2  = P1^5;					//Relevo de Salida (Inhabilitado Proc. Aux usa ERR IMP)	*
 sbit lock1  = P1^6;					//Relevo de Entrada		
 
@@ -76,11 +75,8 @@ extern  bit InhabilitaPulsoEvPOut;
 extern bit SalidaW;
 
 /*definicion de funciones */
-
 extern bit tx_bus (unsigned char num_chr);
-static unsigned char calculo_bcc();
-void Retransmitir_trama_hora();
-void cmd_exclusivo();
+extern void cmd_exclusivo();
 /***********************************************************************************************************
 
 
@@ -572,8 +568,8 @@ void Debug_chr_uart(unsigned char Dat)
 	
 	
 }
-
-
+*/
+/*
 void DebugBufferMF(unsigned char *str,unsigned char num_char)
 {
   unsigned char j;
@@ -607,8 +603,8 @@ void Debug_txt_uart(unsigned char * str)
 		
 	
 }
-*/
 
+*/
 //**************************************************************************************************************
 //**************************************************************************************************************
 void EscribirCadenaSoft(unsigned char tamano_cadena)
@@ -621,7 +617,7 @@ unsigned char i;
     }
 	
 }
-static unsigned char calculo_bcc()
+unsigned char calculo_bcc()
 {
 	unsigned char bcc=0;
 	unsigned char j;
@@ -635,7 +631,6 @@ static unsigned char calculo_bcc()
 }
 void backup_clk()
 {
-	//<STX>3H29/03/2019 17:07:29 6<ETX>D<LF>
 	unsigned char i;
 	buffer_bus[g_cContByteRx++]=calculo_bcc();
 	for (i=0; i<g_cContByteRx; i++)
@@ -652,11 +647,11 @@ void backup_clk()
 					
 			//Debug_txt_uart("hora backup");
 			//Debug_txt_uart(buffer_clk);	
-			//Debug_txt_uart("\n");	
-			
+			//Debug_txt_uart("\n");						
 			copia_g_cContByteRx	=g_cContByteRx;
 			tx_bus(g_cContByteRx);
-			cmd_exclusivo();		
+			cmd_exclusivo ();		
+					
 }
 void Retransmitir_trama_hora()
 {
@@ -668,7 +663,7 @@ void Retransmitir_trama_hora()
 					}
 	
 		tx_bus(copia_g_cContByteRx);
-	
+		
 }
 void cmd_exclusivo()
 {
@@ -682,7 +677,7 @@ void cmd_exclusivo()
 	 // Debug_txt_uart("\n");	
 		dato= ((reelectura[0]& 0x0f)<<4)| ((reelectura[1]& 0x0f));
 	//	Debug_chr_uart(dato);
-		if(dato >=2)
+		if(dato >=3)
 		{
 			strncpy(reelectura,buffer_bus+11,2);
 			reelectura[2]=0;

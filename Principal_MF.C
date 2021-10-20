@@ -170,6 +170,8 @@ unsigned char xdata buffer_bus[30];
 #define	EXCEDE_HORARIO	0X07
 #define	MENSUAL_NO_PAGO	0X08
 #define UN_MOMENTO			0X09
+#define  NO_PAGO 			0xe7			
+
 
 #define SOLICITA_EVN 	0XAA
 
@@ -254,7 +256,6 @@ extern	unsigned char facility_code;
 extern	unsigned char	card_number;
 extern	unsigned char card_number1;
 extern	unsigned char card_number2;
-extern  void Retransmitir_trama_hora();
 
 //*******************************************************************************************
 void Pulso_Bus(void)
@@ -492,6 +493,7 @@ void SendRtaBus (unsigned char Respuesta)
 {
 	if (ready==1)
 	{
+		wait_long ();
 		buffer_bus[0]=Respuesta;		
 		ErrorTx=tx_bus(1);
 		if (ErrorTx==1)
@@ -1180,7 +1182,6 @@ void AtencComSoft(void)
 		case ANALICE_STR_SOF:															   //ANALIZA DATOS RECIBIDOS
 
 					g_scArrDisplay[g_cContByteRx]=0;
-				
   				if (SerieOK==1)
 				{
 					SerieOK=0;
@@ -1188,7 +1189,6 @@ void AtencComSoft(void)
 					{
 			 			buffer_bus[i]=g_scArrDisplay[i];
 					}
-					
 					tx_bus(g_cContByteRx);
 					txACK=1;
 					g_cEstadoComSoft=ESPERA_RX;
@@ -1358,6 +1358,10 @@ void AtencComSoft(void)
 						{
 							SendRtaBus(MENSUAL_NO_PAGO);
 						}
+							else  if ((g_scArrDisplay [ 1 ] == 'X' ) && (g_scArrDisplay [ 2 ] == 'X' ) && (g_scArrDisplay [ 3 ] == 'X' ) && (g_scArrDisplay [ 4 ] == 'X' ) && (g_scArrDisplay [ 5 ] == 'N' ) && (g_scArrDisplay [ 6 ] == 'O' ) && (g_scArrDisplay [ 7 ] == ' ' ) &&(g_scArrDisplay [ 8 ] == 'P') && (g_scArrDisplay [ 9 ] == 'A' ) && (g_scArrDisplay [ 10 ] == 'G' ) && (g_scArrDisplay [ 11 ] == 'O' ))
+						{
+							SendRtaBus (NO_PAGO);
+						}
 //-------------------------------------------------------------------------------------------------------------------------
 						cont(0x80);
 						for(i=5;(i<21)&&(g_scArrDisplay[i]!=ETX);i++)			/*msj en el display ejemplo (PARQUEADERO)*/
@@ -1411,7 +1415,6 @@ void main (void)
 //*******************************************************************************************	
  	com_initialize ();                  // Initialize interrupt driven serial I/O 			*
 	inicia_wiegand();									// Inicia wiegand lectrua a 26 complemnto a uno, lectura a 33, 27 lectura a 26 sin complemeto
- // 	EA = 1;                             // Enable global interrupts 						*
  	prg_disp();
 //*******************************************************************************************	
 	TMOD=(TMOD & 0xf0) | 0x01;			//  Coloca el temporizador 0 y 1 en modo 1.  16bITS	*
@@ -1495,12 +1498,12 @@ void main (void)
   
 		if((completo == 1) &&(SignalAcceso==0))
 		{
-		
+			
 			if (Habilita_Lectura==1)
 			{
 				TimeOutLinea=TIMEW;							/*tengo el dato wiegand en el orden de access*/
 		  		id_Access();   								/*tengo el dato en buffer_wie*/
-				
+				off_Timer0_Interrup();
 				limpia_data();								/*limpio los datos*/				
 			  	
 				if ((ACCESO_USE_LPR==1))
@@ -1631,7 +1634,7 @@ void main (void)
 				if (completo==1)
 				{
 					id_Access();																				/*se muestra el nuemro de la tarjeta pero no hay presencia*/
-			
+					off_Timer0_Interrup();
 					limpia_data();	
 					SendRtaBus(ERROR_LOOP);																/*envia un msj a segundario q hay un error en el loop*/
 					lcd_text(1,0,(unsigned char *) "ERROR EN LOOP...");
@@ -2385,7 +2388,7 @@ void main (void)
 				
 					else if ((buffer_bus[0]==0x02)&&(buffer_bus[1]==05)&&(buffer_bus[2]==0x03))	 //	bcc hora
 				{
-					
+					//Debug_txt_uart((unsigned char *) "recibo trama Hora: ");
 					Retransmitir_trama_hora();
 			  }
 					

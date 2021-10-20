@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   UART                                                              06/11/2021 12:39:41 PAGE 1   
+C51 COMPILER V9.59.0.0   UART                                                              10/20/2021 11:54:14 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE UART
@@ -9,738 +9,733 @@ COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE uart.c LARGE OPTIMIZE(8,SPEED) B
 line level    source
 
    1          #include <reg51.h>
-   2          #include <string.h>
-   3          #include "uart.h"
-   4          
-   5          sbit lock2  = P1^5;         //Relevo de Salida (Inhabilitado Proc. Aux usa ERR IMP) *
-   6          sbit lock1  = P1^6;         //Relevo de Entrada   
-   7          
-   8          #define ESPERA_RX       0
-   9          //ESTADOR RECEPCION SOFTWARE
-  10          
-  11          #define ESPERA_RX       0
-  12          #define VER_DIR         1
-  13          #define VER_COMANDO       2
-  14          #define POLL_COM_SOF      3
-  15          #define WRITE_COM_SOF     4
-  16          #define RECEPCION_STR_SOF_STX 5
-  17          #define SAVE_STR_SOF      6
-  18          #define ANALICE_STR_SOF     7
-  19          #define RECEPCION_ID      8
+   2          #include "uart.h"
+   3          #include <string.h>
+   4          sbit lock2  = P1^5;         //Relevo de Salida (Inhabilitado Proc. Aux usa ERR IMP) *
+   5          sbit lock1  = P1^6;         //Relevo de Entrada   
+   6          
+   7          #define ESPERA_RX       0
+   8          //ESTADOR RECEPCION SOFTWARE
+   9          
+  10          #define ESPERA_RX       0
+  11          #define VER_DIR         1
+  12          #define VER_COMANDO       2
+  13          #define POLL_COM_SOF      3
+  14          #define WRITE_COM_SOF     4
+  15          #define RECEPCION_STR_SOF_STX 5
+  16          #define SAVE_STR_SOF      6
+  17          #define ANALICE_STR_SOF     7
+  18          #define RECEPCION_ID      8
+  19          
   20          
-  21          
-  22          #define TAMANO_RX_COM_SOFT  60  
-  23          #define TAMANO_TX_COM_SOFT  50
-  24          #define TIMEW   0x1e          //Tiempo para indicar TimeOut
+  21          #define TAMANO_RX_COM_SOFT  60  
+  22          #define TAMANO_TX_COM_SOFT  50
+  23          #define TIMEW   0x1e          //Tiempo para indicar TimeOut
+  24          
   25          
-  26          
-  27          #define ENQ 5
-  28          #define EOT 4
-  29          #define ACK 6
-  30          #define STX 2
-  31          #define ETX 3
-  32          #define CR  0x0d
-  33          #define LF  0x0a
-  34          
-  35           //ESTADOR TRANSMICION SOFTWARE
-  36          
-  37          #define SIN_LECTURA_TX  0x00
-  38          #define LECTURA_COD_TX  0x01
-  39          #define LECTURA_WIEG_TX 0x02
-  40          #define COD_PRINT_TX  0x04
-  41          #define LPR_TX      0x08   //reconocimiento placa
-  42          
-  43          #define    cte_seg  0x1c
-  44          
-  45          extern unsigned char g_cEstadoComSoft;
-  46          extern unsigned char g_cContByteRx;
-  47          extern unsigned char g_cDirBoard;
-  48          extern unsigned char TimeOutLinea;
-  49          extern unsigned char g_cEstadoTxSoft;
-  50          extern unsigned char Rechazo;
-  51          extern unsigned int TimeOut_Codigo;
-  52          extern unsigned char seg,k;
-  53          extern  unsigned int TimeOut_Send_Acceso;
-  54          extern unsigned int OpenMensual_Apx;
-C51 COMPILER V9.59.0.0   UART                                                              06/11/2021 12:39:41 PAGE 2   
+  26          #define ENQ 5
+  27          #define EOT 4
+  28          #define ACK 6
+  29          #define STX 2
+  30          #define ETX 3
+  31          #define CR  0x0d
+  32          #define LF  0x0a
+  33          
+  34           //ESTADOR TRANSMICION SOFTWARE
+  35          
+  36          #define SIN_LECTURA_TX  0x00
+  37          #define LECTURA_COD_TX  0x01
+  38          #define LECTURA_WIEG_TX 0x02
+  39          #define COD_PRINT_TX  0x04
+  40          #define LPR_TX      0x08   //reconocimiento placa
+  41          
+  42          #define    cte_seg  0x1c
+  43          
+  44          extern unsigned char g_cEstadoComSoft;
+  45          extern unsigned char g_cContByteRx;
+  46          extern unsigned char g_cDirBoard;
+  47          extern unsigned char TimeOutLinea;
+  48          extern unsigned char g_cEstadoTxSoft;
+  49          extern unsigned char Rechazo;
+  50          extern unsigned int TimeOut_Codigo;
+  51          extern unsigned char seg,k;
+  52          extern  unsigned int TimeOut_Send_Acceso;
+  53          extern unsigned int OpenMensual_Apx;
+  54          
+C51 COMPILER V9.59.0.0   UART                                                              10/20/2021 11:54:14 PAGE 2   
 
-  55          
-  56          extern unsigned char g_scArrRxComSoft[];
-  57          extern unsigned char g_scArrDisplay[];
-  58          extern unsigned char g_scArrTxComSoft[];
-  59          extern unsigned char xdata buffer_bus[];
-  60          extern unsigned char completo;
-  61          static unsigned char buffer_clk[30];
-  62          static unsigned char copia_g_cContByteRx=0;
-  63          extern  bit sendactive;
-  64          extern  bit FueraLinea;
-  65          extern  bit txACK;
-  66          extern  bit rx_serie;
-  67          extern  bit Tiquete_Placa;
-  68          extern  bit Tiquete_Salida;
-  69          extern bit SerieOK;
-  70          extern bit Tx_Acceso;
-  71          extern  bit bandera_rx_soft;
-  72          
-  73          extern bit Send_Wiegand;
-  74          extern bit notifyEVP;
-  75          extern  bit InhabilitaPulsoEvPOut;
-  76          extern bit SalidaW;
-  77          
-  78          /*definicion de funciones */
-  79          
-  80          extern bit tx_bus (unsigned char num_chr);
-  81          static unsigned char calculo_bcc();
-  82          void Retransmitir_trama_hora();
-  83          void cmd_exclusivo();
-  84          /*********************************************************************************************************
+  55          extern unsigned char g_scArrRxComSoft[];
+  56          extern unsigned char g_scArrDisplay[];
+  57          extern unsigned char g_scArrTxComSoft[];
+  58          extern unsigned char xdata buffer_bus[];
+  59          extern unsigned char completo;
+  60          static unsigned char buffer_clk[30];
+  61          static unsigned char copia_g_cContByteRx=0;
+  62          extern  bit sendactive;
+  63          extern  bit FueraLinea;
+  64          extern  bit txACK;
+  65          extern  bit rx_serie;
+  66          extern  bit Tiquete_Placa;
+  67          extern  bit Tiquete_Salida;
+  68          extern bit SerieOK;
+  69          extern bit Tx_Acceso;
+  70          extern  bit bandera_rx_soft;
+  71          
+  72          extern bit Send_Wiegand;
+  73          extern bit notifyEVP;
+  74          extern  bit InhabilitaPulsoEvPOut;
+  75          extern bit SalidaW;
+  76          
+  77          /*definicion de funciones */
+  78          extern bit tx_bus (unsigned char num_chr);
+  79          extern void cmd_exclusivo();
+  80          /*********************************************************************************************************
              -**
-  85          
-  86          
+  81          
+  82          
+  83          //*******************************************************************************************
+  84          //                                              *
+  85          // Function to initialize the serial port and the UART baudrate.              *
+  86          //                                              *
   87          //*******************************************************************************************
-  88          //                                              *
-  89          // Function to initialize the serial port and the UART baudrate.              *
-  90          //                                              *
-  91          //*******************************************************************************************
-  92          */
-  93          void com_initialize (void) 
-  94          {
-  95   1          sendactive = 0;               // transmitter is not active              *
-  96   1          SCON = 0x50;                // serial port MODE 1, enable serial receiver   *
-  97   1        PCON |= 0x80;                 // 0x80=SMOD: set serial baudrate doubler     *
-  98   1          TMOD |= 0x20;                 // put timer 1 into MODE 2              *
-  99   1        TCON = 0x40;              // TCON                       *
- 100   1      //------------------------------------------------------------------------------------------*
- 101   1      //  TH1 =  0xFF;              // TH1  115000 Bps @ 22.148MHZ            *
- 102   1      //  TL1 =  0xFF;              // TH1                        *
- 103   1      //------------------------------------------------------------------------------------------*
- 104   1        TH1 =  0xF4;              // TH1 9600 Bps @ 22.148MHZ             *          
- 105   1        TL1 =  0xF4;              // TH1                        *
- 106   1      //------------------------------------------------------------------------------------------*
- 107   1      //  TH1 = (unsigned char) (256 - (XTAL / (16L * 12L * baudrate)));              *
- 108   1      //------------------------------------------------------------------------------------------*
- 109   1          TR1 = 1;              // start timer 1
- 110   1          ES = 1;               // enable serial interrupts
- 111   1      }
- 112          
- 113          //*******************************************************************************************
- 114          //  Transmision de un caracter                                *
- 115          //*******************************************************************************************
-C51 COMPILER V9.59.0.0   UART                                                              06/11/2021 12:39:41 PAGE 3   
+  88          */
+  89          void com_initialize (void) 
+  90          {
+  91   1          sendactive = 0;               // transmitter is not active              *
+  92   1          SCON = 0x50;                // serial port MODE 1, enable serial receiver   *
+  93   1        PCON |= 0x80;                 // 0x80=SMOD: set serial baudrate doubler     *
+  94   1          TMOD |= 0x20;                 // put timer 1 into MODE 2              *
+  95   1        TCON = 0x40;              // TCON                       *
+  96   1      //------------------------------------------------------------------------------------------*
+  97   1      //  TH1 =  0xFF;              // TH1  115000 Bps @ 22.148MHZ            *
+  98   1      //  TL1 =  0xFF;              // TH1                        *
+  99   1      //------------------------------------------------------------------------------------------*
+ 100   1        TH1 =  0xF4;              // TH1 9600 Bps @ 22.148MHZ             *          
+ 101   1        TL1 =  0xF4;              // TH1                        *
+ 102   1      //------------------------------------------------------------------------------------------*
+ 103   1      //  TH1 = (unsigned char) (256 - (XTAL / (16L * 12L * baudrate)));              *
+ 104   1      //------------------------------------------------------------------------------------------*
+ 105   1          TR1 = 1;              // start timer 1
+ 106   1          ES = 1;               // enable serial interrupts
+ 107   1      }
+ 108          
+ 109          //*******************************************************************************************
+ 110          //  Transmision de un caracter                                *
+ 111          //*******************************************************************************************
+ 112           void tx_chr (unsigned char data_com)
+ 113           {
+ 114   1        while (sendactive==1) 
+ 115   1        {
+C51 COMPILER V9.59.0.0   UART                                                              10/20/2021 11:54:14 PAGE 3   
 
- 116           void tx_chr (unsigned char data_com)
- 117           {
- 118   1        while (sendactive==1) 
- 119   1        {
- 120   2        }
- 121   1          SBUF=data_com;
- 122   1        sendactive=1;
- 123   1       }
- 124          
- 125          /********************************************************************************************
- 126          //
- 127          // Serial Interrupt Service Routine
- 128          //
- 129          //*******************************************************************************************/
- 130          static void com_isr (void) interrupt 4 using 1 
- 131          {
- 132   1        char cDatoRx;
- 133   1      //------------------------------------------------------------------------------------------*
- 134   1      // Received data interrupt.                                 *
- 135   1      //------------------------------------------------------------------------------------------*
- 136   1        if (RI) 
- 137   1        {
- 138   2            cDatoRx = SBUF;                     // read character
- 139   2           RI = 0;                  // clear interrupt request flag
- 140   2          
- 141   2          switch (g_cEstadoComSoft)
- 142   2          {
- 143   3      //---------------------------------------------------------------------------------------
- 144   3            case ESPERA_RX:
- 145   3            
- 146   3              g_cContByteRx=0;
- 147   3              if(cDatoRx==ENQ)
- 148   3              {
- 149   4                g_cEstadoComSoft=VER_DIR;
- 150   4                
- 151   4              }
- 152   3            break;
- 153   3      //--------------------------------------------------------------------------------------
- 154   3            case VER_DIR:
- 155   3              if(cDatoRx==g_cDirBoard)
- 156   3              {
- 157   4                g_cEstadoComSoft=VER_COMANDO;
- 158   4                TimeOutLinea=TIMEW;
- 159   4                FueraLinea=0;
+ 116   2        }
+ 117   1          SBUF=data_com;
+ 118   1        sendactive=1;
+ 119   1       }
+ 120          
+ 121          /********************************************************************************************
+ 122          //
+ 123          // Serial Interrupt Service Routine
+ 124          //
+ 125          //*******************************************************************************************/
+ 126          static void com_isr (void) interrupt 4 using 1 
+ 127          {
+ 128   1        char cDatoRx;
+ 129   1      //------------------------------------------------------------------------------------------*
+ 130   1      // Received data interrupt.                                 *
+ 131   1      //------------------------------------------------------------------------------------------*
+ 132   1        if (RI) 
+ 133   1        {
+ 134   2            cDatoRx = SBUF;                     // read character
+ 135   2           RI = 0;                  // clear interrupt request flag
+ 136   2          
+ 137   2          switch (g_cEstadoComSoft)
+ 138   2          {
+ 139   3      //---------------------------------------------------------------------------------------
+ 140   3            case ESPERA_RX:
+ 141   3            
+ 142   3              g_cContByteRx=0;
+ 143   3              if(cDatoRx==ENQ)
+ 144   3              {
+ 145   4                g_cEstadoComSoft=VER_DIR;
+ 146   4                
+ 147   4              }
+ 148   3            break;
+ 149   3      //--------------------------------------------------------------------------------------
+ 150   3            case VER_DIR:
+ 151   3              if(cDatoRx==g_cDirBoard)
+ 152   3              {
+ 153   4                g_cEstadoComSoft=VER_COMANDO;
+ 154   4                TimeOutLinea=TIMEW;
+ 155   4                FueraLinea=0;
+ 156   4              }
+ 157   3              else
+ 158   3              {
+ 159   4                g_cEstadoComSoft=ESPERA_RX;
  160   4              }
- 161   3              else
- 162   3              {
- 163   4                g_cEstadoComSoft=ESPERA_RX;
- 164   4              }
- 165   3              break;
- 166   3      //-----------------------------------------------------------------------------------------
- 167   3            case VER_COMANDO:
- 168   3              switch (cDatoRx)
- 169   3              {
- 170   4                case 'p':
- 171   4                  g_cEstadoComSoft=POLL_COM_SOF;          //Se atiende en el ciclo principal
- 172   4                  g_cContByteRx=0;
- 173   4                break;
+ 161   3              break;
+ 162   3      //-----------------------------------------------------------------------------------------
+ 163   3            case VER_COMANDO:
+ 164   3              switch (cDatoRx)
+ 165   3              {
+ 166   4                case 'p':
+ 167   4                  g_cEstadoComSoft=POLL_COM_SOF;          //Se atiende en el ciclo principal
+ 168   4                  g_cContByteRx=0;
+ 169   4                break;
+ 170   4      
+ 171   4                case 'e':                       //Se atiende en el ciclo principal
+ 172   4                  g_cEstadoComSoft=RECEPCION_ID;
+ 173   4                  g_cContByteRx=0;
  174   4      
- 175   4                case 'e':                       //Se atiende en el ciclo principal
- 176   4                  g_cEstadoComSoft=RECEPCION_ID;
- 177   4                  g_cContByteRx=0;
-C51 COMPILER V9.59.0.0   UART                                                              06/11/2021 12:39:41 PAGE 4   
+ 175   4                break;
+ 176   4                        
+ 177   4                case 'w':
+C51 COMPILER V9.59.0.0   UART                                                              10/20/2021 11:54:14 PAGE 4   
 
- 178   4      
- 179   4                break;
- 180   4                        
- 181   4                case 'w':
- 182   4                  g_cEstadoComSoft=RECEPCION_STR_SOF_STX;       //Se atiende en el ciclo principal
- 183   4      //            txACK=1;
- 184   4                  tx_chr(ACK);
- 185   4                  g_cContByteRx=0;
- 186   4      
- 187   4                break;
- 188   4              
- 189   4                case 'S':                       //Se atiende en el ciclo principal
- 190   4                  g_cEstadoComSoft=RECEPCION_STR_SOF_STX;
- 191   4                  txACK=1;
- 192   4                  rx_serie=1;   
- 193   4                break;
- 194   4                case 'c':                       //numero de parqueos disponibles
- 195   4                   g_cEstadoComSoft=RECEPCION_STR_SOF_STX;        //modificado jp
- 196   4                   tx_chr(ACK);
- 197   4                   g_cContByteRx=0;
- 198   4                  break;
- 199   4                default:
- 200   4                  g_cEstadoComSoft=ESPERA_RX;
- 201   4                break;
- 202   4              } //switch (cDatoRx)
- 203   3              break;
- 204   3      //--------------------------------------------------------------------------------------
- 205   3            case RECEPCION_STR_SOF_STX:
- 206   3              if(cDatoRx==STX)
- 207   3              {
- 208   4                g_cContByteRx=0;
- 209   4                g_scArrRxComSoft[g_cContByteRx++]=cDatoRx;
- 210   4                g_cEstadoComSoft=SAVE_STR_SOF;
- 211   4              }
- 212   3              else if (cDatoRx==ENQ)
- 213   3              {
- 214   4                g_cEstadoComSoft=VER_DIR;
- 215   4                g_cContByteRx=0;
+ 178   4                  g_cEstadoComSoft=RECEPCION_STR_SOF_STX;       //Se atiende en el ciclo principal
+ 179   4      //            txACK=1;
+ 180   4                  tx_chr(ACK);
+ 181   4                  g_cContByteRx=0;
+ 182   4      
+ 183   4                break;
+ 184   4              
+ 185   4                case 'S':                       //Se atiende en el ciclo principal
+ 186   4                  g_cEstadoComSoft=RECEPCION_STR_SOF_STX;
+ 187   4                  txACK=1;
+ 188   4                  rx_serie=1;   
+ 189   4                break;
+ 190   4                case 'c':                       //numero de parqueos disponibles
+ 191   4                   g_cEstadoComSoft=RECEPCION_STR_SOF_STX;        //modificado jp
+ 192   4                   tx_chr(ACK);
+ 193   4                   g_cContByteRx=0;
+ 194   4                  break;
+ 195   4                default:
+ 196   4                  g_cEstadoComSoft=ESPERA_RX;
+ 197   4                break;
+ 198   4              } //switch (cDatoRx)
+ 199   3              break;
+ 200   3      //--------------------------------------------------------------------------------------
+ 201   3            case RECEPCION_STR_SOF_STX:
+ 202   3              if(cDatoRx==STX)
+ 203   3              {
+ 204   4                g_cContByteRx=0;
+ 205   4                g_scArrRxComSoft[g_cContByteRx++]=cDatoRx;
+ 206   4                g_cEstadoComSoft=SAVE_STR_SOF;
+ 207   4              }
+ 208   3              else if (cDatoRx==ENQ)
+ 209   3              {
+ 210   4                g_cEstadoComSoft=VER_DIR;
+ 211   4                g_cContByteRx=0;
+ 212   4              }
+ 213   3              else
+ 214   3              {
+ 215   4                g_cEstadoComSoft=ESPERA_RX;
  216   4              }
- 217   3              else
- 218   3              {
- 219   4                g_cEstadoComSoft=ESPERA_RX;
- 220   4              }
- 221   3            break;
- 222   3      //-----------------------------------------------------------------------------------------
- 223   3            case RECEPCION_ID:
- 224   3              g_scArrRxComSoft[g_cContByteRx++]=cDatoRx;
- 225   3              if(g_cContByteRx>TAMANO_RX_COM_SOFT)
+ 217   3            break;
+ 218   3      //-----------------------------------------------------------------------------------------
+ 219   3            case RECEPCION_ID:
+ 220   3              g_scArrRxComSoft[g_cContByteRx++]=cDatoRx;
+ 221   3              if(g_cContByteRx>TAMANO_RX_COM_SOFT)
+ 222   3              {
+ 223   4                g_cEstadoComSoft=ESPERA_RX;
+ 224   4              }
+ 225   3              else if(cDatoRx==ETX)
  226   3              {
  227   4                g_cEstadoComSoft=ESPERA_RX;
- 228   4              }
- 229   3              else if(cDatoRx==ETX)
- 230   3              {
- 231   4                g_cEstadoComSoft=ESPERA_RX;
- 232   4                g_cEstadoTxSoft &=~LECTURA_COD_TX;
- 233   4                Rechazo=0;
- 234   4      
- 235   4                Tiquete_Placa=0;
- 236   4                Tiquete_Salida=0;
- 237   4      
- 238   4                TimeOut_Codigo=0;
- 239   4              }
-C51 COMPILER V9.59.0.0   UART                                                              06/11/2021 12:39:41 PAGE 5   
+ 228   4                g_cEstadoTxSoft &=~LECTURA_COD_TX;
+ 229   4                Rechazo=0;
+ 230   4      
+ 231   4                Tiquete_Placa=0;
+ 232   4                Tiquete_Salida=0;
+ 233   4      
+ 234   4                TimeOut_Codigo=0;
+ 235   4              }
+ 236   3              else if (cDatoRx==ENQ)
+ 237   3              {
+ 238   4                g_cEstadoComSoft=VER_DIR;
+ 239   4                g_cContByteRx=0;
+C51 COMPILER V9.59.0.0   UART                                                              10/20/2021 11:54:14 PAGE 5   
 
- 240   3              else if (cDatoRx==ENQ)
- 241   3              {
- 242   4                g_cEstadoComSoft=VER_DIR;
- 243   4                g_cContByteRx=0;
- 244   4              }
- 245   3              break;            
- 246   3      //-----------------------------------------------------------------------------------------
- 247   3            case SAVE_STR_SOF:
- 248   3      
- 249   3              g_scArrRxComSoft[g_cContByteRx++]=cDatoRx;
- 250   3        
- 251   3              if(g_cContByteRx>TAMANO_RX_COM_SOFT)
+ 240   4              }
+ 241   3              break;            
+ 242   3      //-----------------------------------------------------------------------------------------
+ 243   3            case SAVE_STR_SOF:
+ 244   3      
+ 245   3              g_scArrRxComSoft[g_cContByteRx++]=cDatoRx;
+ 246   3        
+ 247   3              if(g_cContByteRx>TAMANO_RX_COM_SOFT)
+ 248   3              {
+ 249   4                g_cEstadoComSoft=ESPERA_RX;
+ 250   4              }
+ 251   3              else if(cDatoRx==ETX)
  252   3              {
- 253   4                g_cEstadoComSoft=ESPERA_RX;
- 254   4              }
- 255   3              else if(cDatoRx==ETX)
- 256   3              {
- 257   4                if (rx_serie==1)
- 258   4                {
- 259   5                  rx_serie=0;
- 260   5                  SerieOK=1;
- 261   5                  for (k=0; k<g_cContByteRx; k++)
- 262   5                  {
- 263   6                    g_scArrDisplay[k]=g_scArrRxComSoft[k];
- 264   6                  }
- 265   5                  g_cEstadoComSoft=ANALICE_STR_SOF;
- 266   5                }
- 267   4                
- 268   4                      
- 269   4      
- 270   4                if (g_cContByteRx==6)
- 271   4                {
- 272   5      //--------------------------------------------------------------------------------------------------------
+ 253   4                if (rx_serie==1)
+ 254   4                {
+ 255   5                  rx_serie=0;
+ 256   5                  SerieOK=1;
+ 257   5                  for (k=0; k<g_cContByteRx; k++)
+ 258   5                  {
+ 259   6                    g_scArrDisplay[k]=g_scArrRxComSoft[k];
+ 260   6                  }
+ 261   5                  g_cEstadoComSoft=ANALICE_STR_SOF;
+ 262   5                }
+ 263   4                
+ 264   4                      
+ 265   4      
+ 266   4                if (g_cContByteRx==6)
+ 267   4                {
+ 268   5      //--------------------------------------------------------------------------------------------------------
              -------------------*
- 273   5                  if(g_scArrRxComSoft[1]=='D')
- 274   5                  {
- 275   6      //              lock1=0;
- 276   6      
- 277   6                  }
- 278   5                  else if(g_scArrRxComSoft[1]=='A')
- 279   5                  {
- 280   6                  
- 281   6                    if (TimeOut_Send_Acceso!=0)         // Time Out para notificar al secunadrio
- 282   6                    {
- 283   7                      TimeOut_Send_Acceso=0;
- 284   7                      Tx_Acceso=1;              // Notifica al Secundario el Acceso
- 285   7                      g_cEstadoTxSoft &=~LECTURA_WIEG_TX;
- 286   7                      OpenMensual_Apx=cte_seg*3;          // Un segundo no acepta Acceso Axxx => Software envia 3 intentos;
- 287   7                    }
- 288   6                    else
- 289   6                    {
- 290   7                      if (OpenMensual_Apx==0)         // 
- 291   7                      {
- 292   8                        lock1=1;
- 293   8                        seg=cte_seg;
- 294   8                        TH0=0X00;                                           
- 295   8                        TL0=0X00;
- 296   8                        TF0=0;                
- 297   8                      }
- 298   7                    }         
- 299   6                    
- 300   6                          
-C51 COMPILER V9.59.0.0   UART                                                              06/11/2021 12:39:41 PAGE 6   
+ 269   5                  if(g_scArrRxComSoft[1]=='D')
+ 270   5                  {
+ 271   6      //              lock1=0;
+ 272   6      
+ 273   6                  }
+ 274   5                  else if(g_scArrRxComSoft[1]=='A')
+ 275   5                  {
+ 276   6                  
+ 277   6                    if (TimeOut_Send_Acceso!=0)         // Time Out para notificar al secunadrio
+ 278   6                    {
+ 279   7                      TimeOut_Send_Acceso=0;
+ 280   7                      Tx_Acceso=1;              // Notifica al Secundario el Acceso
+ 281   7                      g_cEstadoTxSoft &=~LECTURA_WIEG_TX;
+ 282   7                      OpenMensual_Apx=cte_seg*3;          // Un segundo no acepta Acceso Axxx => Software envia 3 intentos;
+ 283   7                    }
+ 284   6                    else
+ 285   6                    {
+ 286   7                      if (OpenMensual_Apx==0)         // 
+ 287   7                      {
+ 288   8                        lock1=1;
+ 289   8                        seg=cte_seg;
+ 290   8                        TH0=0X00;                                           
+ 291   8                        TL0=0X00;
+ 292   8                        TF0=0;                
+ 293   8                      }
+ 294   7                    }         
+ 295   6                    
+ 296   6                          
+ 297   6                  }
+ 298   5      
+ 299   5                  if(g_scArrRxComSoft[2]=='D')
+ 300   5                  {
+C51 COMPILER V9.59.0.0   UART                                                              10/20/2021 11:54:14 PAGE 6   
 
- 301   6                  }
- 302   5      
- 303   5                  if(g_scArrRxComSoft[2]=='D')
+ 301   6      //              lock2=0;
+ 302   6                  }
+ 303   5                  else if(g_scArrRxComSoft[2]=='A')
  304   5                  {
- 305   6      //              lock2=0;
- 306   6                  }
- 307   5                  else if(g_scArrRxComSoft[2]=='A')
- 308   5                  {
- 309   6                    if (notifyEVP==1)
- 310   6                    {
- 311   7                      Tx_Acceso=1;
- 312   7                      if (InhabilitaPulsoEvPOut==1)
- 313   7                      {
- 314   8                        if ((Send_Wiegand==1))
- 315   8                        {
- 316   9                          Send_Wiegand=0;
- 317   9                          g_cEstadoTxSoft &=~LECTURA_WIEG_TX;
- 318   9                          
- 319   9                          
- 320   9                          if (TimeOut_Send_Acceso!=0)         // Time Out para notificar al secunadrio
- 321   9                          {
- 322  10                            SalidaW=0;
- 323  10      
- 324  10                            TimeOut_Send_Acceso=0;
- 325  10                            Tx_Acceso=1;              // Notifica al Secundario el Acceso
- 326  10                            g_cEstadoTxSoft &=~LECTURA_WIEG_TX;
- 327  10                            OpenMensual_Apx=cte_seg*3;          // Un segundo no acepta Acceso Axxx => Software envia 3 intent
+ 305   6                    if (notifyEVP==1)
+ 306   6                    {
+ 307   7                      Tx_Acceso=1;
+ 308   7                      if (InhabilitaPulsoEvPOut==1)
+ 309   7                      {
+ 310   8                        if ((Send_Wiegand==1))
+ 311   8                        {
+ 312   9                          Send_Wiegand=0;
+ 313   9                          g_cEstadoTxSoft &=~LECTURA_WIEG_TX;
+ 314   9                          
+ 315   9                          
+ 316   9                          if (TimeOut_Send_Acceso!=0)         // Time Out para notificar al secunadrio
+ 317   9                          {
+ 318  10                            SalidaW=0;
+ 319  10      
+ 320  10                            TimeOut_Send_Acceso=0;
+ 321  10                            Tx_Acceso=1;              // Notifica al Secundario el Acceso
+ 322  10                            g_cEstadoTxSoft &=~LECTURA_WIEG_TX;
+ 323  10                            OpenMensual_Apx=cte_seg*3;          // Un segundo no acepta Acceso Axxx => Software envia 3 intent
              -os;
- 328  10                          }
- 329   9                          else
- 330   9                          {
- 331  10                            if (OpenMensual_Apx==0)         // 
- 332  10                            {
- 333  11                              lock2=1;
- 334  11                              seg=cte_seg;
- 335  11                              TH0=0X00;                                           
- 336  11                              TL0=0X00;
- 337  11                              TF0=0;                
- 338  11                            }
- 339  10                          }                             
- 340   9                          
- 341   9                      
- 342   9      //                    lock2=1;          // Alvaro Manda Abrir mensual y tiquete pero notifico
- 343   9      //                    seg=cte_seg+14;
- 344   9      //                    TH0=0X00;         //Inicializa timer                    *           
- 345   9      //                    TL0=0X00;
- 346   9      //                    TF0=0;
- 347   9                        }
- 348   8                      }
- 349   7                      else
- 350   7                      {
- 351   8                        if ((Send_Wiegand==1))
- 352   8                        {
- 353   9                          Send_Wiegand=0;
- 354   9                          g_cEstadoTxSoft &=~LECTURA_WIEG_TX;
- 355   9                        }
- 356   8      
- 357   8                        lock2=1;            // Alvaro Manda Abrir mensual y tiquete pero notifico
- 358   8                        seg=cte_seg+14;
- 359   8                        TH0=0X00;           //Inicializa timer                    *           
- 360   8                        TL0=0X00;
- 361   8                        TF0=0;
-C51 COMPILER V9.59.0.0   UART                                                              06/11/2021 12:39:41 PAGE 7   
+ 324  10                          }
+ 325   9                          else
+ 326   9                          {
+ 327  10                            if (OpenMensual_Apx==0)         // 
+ 328  10                            {
+ 329  11                              lock2=1;
+ 330  11                              seg=cte_seg;
+ 331  11                              TH0=0X00;                                           
+ 332  11                              TL0=0X00;
+ 333  11                              TF0=0;                
+ 334  11                            }
+ 335  10                          }                             
+ 336   9                          
+ 337   9                      
+ 338   9      //                    lock2=1;          // Alvaro Manda Abrir mensual y tiquete pero notifico
+ 339   9      //                    seg=cte_seg+14;
+ 340   9      //                    TH0=0X00;         //Inicializa timer                    *           
+ 341   9      //                    TL0=0X00;
+ 342   9      //                    TF0=0;
+ 343   9                        }
+ 344   8                      }
+ 345   7                      else
+ 346   7                      {
+ 347   8                        if ((Send_Wiegand==1))
+ 348   8                        {
+ 349   9                          Send_Wiegand=0;
+ 350   9                          g_cEstadoTxSoft &=~LECTURA_WIEG_TX;
+ 351   9                        }
+ 352   8      
+ 353   8                        lock2=1;            // Alvaro Manda Abrir mensual y tiquete pero notifico
+ 354   8                        seg=cte_seg+14;
+ 355   8                        TH0=0X00;           //Inicializa timer                    *           
+ 356   8                        TL0=0X00;
+ 357   8                        TF0=0;
+ 358   8                      }
+ 359   7                    }
+ 360   6                    else
+ 361   6                    {
+C51 COMPILER V9.59.0.0   UART                                                              10/20/2021 11:54:14 PAGE 7   
 
- 362   8                      }
- 363   7                    }
- 364   6                    else
- 365   6                    {
- 366   7                        if ((Send_Wiegand==1))
- 367   7                        {
- 368   8                          Send_Wiegand=0;
- 369   8                          g_cEstadoTxSoft &=~LECTURA_WIEG_TX;
- 370   8                        }
- 371   7      
- 372   7                        lock2=1;            // Alvaro Manda Abrir mensual y tiquete pero notifico
- 373   7                        seg=cte_seg+14;
- 374   7                        TH0=0X00;           //Inicializa timer                    *           
- 375   7                        TL0=0X00;
- 376   7                        TF0=0;
- 377   7                    }
- 378   6                  }
- 379   5                  g_cEstadoComSoft=ESPERA_RX;
- 380   5                  g_cContByteRx=0;
- 381   5                  
- 382   5      //--------------------------------------------------------------------------------------------------------
+ 362   7                        if ((Send_Wiegand==1))
+ 363   7                        {
+ 364   8                          Send_Wiegand=0;
+ 365   8                          g_cEstadoTxSoft &=~LECTURA_WIEG_TX;
+ 366   8                        }
+ 367   7      
+ 368   7                        lock2=1;            // Alvaro Manda Abrir mensual y tiquete pero notifico
+ 369   7                        seg=cte_seg+14;
+ 370   7                        TH0=0X00;           //Inicializa timer                    *           
+ 371   7                        TL0=0X00;
+ 372   7                        TF0=0;
+ 373   7                    }
+ 374   6                  }
+ 375   5                  g_cEstadoComSoft=ESPERA_RX;
+ 376   5                  g_cContByteRx=0;
+ 377   5                  
+ 378   5      //--------------------------------------------------------------------------------------------------------
              -------------------*
- 383   5        
- 384   5      
- 385   5                }
- 386   4                else if(g_cContByteRx==7)                 //modificado jp   tomo la cadena q llega por el serial tcp/ip
- 387   4                {                                         // y la almaceno en el buffer_bus 
- 388   5                  if(g_scArrRxComSoft[1]=='c')
- 389   5                  { 
- 390   6                     for (k=0; k<g_cContByteRx; k++)          //este for carga la inf pto paralelo p2
- 391   6                  {
- 392   7      
- 393   7                    buffer_bus[k]=g_scArrRxComSoft[k];
- 394   7                   
- 395   7                  }
- 396   6              /*
- 397   6                  for (k=2; k<g_cContByteRx; k++)         //k=2 con lcd
- 398   6                  {
- 399   6      
- 400   6                      buffer_Cupo[k-2]=g_scArrRxComSoft[k];       //solo usado para almacenar datos para mostrar en lcd
+ 379   5        
+ 380   5      
+ 381   5                }
+ 382   4                else if(g_cContByteRx==7)                 //modificado jp   tomo la cadena q llega por el serial tcp/ip
+ 383   4                {                                         // y la almaceno en el buffer_bus 
+ 384   5                  if(g_scArrRxComSoft[1]=='c')
+ 385   5                  { 
+ 386   6                     for (k=0; k<g_cContByteRx; k++)          //este for carga la inf pto paralelo p2
+ 387   6                  {
+ 388   7      
+ 389   7                    buffer_bus[k]=g_scArrRxComSoft[k];
+ 390   7                   
+ 391   7                  }
+ 392   6              /*
+ 393   6                  for (k=2; k<g_cContByteRx; k++)         //k=2 con lcd
+ 394   6                  {
+ 395   6      
+ 396   6                      buffer_Cupo[k-2]=g_scArrRxComSoft[k];       //solo usado para almacenar datos para mostrar en lcd
+ 397   6                  }
+ 398   6                  */
+ 399   6                  g_cEstadoComSoft=ANALICE_STR_SOF;
+ 400   6              
  401   6                  }
- 402   6                  */
- 403   6                  g_cEstadoComSoft=ANALICE_STR_SOF;
- 404   6              
- 405   6                  }
- 406   5                }         
- 407   4              
- 408   4      //------------------------------------------------------------------------------------
- 409   4                else if (g_cContByteRx==25)
- 410   4                { 
- 411   5                  for (k=0; k<g_cContByteRx; k++)
- 412   5                  {
- 413   6                    g_scArrDisplay[k]=g_scArrRxComSoft[k];
- 414   6                  }
- 415   5                  g_cEstadoComSoft=ANALICE_STR_SOF;
+ 402   5                }         
+ 403   4              
+ 404   4      //------------------------------------------------------------------------------------
+ 405   4                else if (g_cContByteRx==25)
+ 406   4                { 
+ 407   5                  for (k=0; k<g_cContByteRx; k++)
+ 408   5                  {
+ 409   6                    g_scArrDisplay[k]=g_scArrRxComSoft[k];
+ 410   6                  }
+ 411   5                  g_cEstadoComSoft=ANALICE_STR_SOF;
+ 412   5      
+ 413   5                }
+ 414   4                else if (g_cContByteRx>=38)
+ 415   4                {
  416   5      
- 417   5                }
- 418   4                else if (g_cContByteRx>=38)
- 419   4                {
- 420   5      
- 421   5                  if(g_scArrRxComSoft[1]=='A')
- 422   5                  {
-C51 COMPILER V9.59.0.0   UART                                                              06/11/2021 12:39:41 PAGE 8   
+ 417   5                  if(g_scArrRxComSoft[1]=='A')
+ 418   5                  {
+ 419   6      
+ 420   6                    
+ 421   6                    if (TimeOut_Send_Acceso!=0)
+ 422   6                    {
+C51 COMPILER V9.59.0.0   UART                                                              10/20/2021 11:54:14 PAGE 8   
 
- 423   6      
- 424   6                    
- 425   6                    if (TimeOut_Send_Acceso!=0)
- 426   6                    {
- 427   7                      g_cEstadoTxSoft &=~LECTURA_WIEG_TX;
- 428   7                      TimeOut_Send_Acceso=0;
- 429   7                      Tx_Acceso=1;
- 430   7                      
- 431   7                      OpenMensual_Apx=cte_seg*3;          // Un segundo no acepta Acceso Axxx => Software envia 3 intentos;
- 432   7                    }
- 433   6                    else
- 434   6                    {
- 435   7                      if (OpenMensual_Apx==0)         // 
- 436   7                      {
- 437   8                        lock1=1;
- 438   8                        seg=cte_seg;
- 439   8                        TH0=0X00;                                           
- 440   8                        TL0=0X00;
- 441   8                        TF0=0;              
- 442   8                      }
- 443   7                    }       
- 444   6                  }
- 445   5                  if(g_scArrRxComSoft[2]=='A')
- 446   5                  {
- 447   6      
- 448   6        
- 449   6                      Tx_Acceso=1;
- 450   6                    if (notifyEVP==1)
- 451   6                    {
- 452   7        
- 453   7                      if (InhabilitaPulsoEvPOut==1)
- 454   7                      {
- 455   8      
- 456   8                        if ((Send_Wiegand==1))
- 457   8                        {
- 458   9                          Send_Wiegand=0;
- 459   9                          g_cEstadoTxSoft &=~LECTURA_WIEG_TX;
- 460   9      
- 461   9      
- 462   9                            if (TimeOut_Send_Acceso!=0)         // Time Out para notificar al secunadrio
- 463   9                          {
- 464  10                            SalidaW=0;  
- 465  10                            TimeOut_Send_Acceso=0;
- 466  10                            Tx_Acceso=1;              // Notifica al Secundario el Acceso
- 467  10                            g_cEstadoTxSoft &=~LECTURA_WIEG_TX;
- 468  10                            OpenMensual_Apx=cte_seg*3;          // Un segundo no acepta Acceso Axxx => Software envia 3 intent
+ 423   7                      g_cEstadoTxSoft &=~LECTURA_WIEG_TX;
+ 424   7                      TimeOut_Send_Acceso=0;
+ 425   7                      Tx_Acceso=1;
+ 426   7                      
+ 427   7                      OpenMensual_Apx=cte_seg*3;          // Un segundo no acepta Acceso Axxx => Software envia 3 intentos;
+ 428   7                    }
+ 429   6                    else
+ 430   6                    {
+ 431   7                      if (OpenMensual_Apx==0)         // 
+ 432   7                      {
+ 433   8                        lock1=1;
+ 434   8                        seg=cte_seg;
+ 435   8                        TH0=0X00;                                           
+ 436   8                        TL0=0X00;
+ 437   8                        TF0=0;              
+ 438   8                      }
+ 439   7                    }       
+ 440   6                  }
+ 441   5                  if(g_scArrRxComSoft[2]=='A')
+ 442   5                  {
+ 443   6      
+ 444   6        
+ 445   6                      Tx_Acceso=1;
+ 446   6                    if (notifyEVP==1)
+ 447   6                    {
+ 448   7        
+ 449   7                      if (InhabilitaPulsoEvPOut==1)
+ 450   7                      {
+ 451   8      
+ 452   8                        if ((Send_Wiegand==1))
+ 453   8                        {
+ 454   9                          Send_Wiegand=0;
+ 455   9                          g_cEstadoTxSoft &=~LECTURA_WIEG_TX;
+ 456   9      
+ 457   9      
+ 458   9                            if (TimeOut_Send_Acceso!=0)         // Time Out para notificar al secunadrio
+ 459   9                          {
+ 460  10                            SalidaW=0;  
+ 461  10                            TimeOut_Send_Acceso=0;
+ 462  10                            Tx_Acceso=1;              // Notifica al Secundario el Acceso
+ 463  10                            g_cEstadoTxSoft &=~LECTURA_WIEG_TX;
+ 464  10                            OpenMensual_Apx=cte_seg*3;          // Un segundo no acepta Acceso Axxx => Software envia 3 intent
              -os;
- 469  10                          }
- 470   9                          else
- 471   9                          {
- 472  10                            if (OpenMensual_Apx==0)         // 
- 473  10                            {
- 474  11                              lock2=1;
- 475  11                              seg=cte_seg;
- 476  11                              TH0=0X00;                                           
- 477  11                              TL0=0X00;
- 478  11                              TF0=0;                
- 479  11                            }
- 480  10                          }     
- 481   9      
- 482   9      //                    lock2=1;          // Alvaro Manda Abrir mensual y tiquete pero notifico
- 483   9      //                    seg=cte_seg+14;
-C51 COMPILER V9.59.0.0   UART                                                              06/11/2021 12:39:41 PAGE 9   
+ 465  10                          }
+ 466   9                          else
+ 467   9                          {
+ 468  10                            if (OpenMensual_Apx==0)         // 
+ 469  10                            {
+ 470  11                              lock2=1;
+ 471  11                              seg=cte_seg;
+ 472  11                              TH0=0X00;                                           
+ 473  11                              TL0=0X00;
+ 474  11                              TF0=0;                
+ 475  11                            }
+ 476  10                          }     
+ 477   9      
+ 478   9      //                    lock2=1;          // Alvaro Manda Abrir mensual y tiquete pero notifico
+ 479   9      //                    seg=cte_seg+14;
+ 480   9      //                    TH0=0X00;         //Inicializa timer                    *           
+ 481   9      //                    TL0=0X00;
+ 482   9      //                    TF0=0;
+ 483   9                        }
+C51 COMPILER V9.59.0.0   UART                                                              10/20/2021 11:54:14 PAGE 9   
 
- 484   9      //                    TH0=0X00;         //Inicializa timer                    *           
- 485   9      //                    TL0=0X00;
- 486   9      //                    TF0=0;
- 487   9                        }
- 488   8                      }
- 489   7                      else
- 490   7                      {
- 491   8                        if ((Send_Wiegand==1))
- 492   8                        {
- 493   9                          Send_Wiegand=0;
- 494   9                          g_cEstadoTxSoft &=~LECTURA_WIEG_TX;
- 495   9                        }
- 496   8      
- 497   8                        lock2=1;            // Alvaro Manda Abrir mensual y tiquete pero notifico
- 498   8                        seg=cte_seg+14;
- 499   8                        TH0=0X00;           //Inicializa timer                    *           
- 500   8                        TL0=0X00;
- 501   8                        TF0=0;
- 502   8                      }
- 503   7                    }
- 504   6                    else
- 505   6                    {
- 506   7                        if ((Send_Wiegand==1))
- 507   7                        {
- 508   8                          Send_Wiegand=0;
- 509   8                          g_cEstadoTxSoft &=~LECTURA_WIEG_TX;
- 510   8                          lock2=1;            // Alvaro Manda Abrir mensual y tiquete pero notifico
- 511   8                          seg=cte_seg+14;
- 512   8                          TH0=0X00;           //Inicializa timer                    *           
- 513   8                          TL0=0X00;
- 514   8                          TF0=0;
- 515   8                        }
- 516   7      
- 517   7      
- 518   7      
- 519   7                    }
- 520   6                  }
- 521   5      
- 522   5                  for (k=0; k<38; k++)
- 523   5                  {
- 524   6                    g_scArrDisplay[k]=g_scArrRxComSoft[k];
- 525   6                  }
- 526   5                  g_cEstadoComSoft=ANALICE_STR_SOF;
- 527   5                  bandera_rx_soft=1;
- 528   5                }
- 529   4              }
- 530   3              else if (cDatoRx==ENQ)
- 531   3              {
- 532   4                g_cEstadoComSoft=VER_DIR;
- 533   4                g_cContByteRx=0;
- 534   4              }
- 535   3      
- 536   3              break;
- 537   3      //------------------------------------------------------------------------------------------
- 538   3            default:
- 539   3              g_cEstadoComSoft=ESPERA_RX;
- 540   3            break;
- 541   3          } //switch (g_cEstadoComSoft) 
- 542   2        }
- 543   1      //------------------------------------------------------------------------------------------*
- 544   1      // Transmitted data interrupt.                                *
- 545   1      //------------------------------------------------------------------------------------------*
-C51 COMPILER V9.59.0.0   UART                                                              06/11/2021 12:39:41 PAGE 10  
+ 484   8                      }
+ 485   7                      else
+ 486   7                      {
+ 487   8                        if ((Send_Wiegand==1))
+ 488   8                        {
+ 489   9                          Send_Wiegand=0;
+ 490   9                          g_cEstadoTxSoft &=~LECTURA_WIEG_TX;
+ 491   9                        }
+ 492   8      
+ 493   8                        lock2=1;            // Alvaro Manda Abrir mensual y tiquete pero notifico
+ 494   8                        seg=cte_seg+14;
+ 495   8                        TH0=0X00;           //Inicializa timer                    *           
+ 496   8                        TL0=0X00;
+ 497   8                        TF0=0;
+ 498   8                      }
+ 499   7                    }
+ 500   6                    else
+ 501   6                    {
+ 502   7                        if ((Send_Wiegand==1))
+ 503   7                        {
+ 504   8                          Send_Wiegand=0;
+ 505   8                          g_cEstadoTxSoft &=~LECTURA_WIEG_TX;
+ 506   8                          lock2=1;            // Alvaro Manda Abrir mensual y tiquete pero notifico
+ 507   8                          seg=cte_seg+14;
+ 508   8                          TH0=0X00;           //Inicializa timer                    *           
+ 509   8                          TL0=0X00;
+ 510   8                          TF0=0;
+ 511   8                        }
+ 512   7      
+ 513   7      
+ 514   7      
+ 515   7                    }
+ 516   6                  }
+ 517   5      
+ 518   5                  for (k=0; k<38; k++)
+ 519   5                  {
+ 520   6                    g_scArrDisplay[k]=g_scArrRxComSoft[k];
+ 521   6                  }
+ 522   5                  g_cEstadoComSoft=ANALICE_STR_SOF;
+ 523   5                  bandera_rx_soft=1;
+ 524   5                }
+ 525   4              }
+ 526   3              else if (cDatoRx==ENQ)
+ 527   3              {
+ 528   4                g_cEstadoComSoft=VER_DIR;
+ 529   4                g_cContByteRx=0;
+ 530   4              }
+ 531   3      
+ 532   3              break;
+ 533   3      //------------------------------------------------------------------------------------------
+ 534   3            default:
+ 535   3              g_cEstadoComSoft=ESPERA_RX;
+ 536   3            break;
+ 537   3          } //switch (g_cEstadoComSoft) 
+ 538   2        }
+ 539   1      //------------------------------------------------------------------------------------------*
+ 540   1      // Transmitted data interrupt.                                *
+ 541   1      //------------------------------------------------------------------------------------------*
+ 542   1          if (TI != 0) 
+ 543   1        {
+ 544   2            TI = 0;                 // clear interrupt request flag
+ 545   2          sendactive=0;
+C51 COMPILER V9.59.0.0   UART                                                              10/20/2021 11:54:14 PAGE 10  
 
- 546   1          if (TI != 0) 
- 547   1        {
- 548   2            TI = 0;                 // clear interrupt request flag
- 549   2          sendactive=0;
- 550   2          }
- 551   1      }
- 552          
- 553          /*------------------------------------------------------------------------------
- 554          Transmito un caracter pasandolo a ascii 
- 555          ------------------------------------------------------------------------------*/
- 556          // TEMPORALMENTE FUERA DE SERVICIO
- 557          /*
- 558          void Debug_chr_uart(unsigned char Dat)
- 559          {
- 560            unsigned char temp;
- 561          
- 562              temp=(Dat&0xf0)>>4;
- 563              (temp>0x09)?(temp=temp+0x37):(temp=temp+0x30);
- 564            
- 565              tx_chr(temp); 
- 566            
- 567                         
- 568              temp=(Dat&0x0f);
- 569              (temp>0x09)?(temp=temp+0x37):(temp=temp+0x30);
- 570              tx_chr(temp); 
- 571              tx_chr(' ');  
- 572            
- 573            
- 574          }
- 575          
- 576          
- 577          void DebugBufferMF(unsigned char *str,unsigned char num_char)
- 578          {
- 579            unsigned char j;
- 580           
- 581                
- 582              for (j=0; j<num_char; j++)
- 583              {
- 584              Debug_chr_uart(*str);
- 585              str++;
- 586              }
- 587              tx_chr('\r');
- 588              tx_chr('\n');
- 589           
- 590          }
- 591          */
- 592          /*------------------------------------------------------------------------------
- 593          imprime la trama hasta el caracter null
- 594          ------------------------------------------------------------------------------*/
- 595          /*
- 596          void Debug_txt_uart(unsigned char * str)
- 597          {
- 598            unsigned char i;
- 599          
- 600            i=0;
- 601            
- 602            
- 603              for (i=0; str[i] != '\0'; i++)
- 604              {
- 605                  tx_chr(str[i]);
- 606              }
- 607              
-C51 COMPILER V9.59.0.0   UART                                                              06/11/2021 12:39:41 PAGE 11  
+ 546   2          }
+ 547   1      }
+ 548          
+ 549          /*------------------------------------------------------------------------------
+ 550          Transmito un caracter pasandolo a ascii 
+ 551          ------------------------------------------------------------------------------*/
+ 552          // TEMPORALMENTE FUERA DE SERVICIO
+ 553          /*
+ 554          void Debug_chr_uart(unsigned char Dat)
+ 555          {
+ 556            unsigned char temp;
+ 557          
+ 558              temp=(Dat&0xf0)>>4;
+ 559              (temp>0x09)?(temp=temp+0x37):(temp=temp+0x30);
+ 560            
+ 561              tx_chr(temp); 
+ 562            
+ 563                         
+ 564              temp=(Dat&0x0f);
+ 565              (temp>0x09)?(temp=temp+0x37):(temp=temp+0x30);
+ 566              tx_chr(temp); 
+ 567              tx_chr(' ');  
+ 568            
+ 569            
+ 570          }
+ 571          */
+ 572          /*
+ 573          void DebugBufferMF(unsigned char *str,unsigned char num_char)
+ 574          {
+ 575            unsigned char j;
+ 576           
+ 577                
+ 578              for (j=0; j<num_char; j++)
+ 579              {
+ 580              Debug_chr_uart(*str);
+ 581              str++;
+ 582              }
+ 583              tx_chr('\r');
+ 584              tx_chr('\n');
+ 585           
+ 586          }
+ 587          */
+ 588          /*------------------------------------------------------------------------------
+ 589          imprime la trama hasta el caracter null
+ 590          ------------------------------------------------------------------------------*/
+ 591          /*
+ 592          void Debug_txt_uart(unsigned char * str)
+ 593          {
+ 594            unsigned char i;
+ 595          
+ 596            i=0;
+ 597            
+ 598            
+ 599              for (i=0; str[i] != '\0'; i++)
+ 600              {
+ 601                  tx_chr(str[i]);
+ 602              }
+ 603              
+ 604            
+ 605          }
+ 606          
+ 607          */
+C51 COMPILER V9.59.0.0   UART                                                              10/20/2021 11:54:14 PAGE 11  
 
- 608            
- 609          }
- 610          */
- 611          
- 612          //********************************************************************************************************
+ 608          //********************************************************************************************************
              -******
- 613          //********************************************************************************************************
+ 609          //********************************************************************************************************
              -******
- 614          void EscribirCadenaSoft(unsigned char tamano_cadena)
- 615          {
- 616   1      unsigned char i;
- 617   1       
- 618   1        for(i=0;i<tamano_cadena;i++)
- 619   1          {
- 620   2              tx_chr(g_scArrTxComSoft[i]);
- 621   2          }
- 622   1        
- 623   1      }
- 624          static unsigned char calculo_bcc()
- 625          {
- 626   1        unsigned char bcc=0;
- 627   1        unsigned char j;
- 628   1        
- 629   1        for (j=0; j<g_cContByteRx; j++)
- 630   1        {
- 631   2              bcc=g_scArrDisplay[j]^bcc;
- 632   2        }
- 633   1        
- 634   1        return bcc;
- 635   1      }
- 636          void backup_clk()
- 637          {
- 638   1        //<STX>3H29/03/2019 17:07:29 6<ETX>D<LF>
- 639   1        unsigned char i;
- 640   1        buffer_bus[g_cContByteRx++]=calculo_bcc();
- 641   1        for (i=0; i<g_cContByteRx; i++)
- 642   1                {
- 643   2                  buffer_clk[i]= buffer_bus[i];
- 644   2                  
- 645   2                }
- 646   1            buffer_clk[g_cContByteRx+1]=0;    
- 647   1            buffer_bus[g_cContByteRx+1]=0;
- 648   1            //Debug_txt_uart("Hora con bcc");
- 649   1            //Debug_txt_uart("\n");
- 650   1            //Debug_txt_uart(buffer_bus); 
- 651   1            //Debug_txt_uart("\n"); 
- 652   1                
- 653   1            //Debug_txt_uart("hora backup");
- 654   1            //Debug_txt_uart(buffer_clk); 
- 655   1            //Debug_txt_uart("\n"); 
- 656   1            
- 657   1            copia_g_cContByteRx =g_cContByteRx;
- 658   1            tx_bus(g_cContByteRx);
- 659   1            cmd_exclusivo();    
- 660   1      }
- 661          void Retransmitir_trama_hora()
- 662          {
- 663   1        unsigned char i;
- 664   1        for (i=0; i<copia_g_cContByteRx; i++)
- 665   1                {
- 666   2                  buffer_bus[i]=buffer_clk[i];
- 667   2                  
-C51 COMPILER V9.59.0.0   UART                                                              06/11/2021 12:39:41 PAGE 12  
+ 610          void EscribirCadenaSoft(unsigned char tamano_cadena)
+ 611          {
+ 612   1      unsigned char i;
+ 613   1       
+ 614   1        for(i=0;i<tamano_cadena;i++)
+ 615   1          {
+ 616   2              tx_chr(g_scArrTxComSoft[i]);
+ 617   2          }
+ 618   1        
+ 619   1      }
+ 620          unsigned char calculo_bcc()
+ 621          {
+ 622   1        unsigned char bcc=0;
+ 623   1        unsigned char j;
+ 624   1        
+ 625   1        for (j=0; j<g_cContByteRx; j++)
+ 626   1        {
+ 627   2              bcc=g_scArrDisplay[j]^bcc;
+ 628   2        }
+ 629   1        
+ 630   1        return bcc;
+ 631   1      }
+ 632          void backup_clk()
+ 633          {
+ 634   1        unsigned char i;
+ 635   1        buffer_bus[g_cContByteRx++]=calculo_bcc();
+ 636   1        for (i=0; i<g_cContByteRx; i++)
+ 637   1                {
+ 638   2                  buffer_clk[i]= buffer_bus[i];
+ 639   2                  
+ 640   2                }
+ 641   1            buffer_clk[g_cContByteRx+1]=0;    
+ 642   1            buffer_bus[g_cContByteRx+1]=0;
+ 643   1            //Debug_txt_uart("Hora con bcc");
+ 644   1            //Debug_txt_uart("\n");
+ 645   1            //Debug_txt_uart(buffer_bus); 
+ 646   1            //Debug_txt_uart("\n"); 
+ 647   1                
+ 648   1            //Debug_txt_uart("hora backup");
+ 649   1            //Debug_txt_uart(buffer_clk); 
+ 650   1            //Debug_txt_uart("\n");           
+ 651   1            copia_g_cContByteRx =g_cContByteRx;
+ 652   1            tx_bus(g_cContByteRx);
+ 653   1            cmd_exclusivo ();   
+ 654   1                
+ 655   1      }
+ 656          void Retransmitir_trama_hora()
+ 657          {
+ 658   1        unsigned char i;
+ 659   1        for (i=0; i<copia_g_cContByteRx; i++)
+ 660   1                {
+ 661   2                  buffer_bus[i]=buffer_clk[i];
+ 662   2                  
+ 663   2                }
+ 664   1        
+ 665   1          tx_bus(copia_g_cContByteRx);
+ 666   1          
+ 667   1      }
+C51 COMPILER V9.59.0.0   UART                                                              10/20/2021 11:54:14 PAGE 12  
 
- 668   2                }
- 669   1        
- 670   1          tx_bus(copia_g_cContByteRx);
- 671   1        
- 672   1      }
- 673          void cmd_exclusivo()
- 674          {
- 675   1        
- 676   1        unsigned char reelectura[4];
- 677   1        unsigned char dato; 
- 678   1          strncpy(reelectura,buffer_bus+6,2);
- 679   1          reelectura[2]=0;
- 680   1        //  Debug_txt_uart("trama: ");
- 681   1        //  Debug_txt_uart(reelectura);
- 682   1         // Debug_txt_uart("\n"); 
- 683   1          dato= ((reelectura[0]& 0x0f)<<4)| ((reelectura[1]& 0x0f));
- 684   1        //  Debug_chr_uart(dato);
- 685   1          if(dato >=2)
- 686   1          {
- 687   2            strncpy(reelectura,buffer_bus+11,2);
- 688   2            reelectura[2]=0;
- 689   2          //  Debug_txt_uart("trama: ");
- 690   2          //  Debug_txt_uart(reelectura);
- 691   2          //  Debug_txt_uart("\n"); 
- 692   2            dato= ((reelectura[0]& 0x0f)<<4)| ((reelectura[1]& 0x0f));
- 693   2          //  Debug_chr_uart(dato);
- 694   2            if (dato >= 22)
- 695   2            {
- 696   3              buffer_bus[0]=0X02;
- 697   3              buffer_bus[1]=0X55;
- 698   3              buffer_bus[2]=0X03;
- 699   3              tx_bus(3);
- 700   3            //  Debug_chr_uart(buffer_bus[0]);
- 701   3            }
- 702   2            
- 703   2          }
- 704   1      }
+ 668          void cmd_exclusivo()
+ 669          {
+ 670   1        
+ 671   1        unsigned char reelectura[4];
+ 672   1        unsigned char dato; 
+ 673   1          strncpy(reelectura,buffer_bus+6,2);
+ 674   1          reelectura[2]=0;
+ 675   1        //  Debug_txt_uart("trama: ");
+ 676   1        //  Debug_txt_uart(reelectura);
+ 677   1         // Debug_txt_uart("\n"); 
+ 678   1          dato= ((reelectura[0]& 0x0f)<<4)| ((reelectura[1]& 0x0f));
+ 679   1        //  Debug_chr_uart(dato);
+ 680   1          if(dato >=3)
+ 681   1          {
+ 682   2            strncpy(reelectura,buffer_bus+11,2);
+ 683   2            reelectura[2]=0;
+ 684   2          //  Debug_txt_uart("trama: ");
+ 685   2          //  Debug_txt_uart(reelectura);
+ 686   2          //  Debug_txt_uart("\n"); 
+ 687   2            dato= ((reelectura[0]& 0x0f)<<4)| ((reelectura[1]& 0x0f));
+ 688   2          //  Debug_chr_uart(dato);
+ 689   2            if (dato >= 22)
+ 690   2            {
+ 691   3              buffer_bus[0]=0X02;
+ 692   3              buffer_bus[1]=0X55;
+ 693   3              buffer_bus[2]=0X03;
+ 694   3              tx_bus(3);
+ 695   3            //  Debug_chr_uart(buffer_bus[0]);
+ 696   3            }
+ 697   2            
+ 698   2          }
+ 699   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
